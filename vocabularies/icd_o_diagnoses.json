@@ -198,6 +198,480 @@
       "system": "ICD-O-3",
       "display": "Carcinosarcoma, uterine",
       "topography": "C54"
+    },
+    "carcinoma cervice": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, cervix",
+      "topography": "C53"
+    },
+    "carcinoma esofago": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, esophagus",
+      "topography": "C15"
+    },
+    "adenocarcinoma esofago": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, esophagus",
+      "topography": "C15"
+    },
+    "mesotelioma": {
+      "code": "9050/3",
+      "system": "ICD-O-3",
+      "display": "Mesothelioma, malignant",
+      "topography": "C38"
+    },
+    "mesotelioma pleurico": {
+      "code": "9050/3",
+      "system": "ICD-O-3",
+      "display": "Mesothelioma, pleural",
+      "topography": "C38"
+    },
+    "timoma": {
+      "code": "8580/3",
+      "system": "ICD-O-3",
+      "display": "Thymoma, malignant",
+      "topography": "C37"
+    },
+    "carcinoma timico": {
+      "code": "8586/3",
+      "system": "ICD-O-3",
+      "display": "Thymic carcinoma",
+      "topography": "C37"
+    },
+    "microcitoma polmonare": {
+      "code": "8041/3",
+      "system": "ICD-O-3",
+      "display": "Small cell carcinoma, lung",
+      "topography": "C34"
+    },
+    "sclc": {
+      "code": "8041/3",
+      "system": "ICD-O-3",
+      "display": "Small cell lung carcinoma",
+      "topography": "C34"
+    },
+    "carcinoma neuroendocrino": {
+      "code": "8246/3",
+      "system": "ICD-O-3",
+      "display": "Neuroendocrine carcinoma, NOS",
+      "topography": "C00-C80"
+    },
+    "carcinoma neuroendocrino polmonare": {
+      "code": "8246/3",
+      "system": "ICD-O-3",
+      "display": "Neuroendocrine carcinoma, lung",
+      "topography": "C34"
+    },
+    "tumore neuroendocrino": {
+      "code": "8240/3",
+      "system": "ICD-O-3",
+      "display": "Neuroendocrine tumor, malignant",
+      "topography": "C00-C80"
+    },
+    "gist": {
+      "code": "8936/3",
+      "system": "ICD-O-3",
+      "display": "Gastrointestinal stromal tumor, malignant",
+      "topography": "C49"
+    },
+    "tumore stromale gastrointestinale": {
+      "code": "8936/3",
+      "system": "ICD-O-3",
+      "display": "Gastrointestinal stromal tumor, malignant",
+      "topography": "C49"
+    },
+    "leiomiosarcoma": {
+      "code": "8890/3",
+      "system": "ICD-O-3",
+      "display": "Leiomyosarcoma, NOS",
+      "topography": "C49"
+    },
+    "liposarcoma": {
+      "code": "8850/3",
+      "system": "ICD-O-3",
+      "display": "Liposarcoma, NOS",
+      "topography": "C49"
+    },
+    "rabdomiosarcoma": {
+      "code": "8900/3",
+      "system": "ICD-O-3",
+      "display": "Rhabdomyosarcoma, NOS",
+      "topography": "C49"
+    },
+    "osteosarcoma": {
+      "code": "9180/3",
+      "system": "ICD-O-3",
+      "display": "Osteosarcoma, NOS",
+      "topography": "C40"
+    },
+    "condrosarcoma": {
+      "code": "9220/3",
+      "system": "ICD-O-3",
+      "display": "Chondrosarcoma, NOS",
+      "topography": "C40"
+    },
+    "sarcoma di ewing": {
+      "code": "9260/3",
+      "system": "ICD-O-3",
+      "display": "Ewing sarcoma",
+      "topography": "C40"
+    },
+    "neuroblastoma": {
+      "code": "9500/3",
+      "system": "ICD-O-3",
+      "display": "Neuroblastoma, NOS",
+      "topography": "C74"
+    },
+    "mieloma multiplo": {
+      "code": "9732/3",
+      "system": "ICD-O-3",
+      "display": "Multiple myeloma",
+      "topography": "C42"
+    },
+    "linfoma di hodgkin": {
+      "code": "9650/3",
+      "system": "ICD-O-3",
+      "display": "Hodgkin lymphoma, NOS",
+      "topography": "C77"
+    },
+    "linfoma non-hodgkin": {
+      "code": "9591/3",
+      "system": "ICD-O-3",
+      "display": "Non-Hodgkin lymphoma, NOS",
+      "topography": "C77"
+    },
+    "linfoma diffuso a grandi cellule b": {
+      "code": "9680/3",
+      "system": "ICD-O-3",
+      "display": "Diffuse large B-cell lymphoma, NOS",
+      "topography": "C77"
+    },
+    "linfoma follicolare": {
+      "code": "9690/3",
+      "system": "ICD-O-3",
+      "display": "Follicular lymphoma, NOS",
+      "topography": "C77"
+    },
+    "linfoma mantellare": {
+      "code": "9673/3",
+      "system": "ICD-O-3",
+      "display": "Mantle cell lymphoma",
+      "topography": "C77"
+    },
+    "leucemia linfoblastica acuta": {
+      "code": "9835/3",
+      "system": "ICD-O-3",
+      "display": "Precursor cell lymphoblastic leukemia, NOS",
+      "topography": "C42"
+    },
+    "leucemia mieloide acuta": {
+      "code": "9861/3",
+      "system": "ICD-O-3",
+      "display": "Acute myeloid leukemia, NOS",
+      "topography": "C42"
+    },
+    "leucemia linfatica cronica": {
+      "code": "9823/3",
+      "system": "ICD-O-3",
+      "display": "Chronic lymphocytic leukemia, B-cell type",
+      "topography": "C42"
+    },
+    "leucemia mieloide cronica": {
+      "code": "9875/3",
+      "system": "ICD-O-3",
+      "display": "Chronic myelogenous leukemia, BCR-ABL positive",
+      "topography": "C42"
+    },
+    "carcinoma testa-collo": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, head and neck",
+      "topography": "C00-C14"
+    },
+    "carcinoma faringe": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, pharynx",
+      "topography": "C10"
+    },
+    "carcinoma laringe": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, larynx",
+      "topography": "C32"
+    },
+    "carcinoma orofaringe": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, oropharynx",
+      "topography": "C10"
+    },
+    "carcinoma nasofaringe": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, nasopharynx",
+      "topography": "C11"
+    },
+    "carcinoma cavità orale": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, oral cavity",
+      "topography": "C06"
+    },
+    "carcinoma lingua": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, tongue",
+      "topography": "C02"
+    },
+    "carcinoma ghiandola salivare": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, salivary gland",
+      "topography": "C08"
+    },
+    "carcinoma adenoideo cistico": {
+      "code": "8200/3",
+      "system": "ICD-O-3",
+      "display": "Adenoid cystic carcinoma",
+      "topography": "C08"
+    },
+    "carcinoma a cellule di merkel": {
+      "code": "8247/3",
+      "system": "ICD-O-3",
+      "display": "Merkel cell carcinoma",
+      "topography": "C44"
+    },
+    "carcinoma basocellulare": {
+      "code": "8090/3",
+      "system": "ICD-O-3",
+      "display": "Basal cell carcinoma, NOS",
+      "topography": "C44"
+    },
+    "carcinoma spinocellulare": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, NOS",
+      "topography": "C44"
+    },
+    "carcinoma a cellule renali": {
+      "code": "8312/3",
+      "system": "ICD-O-3",
+      "display": "Renal cell carcinoma, NOS",
+      "topography": "C64"
+    },
+    "carcinoma a cellule chiare renale": {
+      "code": "8310/3",
+      "system": "ICD-O-3",
+      "display": "Clear cell renal cell carcinoma",
+      "topography": "C64"
+    },
+    "carcinoma papillare renale": {
+      "code": "8260/3",
+      "system": "ICD-O-3",
+      "display": "Papillary renal cell carcinoma",
+      "topography": "C64"
+    },
+    "carcinoma cromofobo renale": {
+      "code": "8317/3",
+      "system": "ICD-O-3",
+      "display": "Chromophobe renal cell carcinoma",
+      "topography": "C64"
+    },
+    "carcinoma papillare tiroideo": {
+      "code": "8260/3",
+      "system": "ICD-O-3",
+      "display": "Papillary thyroid carcinoma",
+      "topography": "C73"
+    },
+    "carcinoma follicolare tiroideo": {
+      "code": "8330/3",
+      "system": "ICD-O-3",
+      "display": "Follicular thyroid carcinoma",
+      "topography": "C73"
+    },
+    "carcinoma midollare tiroideo": {
+      "code": "8345/3",
+      "system": "ICD-O-3",
+      "display": "Medullary thyroid carcinoma",
+      "topography": "C73"
+    },
+    "carcinoma anaplastico tiroideo": {
+      "code": "8021/3",
+      "system": "ICD-O-3",
+      "display": "Anaplastic thyroid carcinoma",
+      "topography": "C73"
+    },
+    "feocromocitoma maligno": {
+      "code": "8700/3",
+      "system": "ICD-O-3",
+      "display": "Pheochromocytoma, malignant",
+      "topography": "C74"
+    },
+    "carcinoma surrenalico": {
+      "code": "8370/3",
+      "system": "ICD-O-3",
+      "display": "Adrenocortical carcinoma",
+      "topography": "C74"
+    },
+    "astrocitoma": {
+      "code": "9400/3",
+      "system": "ICD-O-3",
+      "display": "Astrocytoma, malignant",
+      "topography": "C71"
+    },
+    "oligodendroglioma": {
+      "code": "9450/3",
+      "system": "ICD-O-3",
+      "display": "Oligodendroglioma, NOS",
+      "topography": "C71"
+    },
+    "ependimoma": {
+      "code": "9391/3",
+      "system": "ICD-O-3",
+      "display": "Ependymoma, NOS",
+      "topography": "C71"
+    },
+    "medulloblastoma": {
+      "code": "9470/3",
+      "system": "ICD-O-3",
+      "display": "Medulloblastoma, NOS",
+      "topography": "C71"
+    },
+    "meningioma": {
+      "code": "9530/3",
+      "system": "ICD-O-3",
+      "display": "Meningioma, malignant",
+      "topography": "C70"
+    },
+    "seminoma": {
+      "code": "9061/3",
+      "system": "ICD-O-3",
+      "display": "Seminoma, NOS",
+      "topography": "C62"
+    },
+    "tumore a cellule germinali": {
+      "code": "9064/3",
+      "system": "ICD-O-3",
+      "display": "Germ cell tumor, NOS",
+      "topography": "C62"
+    },
+    "teratoma maligno": {
+      "code": "9080/3",
+      "system": "ICD-O-3",
+      "display": "Teratoma, malignant",
+      "topography": "C56"
+    },
+    "coriocarcinoma": {
+      "code": "9100/3",
+      "system": "ICD-O-3",
+      "display": "Choriocarcinoma, NOS",
+      "topography": "C58"
+    },
+    "carcinoma sieroso ovarico": {
+      "code": "8441/3",
+      "system": "ICD-O-3",
+      "display": "Serous cystadenocarcinoma, NOS",
+      "topography": "C56"
+    },
+    "carcinoma mucinoso ovarico": {
+      "code": "8470/3",
+      "system": "ICD-O-3",
+      "display": "Mucinous cystadenocarcinoma, NOS",
+      "topography": "C56"
+    },
+    "carcinoma endometrioide ovarico": {
+      "code": "8380/3",
+      "system": "ICD-O-3",
+      "display": "Endometrioid adenocarcinoma, ovary",
+      "topography": "C56"
+    },
+    "carcinoma a cellule chiare ovarico": {
+      "code": "8310/3",
+      "system": "ICD-O-3",
+      "display": "Clear cell adenocarcinoma, ovary",
+      "topography": "C56"
+    },
+    "carcinoma lobulare mammario": {
+      "code": "8520/3",
+      "system": "ICD-O-3",
+      "display": "Lobular carcinoma, NOS",
+      "topography": "C50"
+    },
+    "carcinoma duttale mammario": {
+      "code": "8500/3",
+      "system": "ICD-O-3",
+      "display": "Infiltrating duct carcinoma, NOS",
+      "topography": "C50"
+    },
+    "carcinoma mammario triplo negativo": {
+      "code": "8500/3",
+      "system": "ICD-O-3",
+      "display": "Triple negative breast carcinoma",
+      "topography": "C50"
+    },
+    "carcinoma mammario her2 positivo": {
+      "code": "8500/3",
+      "system": "ICD-O-3",
+      "display": "HER2-positive breast carcinoma",
+      "topography": "C50"
+    },
+    "carcinoma infiammatorio mammario": {
+      "code": "8530/3",
+      "system": "ICD-O-3",
+      "display": "Inflammatory carcinoma",
+      "topography": "C50"
+    },
+    "adenocarcinoma retto": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, rectum",
+      "topography": "C20"
+    },
+    "adenocarcinoma colon-retto": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Colorectal adenocarcinoma",
+      "topography": "C18-C20"
+    },
+    "adenocarcinoma intestino": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, intestine",
+      "topography": "C17"
+    },
+    "carcinoma ano": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, anus",
+      "topography": "C21"
+    },
+    "carcinoma appendice": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, appendix",
+      "topography": "C18.1"
+    },
+    "tumore carcinoide": {
+      "code": "8240/3",
+      "system": "ICD-O-3",
+      "display": "Carcinoid tumor, malignant",
+      "topography": "C17"
+    },
+    "carcinoma vie biliari": {
+      "code": "8160/3",
+      "system": "ICD-O-3",
+      "display": "Cholangiocarcinoma, biliary tract",
+      "topography": "C24"
+    },
+    "carcinoma cistifellea": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, gallbladder",
+      "topography": "C23"
     }
   }
 }

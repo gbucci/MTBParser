@@ -144,6 +144,84 @@ Esegui il file principale per vedere un esempio funzionante:
 python3 mtb_parser.py
 ```
 
+## Clinical Annotation (NEW in v1.1.0)
+
+MTBParser integra tre sorgenti di evidenza clinica per l'annotazione delle varianti genomiche:
+
+### Annotatori Disponibili
+
+| Annotatore | Licenza | Costo | Focus | Evidenze |
+|-----------|---------|-------|-------|----------|
+| **CIViC** | FREE | CC0 Public Domain | Global, community | ~3000+ variants |
+| **ESCAT** | FREE | Citation required | European/ESMO | ~50+ tier-classified |
+| **OncoKB** | COMMERCIAL | Free tier/Paid | US/FDA | ~5000+ variants |
+
+### Quick Start - Free Sources (Default)
+
+```python
+from annotators.combined_annotator import CombinedAnnotator
+
+# Default: CIViC + ESCAT (both free)
+annotator = CombinedAnnotator()
+
+# Annotate variant
+result = annotator.annotate_variant('EGFR', 'L858R', 'NSCLC')
+report = annotator.get_clinical_report(result)
+
+print(f"Actionability: {report['actionability']['score']}/100")
+print(f"ESCAT Tier: {report['escat_classification']['tier']}")
+print(f"FDA Drugs: {report['therapeutic_options']['fda_approved']}")
+```
+
+### Configuration Presets
+
+```python
+from annotators.annotator_config import AnnotatorConfig
+
+# European hospitals (ESCAT + CIViC)
+config = AnnotatorConfig.european_clinical()
+annotator = CombinedAnnotator(config=config)
+
+# US hospitals (OncoKB + CIViC)
+config = AnnotatorConfig.us_clinical(oncokb_api_key="your_key")
+
+# Maximum validation (all three sources)
+config = AnnotatorConfig.all_sources(oncokb_api_key="your_key")
+
+# ESCAT only (European standard)
+config = AnnotatorConfig.escat_only()
+```
+
+### Integration with MTB Reports
+
+```python
+from core.mtb_parser import MTBParser
+from annotators.combined_annotator import CombinedAnnotator
+
+# Parse MTB report
+parser = MTBParser()
+mtb_report = parser.parse_report(report_text)
+
+# Annotate variants with free sources
+annotator = CombinedAnnotator()
+
+for variant in mtb_report.variants:
+    result = annotator.annotate_variant(
+        gene=variant.gene,
+        variant=variant.protein_change,
+        tumor_type=mtb_report.diagnosis.primary_diagnosis
+    )
+
+    report = annotator.get_clinical_report(result)
+    print(f"{variant.gene}: ESCAT {report['escat_classification']['tier']}")
+    print(f"  Drugs: {report['therapeutic_options']['fda_approved']}")
+```
+
+**Documentazione completa:**
+- [ANNOTATOR_CONFIGURATION.md](ANNOTATOR_CONFIGURATION.md) - Configuration guide
+- [ESCAT_INTEGRATION.md](ESCAT_INTEGRATION.md) - ESCAT tier system details
+- [examples/annotator_configuration_examples.py](examples/annotator_configuration_examples.py) - Examples
+
 ## Formati Report Supportati
 
 ### Formato Tabellare

@@ -219,6 +219,422 @@
       "target": ["NTRK1", "NTRK2", "NTRK3", "ROS1", "ALK"],
       "indication": "NTRK/ROS1 fusion-positive cancers",
       "evidence_level": "FDA Approved"
+    },
+    "trastuzumab": {
+      "code": "224905",
+      "system": "RxNorm",
+      "display": "trastuzumab",
+      "target": ["HER2", "ERBB2"],
+      "indication": "HER2-positive breast/gastric cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "pertuzumab": {
+      "code": "1298238",
+      "system": "RxNorm",
+      "display": "pertuzumab",
+      "target": ["HER2", "ERBB2"],
+      "indication": "HER2-positive breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "trastuzumab deruxtecan": {
+      "code": "2383304",
+      "system": "RxNorm",
+      "display": "trastuzumab deruxtecan",
+      "target": ["HER2", "ERBB2"],
+      "indication": "HER2-positive/low breast/gastric cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "bevacizumab": {
+      "code": "351291",
+      "system": "RxNorm",
+      "display": "bevacizumab",
+      "target": ["VEGF"],
+      "indication": "Various solid tumors",
+      "evidence_level": "FDA Approved"
+    },
+    "cetuximab": {
+      "code": "318341",
+      "system": "RxNorm",
+      "display": "cetuximab",
+      "target": ["EGFR"],
+      "indication": "KRAS wild-type colorectal cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "panitumumab": {
+      "code": "614348",
+      "system": "RxNorm",
+      "display": "panitumumab",
+      "target": ["EGFR"],
+      "indication": "KRAS wild-type colorectal cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "imatinib": {
+      "code": "282388",
+      "system": "RxNorm",
+      "display": "imatinib",
+      "target": ["BCR-ABL", "KIT", "PDGFRA"],
+      "indication": "CML, GIST, Ph+ ALL",
+      "evidence_level": "FDA Approved"
+    },
+    "dasatinib": {
+      "code": "613391",
+      "system": "RxNorm",
+      "display": "dasatinib",
+      "target": ["BCR-ABL"],
+      "indication": "CML, Ph+ ALL",
+      "evidence_level": "FDA Approved"
+    },
+    "nilotinib": {
+      "code": "825410",
+      "system": "RxNorm",
+      "display": "nilotinib",
+      "target": ["BCR-ABL"],
+      "indication": "CML",
+      "evidence_level": "FDA Approved"
+    },
+    "bosutinib": {
+      "code": "1112730",
+      "system": "RxNorm",
+      "display": "bosutinib",
+      "target": ["BCR-ABL"],
+      "indication": "CML",
+      "evidence_level": "FDA Approved"
+    },
+    "ponatinib": {
+      "code": "1251579",
+      "system": "RxNorm",
+      "display": "ponatinib",
+      "target": ["BCR-ABL"],
+      "indication": "CML with T315I, Ph+ ALL",
+      "evidence_level": "FDA Approved"
+    },
+    "lorlatinib": {
+      "code": "2049106",
+      "system": "RxNorm",
+      "display": "lorlatinib",
+      "target": ["ALK", "ROS1"],
+      "indication": "ALK-positive NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "pralsetinib": {
+      "code": "2469247",
+      "system": "RxNorm",
+      "display": "pralsetinib",
+      "target": ["RET"],
+      "indication": "RET fusion-positive NSCLC/thyroid cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "encorafenib": {
+      "code": "1946839",
+      "system": "RxNorm",
+      "display": "encorafenib",
+      "target": ["BRAF"],
+      "indication": "BRAF V600E mutant melanoma/CRC",
+      "evidence_level": "FDA Approved"
+    },
+    "binimetinib": {
+      "code": "1946835",
+      "system": "RxNorm",
+      "display": "binimetinib",
+      "target": ["MEK"],
+      "indication": "BRAF V600E/K mutant melanoma",
+      "evidence_level": "FDA Approved"
+    },
+    "cobimetinib": {
+      "code": "1662643",
+      "system": "RxNorm",
+      "display": "cobimetinib",
+      "target": ["MEK"],
+      "indication": "BRAF V600E/K mutant melanoma",
+      "evidence_level": "FDA Approved"
+    },
+    "selumetinib": {
+      "code": "2378698",
+      "system": "RxNorm",
+      "display": "selumetinib",
+      "target": ["MEK"],
+      "indication": "NF1-related tumors",
+      "evidence_level": "FDA Approved"
+    },
+    "tucatinib": {
+      "code": "2383313",
+      "system": "RxNorm",
+      "display": "tucatinib",
+      "target": ["HER2"],
+      "indication": "HER2-positive breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "neratinib": {
+      "code": "1856156",
+      "system": "RxNorm",
+      "display": "neratinib",
+      "target": ["HER2", "EGFR"],
+      "indication": "HER2-positive breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "lapatinib": {
+      "code": "685687",
+      "system": "RxNorm",
+      "display": "lapatinib",
+      "target": ["HER2", "EGFR"],
+      "indication": "HER2-positive breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "regorafenib": {
+      "code": "1312138",
+      "system": "RxNorm",
+      "display": "regorafenib",
+      "target": ["VEGFR", "KIT", "PDGFR", "BRAF"],
+      "indication": "Colorectal cancer, GIST, HCC",
+      "evidence_level": "FDA Approved"
+    },
+    "lenvatinib": {
+      "code": "1657990",
+      "system": "RxNorm",
+      "display": "lenvatinib",
+      "target": ["VEGFR", "FGFR", "RET"],
+      "indication": "Thyroid cancer, RCC, HCC",
+      "evidence_level": "FDA Approved"
+    },
+    "sorafenib": {
+      "code": "555792",
+      "system": "RxNorm",
+      "display": "sorafenib",
+      "target": ["VEGFR", "PDGFR", "RAF"],
+      "indication": "RCC, HCC, thyroid cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "sunitinib": {
+      "code": "608732",
+      "system": "RxNorm",
+      "display": "sunitinib",
+      "target": ["VEGFR", "PDGFR", "KIT"],
+      "indication": "RCC, GIST, pNET",
+      "evidence_level": "FDA Approved"
+    },
+    "pazopanib": {
+      "code": "847617",
+      "system": "RxNorm",
+      "display": "pazopanib",
+      "target": ["VEGFR", "PDGFR", "KIT"],
+      "indication": "RCC, soft tissue sarcoma",
+      "evidence_level": "FDA Approved"
+    },
+    "axitinib": {
+      "code": "1040028",
+      "system": "RxNorm",
+      "display": "axitinib",
+      "target": ["VEGFR"],
+      "indication": "RCC",
+      "evidence_level": "FDA Approved"
+    },
+    "alpelisib": {
+      "code": "2178918",
+      "system": "RxNorm",
+      "display": "alpelisib",
+      "target": ["PIK3CA"],
+      "indication": "PIK3CA-mutant breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "everolimus": {
+      "code": "802733",
+      "system": "RxNorm",
+      "display": "everolimus",
+      "target": ["mTOR"],
+      "indication": "RCC, pNET, breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "temsirolimus": {
+      "code": "682878",
+      "system": "RxNorm",
+      "display": "temsirolimus",
+      "target": ["mTOR"],
+      "indication": "RCC",
+      "evidence_level": "FDA Approved"
+    },
+    "abemaciclib": {
+      "code": "1946778",
+      "system": "RxNorm",
+      "display": "abemaciclib",
+      "target": ["CDK4", "CDK6"],
+      "indication": "HR+ breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "palbociclib": {
+      "code": "1657851",
+      "system": "RxNorm",
+      "display": "palbociclib",
+      "target": ["CDK4", "CDK6"],
+      "indication": "HR+ breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "ribociclib": {
+      "code": "1946779",
+      "system": "RxNorm",
+      "display": "ribociclib",
+      "target": ["CDK4", "CDK6"],
+      "indication": "HR+ breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "atezolizumab": {
+      "code": "1792778",
+      "system": "RxNorm",
+      "display": "atezolizumab",
+      "target": ["PD-L1"],
+      "indication": "Various solid tumors",
+      "evidence_level": "FDA Approved"
+    },
+    "durvalumab": {
+      "code": "1946831",
+      "system": "RxNorm",
+      "display": "durvalumab",
+      "target": ["PD-L1"],
+      "indication": "NSCLC, urothelial cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "avelumab": {
+      "code": "1946827",
+      "system": "RxNorm",
+      "display": "avelumab",
+      "target": ["PD-L1"],
+      "indication": "Merkel cell, urothelial cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "ipilimumab": {
+      "code": "1094833",
+      "system": "RxNorm",
+      "display": "ipilimumab",
+      "target": ["CTLA-4"],
+      "indication": "Melanoma, RCC, CRC",
+      "evidence_level": "FDA Approved"
+    },
+    "cemiplimab": {
+      "code": "2177990",
+      "system": "RxNorm",
+      "display": "cemiplimab",
+      "target": ["PD-1"],
+      "indication": "Cutaneous squamous cell carcinoma",
+      "evidence_level": "FDA Approved"
+    },
+    "dostarlimab": {
+      "code": "2469246",
+      "system": "RxNorm",
+      "display": "dostarlimab",
+      "target": ["PD-1"],
+      "indication": "MSI-H/dMMR endometrial cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "talazoparib": {
+      "code": "2177994",
+      "system": "RxNorm",
+      "display": "talazoparib",
+      "target": ["PARP"],
+      "indication": "BRCA-mutated breast cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "infigratinib": {
+      "code": "2566082",
+      "system": "RxNorm",
+      "display": "infigratinib",
+      "target": ["FGFR2"],
+      "indication": "FGFR2 fusion/rearrangement cholangiocarcinoma",
+      "evidence_level": "FDA Approved"
+    },
+    "pemigatinib": {
+      "code": "2383306",
+      "system": "RxNorm",
+      "display": "pemigatinib",
+      "target": ["FGFR1", "FGFR2", "FGFR3"],
+      "indication": "FGFR2 fusion/rearrangement cholangiocarcinoma",
+      "evidence_level": "FDA Approved"
+    },
+    "futibatinib": {
+      "code": "2630235",
+      "system": "RxNorm",
+      "display": "futibatinib",
+      "target": ["FGFR1", "FGFR2", "FGFR3", "FGFR4"],
+      "indication": "FGFR2 fusion/rearrangement cholangiocarcinoma",
+      "evidence_level": "FDA Approved"
+    },
+    "midostaurin": {
+      "code": "1946837",
+      "system": "RxNorm",
+      "display": "midostaurin",
+      "target": ["FLT3"],
+      "indication": "FLT3-mutated AML",
+      "evidence_level": "FDA Approved"
+    },
+    "gilteritinib": {
+      "code": "2177995",
+      "system": "RxNorm",
+      "display": "gilteritinib",
+      "target": ["FLT3"],
+      "indication": "FLT3-mutated AML",
+      "evidence_level": "FDA Approved"
+    },
+    "avapritinib": {
+      "code": "2383305",
+      "system": "RxNorm",
+      "display": "avapritinib",
+      "target": ["PDGFRA", "KIT"],
+      "indication": "PDGFRA exon 18 mutant GIST",
+      "evidence_level": "FDA Approved"
+    },
+    "ripretinib": {
+      "code": "2469248",
+      "system": "RxNorm",
+      "display": "ripretinib",
+      "target": ["KIT", "PDGFRA"],
+      "indication": "Advanced GIST",
+      "evidence_level": "FDA Approved"
+    },
+    "zanubrutinib": {
+      "code": "2383307",
+      "system": "RxNorm",
+      "display": "zanubrutinib",
+      "target": ["BTK"],
+      "indication": "Mantle cell lymphoma, CLL",
+      "evidence_level": "FDA Approved"
+    },
+    "acalabrutinib": {
+      "code": "1946838",
+      "system": "RxNorm",
+      "display": "acalabrutinib",
+      "target": ["BTK"],
+      "indication": "CLL, mantle cell lymphoma",
+      "evidence_level": "FDA Approved"
+    },
+    "ibrutinib": {
+      "code": "1486436",
+      "system": "RxNorm",
+      "display": "ibrutinib",
+      "target": ["BTK"],
+      "indication": "CLL, MCL, WM",
+      "evidence_level": "FDA Approved"
+    },
+    "venetoclax": {
+      "code": "1856154",
+      "system": "RxNorm",
+      "display": "venetoclax",
+      "target": ["BCL2"],
+      "indication": "CLL, AML",
+      "evidence_level": "FDA Approved"
+    },
+    "enasidenib": {
+      "code": "1946840",
+      "system": "RxNorm",
+      "display": "enasidenib",
+      "target": ["IDH2"],
+      "indication": "IDH2-mutated AML",
+      "evidence_level": "FDA Approved"
+    },
+    "ivosidenib": {
+      "code": "2177996",
+      "system": "RxNorm",
+      "display": "ivosidenib",
+      "target": ["IDH1"],
+      "indication": "IDH1-mutated AML/cholangiocarcinoma",
+      "evidence_level": "FDA Approved"
     }
   }
 }

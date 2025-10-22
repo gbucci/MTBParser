@@ -42,14 +42,29 @@ class PatternExtractors:
             # Pattern inline con VAF: EGFR c.2573T>G 45%
             r'(\w+)\s+([cp]\.[^\s,]+).*?(\d+)%',
 
-            # Pattern alterazioni comuni: EGFR L858R, BRAF V600E, KRAS G12D
-            r'(\w+)\s+([A-Z]\d+[A-Z*]+)',
+            # Pattern alterazioni comuni: EGFR L858R, BRAF V600E, KRAS G12D, TP53 R273H
+            r'\b(\w+)\s+([A-Z]\d+[A-Z*_]+)\b',
+
+            # Pattern con parentesi: EGFR (L858R), KRAS (G12D)
+            r'\b(\w+)\s*\(([A-Z]\d+[A-Z*]+)\)',
 
             # Pattern "mutazione di GENE": mutazione di BRAF V600E
             r'mutazione\s+(?:di\s+)?(\w+)[:\s]+([^,.\n]+)',
 
             # Pattern "alterazione di GENE"
             r'alterazione\s+(?:di\s+)?(\w+)[:\s]+([^,.\n]+)',
+
+            # Pattern frameshift: TP53 p.Arg273fs, BRCA1 p.Gln1756fs
+            r'\b(\w+)\s+p\.([A-Z][a-z]{2}\d+fs[*X]?\d*)\b',
+
+            # Pattern stop-gained/nonsense: TP53 p.Arg213*, BRCA1 p.Gln1395*
+            r'\b(\w+)\s+p\.([A-Z][a-z]{2}\d+\*)\b',
+
+            # Pattern splice variant: BRCA2 c.8488-1G>A
+            r'\b(\w+)\s+c\.(\d+[-+]\d+[ACGT]>[ACGT])\b',
+
+            # Pattern duplicazione: EGFR c.2235_2249dup
+            r'\b(\w+)\s+c\.(\d+_\d+dup)',
         ]
 
         # ===== FUSION PATTERNS =====
@@ -65,6 +80,36 @@ class PatternExtractors:
 
             # FGFR3(17)::TACC3(11) - with exon numbers
             r'(\w+)\s*\(\d+\)\s*::\s*(\w+)\s*\(\d+\)',
+
+            # Fusion detected format: ALK fusion detected
+            r'\b(\w+)\s+fusion\s+(?:detected|identified|positiv[oa])',
+
+            # GENE rearrangement
+            r'\b(\w+)\s+rearrangement',
+        ]
+
+        # ===== CNV/AMPLIFICATION PATTERNS =====
+        self.cnv_patterns = [
+            # ERBB2 amplification, MET amplificazione
+            r'\b(\w+)\s+amplif(?:ication|icazione)',
+
+            # MYC amplified
+            r'\b(\w+)\s+amplified',
+
+            # ERBB2 copy number: 8.5
+            r'\b(\w+)\s+copy\s+number[:\s]+(\d+\.?\d*)',
+
+            # EGFR CN = 12
+            r'\b(\w+)\s+CN[:\s=]+(\d+\.?\d*)',
+
+            # Loss of heterozygosity: TP53 LOH
+            r'\b(\w+)\s+LOH\b',
+
+            # Deletion: CDKN2A deletion, PTEN delezione
+            r'\b(\w+)\s+del(?:etion|ezione)',
+
+            # Homozygous deletion
+            r'\b(\w+)\s+(?:homozygous|omozigotica)\s+del(?:etion|ezione)',
         ]
 
         # ===== EXON PATTERNS =====
@@ -258,8 +303,10 @@ class PatternExtractors:
                     if variant_key not in seen:
                         # Map to HGNC
                         variant.gene_code = self.vocab.map_gene(variant.gene)
-                        variants.append(variant)
-                        seen.add(variant_key)
+                        # Validate it's a known gene before adding
+                        if variant.gene.upper() in self.vocab.hgnc_genes or variant.gene_code:
+                            variants.append(variant)
+                            seen.add(variant_key)
 
         # 2. Extract fusions
         fusion_variants = self._extract_fusions(text, seen)
@@ -269,6 +316,11 @@ class PatternExtractors:
         # 3. Extract exon-level alterations
         exon_variants = self._extract_exon_alterations(text, seen)
         variants.extend(exon_variants)
+        seen.update([f"{v.gene}_{v.protein_change}" for v in exon_variants])
+
+        # 4. Extract CNV/amplifications
+        cnv_variants = self._extract_cnv(text, seen)
+        variants.extend(cnv_variants)
 
         return variants
 
@@ -358,6 +410,67 @@ class PatternExtractors:
                     exon_variants.append(variant)
 
         return exon_variants
+
+    def _extract_cnv(self, text: str, seen: Set[str]) -> List[Variant]:
+        """Extract copy number variations (amplifications/deletions)"""
+        cnv_variants = []
+
+        for pattern in self.cnv_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for match in matches:
+                # Handle different match formats
+                if isinstance(match, tuple):
+                    gene = match[0].upper()
+                    copy_number = match[1] if len(match) > 1 else None
+                else:
+                    gene = match.upper()
+                    copy_number = None
+
+                # Validate gene
+                if gene not in self.vocab.hgnc_genes:
+                    continue
+
+                # Determine alteration type
+                alteration_type = self._classify_cnv_alteration(pattern, copy_number)
+                variant_key = f"{gene}_{alteration_type}"
+
+                if variant_key not in seen:
+                    variant = Variant(
+                        gene=gene,
+                        protein_change=alteration_type,
+                        classification="Pathogenic" if alteration_type in ["amplification", "deletion", "LOH"] else "VUS",
+                        gene_code=self.vocab.map_gene(gene),
+                        raw_text=f"{gene} {alteration_type}" + (f" (CN={copy_number})" if copy_number else "")
+                    )
+                    cnv_variants.append(variant)
+
+        return cnv_variants
+
+    @staticmethod
+    def _classify_cnv_alteration(pattern: str, copy_number: Optional[str]) -> str:
+        """Classify CNV alteration type based on pattern"""
+        pattern_lower = pattern.lower()
+
+        if 'amplif' in pattern_lower:
+            return "amplification"
+        elif 'copy' in pattern_lower or 'cn' in pattern_lower:
+            if copy_number:
+                cn_val = float(copy_number)
+                if cn_val >= 4:
+                    return "amplification"
+                elif cn_val <= 1:
+                    return "deletion"
+                else:
+                    return f"copy_number_variation (CN={copy_number})"
+            return "copy_number_variation"
+        elif 'loh' in pattern_lower:
+            return "LOH"
+        elif 'delet' in pattern_lower or 'delez' in pattern_lower:
+            if 'homozygous' in pattern_lower or 'omozigotica' in pattern_lower:
+                return "homozygous_deletion"
+            return "deletion"
+        else:
+            return "CNV"
 
     # ========== TMB EXTRACTION ==========
 

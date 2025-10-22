@@ -1,0 +1,306 @@
+{
+  "patient": {
+    "id": "12345",
+    "age": 62,
+    "sex": "M",
+    "birth_date": "1962-03-15"
+  },
+  "diagnosis": {
+    "primary_diagnosis": "Adenocarcinoma polmonare stadio IV",
+    "stage": "I",
+    "icd_o_code": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, NOS",
+      "topography": "C34"
+    }
+  },
+  "variants": [
+    {
+      "gene": "EGFR",
+      "variant": "p.Leu858Arg",
+      "cdna_change": "c.2573T>G",
+      "protein_change": "p.Leu858Arg",
+      "vaf": 45.0,
+      "classification": "Pathogenic",
+      "hgnc_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      },
+      "clinical_annotation": {
+        "variant": "EGFR p.Leu858Arg",
+        "actionability": {
+          "is_actionable": false,
+          "score": 0.0,
+          "level": null
+        },
+        "oncogenicity": {
+          "classification": "Unknown",
+          "mutation_effect": null
+        },
+        "therapeutic_options": {
+          "fda_approved": [],
+          "guideline_recommended": [],
+          "investigational": [],
+          "resistance": []
+        },
+        "evidence_sources": [],
+        "references": {
+          "civic": null,
+          "oncokb": "https://www.oncokb.org/gene/EGFR"
+        },
+        "recommendation": "No high-level evidence for targeted therapy"
+      }
+    },
+    {
+      "gene": "EGFR",
+      "variant": "p.Thr790Met",
+      "cdna_change": "c.2369C>T",
+      "protein_change": "p.Thr790Met",
+      "vaf": 12.0,
+      "classification": "Pathogenic",
+      "hgnc_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      },
+      "clinical_annotation": {
+        "variant": "EGFR p.Thr790Met",
+        "actionability": {
+          "is_actionable": false,
+          "score": 0.0,
+          "level": null
+        },
+        "oncogenicity": {
+          "classification": "Unknown",
+          "mutation_effect": null
+        },
+        "therapeutic_options": {
+          "fda_approved": [],
+          "guideline_recommended": [],
+          "investigational": [],
+          "resistance": []
+        },
+        "evidence_sources": [],
+        "references": {
+          "civic": null,
+          "oncokb": "https://www.oncokb.org/gene/EGFR"
+        },
+        "recommendation": "No high-level evidence for targeted therapy"
+      }
+    },
+    {
+      "gene": "EGFR",
+      "variant": "c.2573T>G",
+      "cdna_change": "c.2573T>G",
+      "protein_change": null,
+      "vaf": 45.0,
+      "classification": null,
+      "hgnc_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      },
+      "clinical_annotation": {
+        "variant": "EGFR c.2573T>G",
+        "actionability": {
+          "is_actionable": false,
+          "score": 0.0,
+          "level": null
+        },
+        "oncogenicity": {
+          "classification": "Unknown",
+          "mutation_effect": null
+        },
+        "therapeutic_options": {
+          "fda_approved": [],
+          "guideline_recommended": [],
+          "investigational": [],
+          "resistance": []
+        },
+        "evidence_sources": [],
+        "references": {
+          "civic": null,
+          "oncokb": "https://www.oncokb.org/gene/EGFR"
+        },
+        "recommendation": "No high-level evidence for targeted therapy"
+      }
+    },
+    {
+      "gene": "EGFR",
+      "variant": "c.2369C>T",
+      "cdna_change": "c.2369C>T",
+      "protein_change": null,
+      "vaf": 12.0,
+      "classification": null,
+      "hgnc_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      },
+      "clinical_annotation": {
+        "variant": "EGFR c.2369C>T",
+        "actionability": {
+          "is_actionable": false,
+          "score": 0.0,
+          "level": null
+        },
+        "oncogenicity": {
+          "classification": "Unknown",
+          "mutation_effect": null
+        },
+        "therapeutic_options": {
+          "fda_approved": [],
+          "guideline_recommended": [],
+          "investigational": [],
+          "resistance": []
+        },
+        "evidence_sources": [],
+        "references": {
+          "civic": null,
+          "oncokb": "https://www.oncokb.org/gene/EGFR"
+        },
+        "recommendation": "No high-level evidence for targeted therapy"
+      }
+    },
+    {
+      "gene": "KRAS",
+      "variant": "G12C",
+      "cdna_change": null,
+      "protein_change": "G12C",
+      "vaf": null,
+      "classification": null,
+      "hgnc_code": {
+        "code": "HGNC:6407",
+        "system": "http://www.genenames.org",
+        "name": "KRAS Proto-Oncogene, GTPase",
+        "chromosome": "12",
+        "cancer_types": [
+          "NSCLC",
+          "Colorectal",
+          "Pancreatic"
+        ],
+        "actionable": true
+      },
+      "clinical_annotation": {
+        "variant": "KRAS G12C",
+        "actionability": {
+          "is_actionable": true,
+          "score": 100,
+          "level": "LEVEL_1"
+        },
+        "oncogenicity": {
+          "classification": "Oncogenic",
+          "mutation_effect": "Gain-of-function"
+        },
+        "therapeutic_options": {
+          "fda_approved": [
+            "Adagrasib",
+            "Sotorasib"
+          ],
+          "guideline_recommended": [],
+          "investigational": [],
+          "resistance": []
+        },
+        "evidence_sources": [
+          "CIViC",
+          "OncoKB"
+        ],
+        "references": {
+          "civic": "https://civicdb.org/variants/45",
+          "oncokb": "https://www.oncokb.org/gene/KRAS/G12C"
+        },
+        "recommendation": "FDA-approved targeted therapy available: Adagrasib, Sotorasib"
+      }
+    },
+    {
+      "gene": "EGFR",
+      "variant": "L858R",
+      "cdna_change": null,
+      "protein_change": "L858R",
+      "vaf": null,
+      "classification": null,
+      "hgnc_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      },
+      "clinical_annotation": {
+        "variant": "EGFR L858R",
+        "actionability": {
+          "is_actionable": true,
+          "score": 100,
+          "level": "LEVEL_1"
+        },
+        "oncogenicity": {
+          "classification": "Oncogenic",
+          "mutation_effect": "Gain-of-function"
+        },
+        "therapeutic_options": {
+          "fda_approved": [
+            "Afatinib",
+            "Erlotinib",
+            "Gefitinib",
+            "Osimertinib"
+          ],
+          "guideline_recommended": [],
+          "investigational": [],
+          "resistance": []
+        },
+        "evidence_sources": [
+          "CIViC",
+          "OncoKB"
+        ],
+        "references": {
+          "civic": "https://civicdb.org/variants/12",
+          "oncokb": "https://www.oncokb.org/gene/EGFR/L858R"
+        },
+        "recommendation": "FDA-approved targeted therapy available: Afatinib, Erlotinib, Gefitinib"
+      }
+    }
+  ],
+  "tmb": 6.2,
+  "ngs_method": null,
+  "quality_metrics": {
+    "completeness_pct": 25.0,
+    "variants_found": 6,
+    "diagnosis_mapped": true,
+    "warnings": []
+  }
+}
