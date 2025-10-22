@@ -49,6 +49,30 @@
       "display": "Malignant melanoma, NOS",
       "topography": "C44"
     },
+    "melanoma cutaneo": {
+      "code": "8720/3",
+      "system": "ICD-O-3",
+      "display": "Malignant melanoma, NOS",
+      "topography": "C44"
+    },
+    "melanoma cutaneo maligno": {
+      "code": "8720/3",
+      "system": "ICD-O-3",
+      "display": "Malignant melanoma, NOS",
+      "topography": "C44"
+    },
+    "melanoma maligno": {
+      "code": "8720/3",
+      "system": "ICD-O-3",
+      "display": "Malignant melanoma, NOS",
+      "topography": "C44"
+    },
+    "melanoma metastatico": {
+      "code": "8720/3",
+      "system": "ICD-O-3",
+      "display": "Malignant melanoma, NOS",
+      "topography": "C44"
+    },
     "colangiocarcinoma": {
       "code": "8160/3",
       "system": "ICD-O-3",
@@ -96,6 +120,54 @@
       "system": "ICD-O-3",
       "display": "Transitional cell carcinoma, NOS",
       "topography": "C67"
+    },
+    "adenocarcinoma gastrico": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, NOS",
+      "topography": "C16"
+    },
+    "carcinoma ovarico": {
+      "code": "8010/3",
+      "system": "ICD-O-3",
+      "display": "Carcinoma, NOS",
+      "topography": "C56"
+    },
+    "carcinoma prostatico": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma of prostate",
+      "topography": "C61"
+    },
+    "carcinoma epatocellulare": {
+      "code": "8170/3",
+      "system": "ICD-O-3",
+      "display": "Hepatocellular carcinoma, NOS",
+      "topography": "C22"
+    },
+    "carcinoma uroteliale": {
+      "code": "8120/3",
+      "system": "ICD-O-3",
+      "display": "Transitional cell carcinoma, NOS",
+      "topography": "C67"
+    },
+    "sarcoma": {
+      "code": "8800/3",
+      "system": "ICD-O-3",
+      "display": "Sarcoma, NOS",
+      "topography": "C49"
+    },
+    "linfoma": {
+      "code": "9590/3",
+      "system": "ICD-O-3",
+      "display": "Lymphoma, NOS",
+      "topography": "C77"
+    },
+    "leucemia": {
+      "code": "9800/3",
+      "system": "ICD-O-3",
+      "display": "Leukemia, NOS",
+      "topography": "C42"
     }
   }
 }
