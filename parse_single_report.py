@@ -22,11 +22,23 @@ from exporters.csv_exporter import CSVExporter
 
 
 def read_docx(filepath):
-    """Extract text from .docx file"""
+    """Extract text from .docx file (including tables)"""
     doc = Document(filepath)
     full_text = []
+
+    # Extract text from paragraphs
     for para in doc.paragraphs:
-        full_text.append(para.text)
+        if para.text.strip():
+            full_text.append(para.text)
+
+    # Extract text from tables
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                cell_text = cell.text.strip()
+                if cell_text and cell_text not in full_text[-5:]:  # Avoid consecutive duplicates
+                    full_text.append(cell_text)
+
     return '\n'.join(full_text)
 
 
