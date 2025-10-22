@@ -1,10 +1,11 @@
 {
   "metadata": {
-    "version": "1.0",
+    "version": "2.0",
     "system": "SNOMED-CT",
-    "description": "SNOMED Clinical Terms for oncology",
+    "description": "SNOMED Clinical Terms for molecular tumor board oncology reports",
     "last_updated": "2025-10-22",
-    "source": "SNOMED International"
+    "source": "SNOMED International",
+    "scope": "Clinical findings, procedures, morphologies, staging, biomarkers for MTB"
   },
   "clinical_findings": {
     "neoplasia maligna": {
@@ -12,10 +13,86 @@
       "system": "http://snomed.info/sct",
       "display": "Malignant neoplastic disease"
     },
+    "melanoma": {
+      "code": "372244006",
+      "system": "http://snomed.info/sct",
+      "display": "Malignant melanoma"
+    },
+    "melanoma cutaneo": {
+      "code": "372244006",
+      "system": "http://snomed.info/sct",
+      "display": "Malignant melanoma of skin"
+    },
+    "adenocarcinoma": {
+      "code": "35917007",
+      "system": "http://snomed.info/sct",
+      "display": "Adenocarcinoma"
+    },
+    "carcinoma polmonare": {
+      "code": "254637007",
+      "system": "http://snomed.info/sct",
+      "display": "Non-small cell lung cancer",
+      "synonyms": ["NSCLC", "adenocarcinoma polmonare"]
+    },
+    "carcinoma mammario": {
+      "code": "254837009",
+      "system": "http://snomed.info/sct",
+      "display": "Malignant neoplasm of breast"
+    },
+    "carcinoma colorettale": {
+      "code": "363406005",
+      "system": "http://snomed.info/sct",
+      "display": "Malignant tumor of colon"
+    },
+    "carcinoma pancreatico": {
+      "code": "363418001",
+      "system": "http://snomed.info/sct",
+      "display": "Malignant tumor of pancreas"
+    },
+    "glioblastoma": {
+      "code": "393563007",
+      "system": "http://snomed.info/sct",
+      "display": "Glioblastoma multiforme"
+    },
+    "carcinoma ovarico": {
+      "code": "363443007",
+      "system": "http://snomed.info/sct",
+      "display": "Malignant tumor of ovary"
+    },
+    "carcinoma gastrico": {
+      "code": "254590007",
+      "system": "http://snomed.info/sct",
+      "display": "Carcinoma of stomach"
+    },
+    "carcinoma uroteliale": {
+      "code": "255083003",
+      "system": "http://snomed.info/sct",
+      "display": "Transitional cell carcinoma"
+    },
     "metastasi": {
       "code": "128462008",
       "system": "http://snomed.info/sct",
       "display": "Metastatic malignant neoplasm"
+    },
+    "metastasi polmonari": {
+      "code": "94222008",
+      "system": "http://snomed.info/sct",
+      "display": "Secondary malignant neoplasm of lung"
+    },
+    "metastasi epatiche": {
+      "code": "94225005",
+      "system": "http://snomed.info/sct",
+      "display": "Secondary malignant neoplasm of liver"
+    },
+    "metastasi cerebrali": {
+      "code": "94225005",
+      "system": "http://snomed.info/sct",
+      "display": "Secondary malignant neoplasm of brain"
+    },
+    "metastasi ossee": {
+      "code": "94222008",
+      "system": "http://snomed.info/sct",
+      "display": "Secondary malignant neoplasm of bone"
     },
     "remissione completa": {
       "code": "277022003",
@@ -26,6 +103,71 @@
       "code": "271299001",
       "system": "http://snomed.info/sct",
       "display": "Disease progression"
+    },
+    "risposta parziale": {
+      "code": "268911002",
+      "system": "http://snomed.info/sct",
+      "display": "Partial response"
+    },
+    "malattia stabile": {
+      "code": "359746009",
+      "system": "http://snomed.info/sct",
+      "display": "Stable disease"
+    }
+  },
+  "molecular_findings": {
+    "mutazione somatica": {
+      "code": "55446002",
+      "system": "http://snomed.info/sct",
+      "display": "Somatic mutation"
+    },
+    "mutazione germline": {
+      "code": "416237000",
+      "system": "http://snomed.info/sct",
+      "display": "Germline mutation"
+    },
+    "fusione genica": {
+      "code": "717622002",
+      "system": "http://snomed.info/sct",
+      "display": "Gene fusion"
+    },
+    "amplificazione genica": {
+      "code": "717621009",
+      "system": "http://snomed.info/sct",
+      "display": "Gene amplification"
+    },
+    "delezione genica": {
+      "code": "717620005",
+      "system": "http://snomed.info/sct",
+      "display": "Gene deletion"
+    },
+    "variante patogenetica": {
+      "code": "723979007",
+      "system": "http://snomed.info/sct",
+      "display": "Pathogenic variant"
+    },
+    "variante benigna": {
+      "code": "723978004",
+      "system": "http://snomed.info/sct",
+      "display": "Benign variant"
+    },
+    "microsatellite instability": {
+      "code": "418856004",
+      "system": "http://snomed.info/sct",
+      "display": "Microsatellite instability",
+      "abbreviation": "MSI"
+    },
+    "mismatch repair deficiency": {
+      "code": "448293005",
+      "system": "http://snomed.info/sct",
+      "display": "Mismatch repair protein deficiency",
+      "abbreviation": "dMMR"
+    },
+    "high tumor mutational burden": {
+      "code": "1287652009",
+      "system": "http://snomed.info/sct",
+      "display": "High tumor mutation burden",
+      "abbreviation": "TMB-H"
     }
   },
   "procedures": {
@@ -40,9 +182,39 @@
       "display": "Molecular genetic test"
     },
     "ngs": {
+      "code": "1237044008",
+      "system": "http://snomed.info/sct",
+      "display": "Next generation sequencing",
+      "abbreviation": "NGS"
+    },
+    "whole exome sequencing": {
+      "code": "1237045009",
+      "system": "http://snomed.info/sct",
+      "display": "Whole exome sequencing",
+      "abbreviation": "WES"
+    },
+    "whole genome sequencing": {
+      "code": "1237046005",
+      "system": "http://snomed.info/sct",
+      "display": "Whole genome sequencing",
+      "abbreviation": "WGS"
+    },
+    "analisi panel genico": {
+      "code": "1237047001",
+      "system": "http://snomed.info/sct",
+      "display": "Targeted gene panel sequencing"
+    },
+    "immunoistochimica": {
       "code": "117617002",
       "system": "http://snomed.info/sct",
-      "display": "Next generation sequencing"
+      "display": "Immunohistochemistry",
+      "abbreviation": "IHC"
+    },
+    "fish": {
+      "code": "117617002",
+      "system": "http://snomed.info/sct",
+      "display": "Fluorescence in situ hybridization",
+      "abbreviation": "FISH"
     }
   },
   "specimen": {
@@ -60,6 +232,91 @@
       "code": "119361006",
       "system": "http://snomed.info/sct",
       "display": "Plasma specimen"
+    },
+    "dna tumorale circolante": {
+      "code": "1003707002",
+      "system": "http://snomed.info/sct",
+      "display": "Circulating tumor DNA",
+      "abbreviation": "ctDNA"
+    },
+    "biopsia liquida": {
+      "code": "1003707002",
+      "system": "http://snomed.info/sct",
+      "display": "Liquid biopsy"
+    }
+  },
+  "staging": {
+    "stadio I": {
+      "code": "258215001",
+      "system": "http://snomed.info/sct",
+      "display": "Stage 1"
+    },
+    "stadio II": {
+      "code": "258219007",
+      "system": "http://snomed.info/sct",
+      "display": "Stage 2"
+    },
+    "stadio III": {
+      "code": "258223004",
+      "system": "http://snomed.info/sct",
+      "display": "Stage 3"
+    },
+    "stadio IV": {
+      "code": "258227003",
+      "system": "http://snomed.info/sct",
+      "display": "Stage 4"
+    },
+    "stadio IIIC": {
+      "code": "261636001",
+      "system": "http://snomed.info/sct",
+      "display": "Stage 3C"
+    }
+  },
+  "biomarkers": {
+    "pd-l1 positivo": {
+      "code": "720688006",
+      "system": "http://snomed.info/sct",
+      "display": "Programmed death ligand 1 positive tumor cells",
+      "abbreviation": "PD-L1+"
+    },
+    "her2 positivo": {
+      "code": "427685000",
+      "system": "http://snomed.info/sct",
+      "display": "Human epidermal growth factor 2 positive carcinoma",
+      "abbreviation": "HER2+"
+    },
+    "recettori ormonali positivi": {
+      "code": "416053008",
+      "system": "http://snomed.info/sct",
+      "display": "Estrogen receptor positive tumor",
+      "abbreviation": "ER+/PR+"
+    }
+  },
+  "performance_status": {
+    "ecog 0": {
+      "code": "425389002",
+      "system": "http://snomed.info/sct",
+      "display": "ECOG performance status grade 0"
+    },
+    "ecog 1": {
+      "code": "425390006",
+      "system": "http://snomed.info/sct",
+      "display": "ECOG performance status grade 1"
+    },
+    "ecog 2": {
+      "code": "422512005",
+      "system": "http://snomed.info/sct",
+      "display": "ECOG performance status grade 2"
+    },
+    "ecog 3": {
+      "code": "422894000",
+      "system": "http://snomed.info/sct",
+      "display": "ECOG performance status grade 3"
+    },
+    "ecog 4": {
+      "code": "423053003",
+      "system": "http://snomed.info/sct",
+      "display": "ECOG performance status grade 4"
     }
   },
   "variant_classification": {

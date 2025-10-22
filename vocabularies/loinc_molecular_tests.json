@@ -1,0 +1,432 @@
+{
+  "metadata": {
+    "version": "2.78",
+    "system": "http://loinc.org",
+    "description": "LOINC codes for molecular and genomic testing in oncology",
+    "last_updated": "2025-10-22",
+    "scope": "Genomic variant reporting, tumor molecular analysis, NGS panels"
+  },
+  "genomic_variants": {
+    "variant_assessment": {
+      "code": "69548-6",
+      "display": "Genetic variant assessment",
+      "component": "Variant",
+      "property": "Find",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom"
+    },
+    "gene_studied": {
+      "code": "48018-6",
+      "display": "Gene studied [ID]",
+      "component": "Gene",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "HGNC gene symbol or ID"
+    },
+    "dna_change": {
+      "code": "48004-6",
+      "display": "DNA change (c.HGVS)",
+      "component": "DNA change",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "HGVS cDNA notation"
+    },
+    "amino_acid_change": {
+      "code": "48005-3",
+      "display": "Amino acid change (p.HGVS)",
+      "component": "Amino acid change",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "HGVS protein notation"
+    },
+    "genomic_dna_change": {
+      "code": "81290-9",
+      "display": "Genomic DNA change (g.HGVS)",
+      "component": "Genomic DNA change",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "HGVS genomic notation"
+    },
+    "variant_allele_frequency": {
+      "code": "81258-6",
+      "display": "Variant allele frequency (VAF)",
+      "component": "Allelic frequency",
+      "property": "NFr",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Qn",
+      "note": "Reported as fraction or percentage"
+    },
+    "copy_number": {
+      "code": "82121-5",
+      "display": "Copy number",
+      "component": "Copy number",
+      "property": "Num",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Qn"
+    },
+    "genomic_structural_variant": {
+      "code": "81299-0",
+      "display": "Genomic structural variant [Type]",
+      "component": "Structural variant",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "Fusion, deletion, amplification, etc."
+    },
+    "gene_fusion": {
+      "code": "93044-6",
+      "display": "Gene fusion [Identifier]",
+      "component": "Gene fusion",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "Format: GENE1::GENE2"
+    },
+    "variant_clinical_significance": {
+      "code": "53037-8",
+      "display": "Genetic variation clinical significance [Imp]",
+      "component": "Clinical significance",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "Pathogenic, Benign, VUS, etc."
+    },
+    "variant_interpretation": {
+      "code": "51968-6",
+      "display": "Genetic disease assessed",
+      "component": "Genetic disease",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom"
+    }
+  },
+  "tumor_markers": {
+    "tumor_mutational_burden": {
+      "code": "94076-7",
+      "display": "Mutations/Megabase [# Ratio] in Tumor",
+      "component": "Mutations/Megabase",
+      "property": "NRto",
+      "time": "Pt",
+      "system": "Tumor",
+      "scale": "Qn",
+      "abbreviation": "TMB",
+      "note": "Somatic mutations per megabase"
+    },
+    "microsatellite_instability": {
+      "code": "94148-4",
+      "display": "Microsatellite instability [Interpretation] in Cancer specimen",
+      "component": "MSI",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Tumor",
+      "scale": "Nom",
+      "abbreviation": "MSI",
+      "values": ["MSI-High", "MSI-Low", "MSS"]
+    },
+    "mismatch_repair_status": {
+      "code": "81267-7",
+      "display": "Mismatch repair [Interpretation]",
+      "component": "MMR status",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Tumor",
+      "scale": "Nom",
+      "abbreviation": "MMR",
+      "values": ["dMMR", "pMMR"]
+    },
+    "pd_l1_expression": {
+      "code": "85337-4",
+      "display": "PD-L1 [Interpretation] in Tissue by Immune stain",
+      "component": "PD-L1",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Tissue",
+      "scale": "Nom",
+      "abbreviation": "PD-L1"
+    },
+    "her2_status": {
+      "code": "48676-1",
+      "display": "HER2 [Interpretation] in Tissue by Immune stain",
+      "component": "HER2",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Tissue",
+      "scale": "Nom",
+      "abbreviation": "HER2",
+      "values": ["Positive", "Negative", "Equivocal"]
+    },
+    "estrogen_receptor": {
+      "code": "16112-5",
+      "display": "Estrogen receptor [Interpretation] in Tissue",
+      "component": "ER",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Tissue",
+      "scale": "Nom",
+      "abbreviation": "ER"
+    },
+    "progesterone_receptor": {
+      "code": "16113-3",
+      "display": "Progesterone receptor [Interpretation] in Tissue",
+      "component": "PR",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Tissue",
+      "scale": "Nom",
+      "abbreviation": "PR"
+    }
+  },
+  "ngs_panels": {
+    "comprehensive_cancer_panel": {
+      "code": "81247-9",
+      "display": "Master HL7 genetic variant reporting panel",
+      "component": "Genetic panel",
+      "property": "Find",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Doc",
+      "note": "Container for all genomic findings"
+    },
+    "somatic_variant_panel": {
+      "code": "81479-7",
+      "display": "Somatic variant panel",
+      "component": "Somatic variants",
+      "property": "Find",
+      "time": "Pt",
+      "system": "Tumor",
+      "scale": "Doc"
+    },
+    "germline_variant_panel": {
+      "code": "81480-5",
+      "display": "Germline variant panel",
+      "component": "Germline variants",
+      "property": "Find",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Doc"
+    },
+    "cancer_hotspot_panel": {
+      "code": "84527-5",
+      "display": "Cancer hotspot panel",
+      "component": "Cancer hotspots",
+      "property": "Find",
+      "time": "Pt",
+      "system": "Tumor",
+      "scale": "Doc",
+      "note": "Common actionable mutations in cancer"
+    },
+    "liquid_biopsy_panel": {
+      "code": "94231-6",
+      "display": "ctDNA variant panel",
+      "component": "ctDNA variants",
+      "property": "Find",
+      "time": "Pt",
+      "system": "Plasma",
+      "scale": "Doc",
+      "abbreviation": "Liquid biopsy"
+    }
+  },
+  "sequencing_methods": {
+    "ngs_method": {
+      "code": "96892-4",
+      "display": "Sequencing method",
+      "component": "Sequencing method",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "values": ["NGS", "WES", "WGS", "Panel", "Sanger"]
+    },
+    "sequencing_platform": {
+      "code": "99772-4",
+      "display": "DNA sequencing platform",
+      "component": "Platform",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "values": ["Illumina", "Ion Torrent", "PacBio", "Oxford Nanopore"]
+    },
+    "sequencing_coverage": {
+      "code": "82120-7",
+      "display": "Sequencing coverage [Mean]",
+      "component": "Coverage",
+      "property": "Mean",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Qn",
+      "note": "Mean depth of coverage (e.g., 500X)"
+    },
+    "reference_genome": {
+      "code": "62374-4",
+      "display": "Human reference sequence assembly version",
+      "component": "Reference genome",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "values": ["GRCh37", "GRCh38", "hg19", "hg38"]
+    }
+  },
+  "specimen_types": {
+    "specimen_type": {
+      "code": "31208-2",
+      "display": "Specimen source [Type]",
+      "component": "Specimen type",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Specimen",
+      "scale": "Nom"
+    },
+    "tumor_tissue": {
+      "code": "85337-4",
+      "display": "Tumor specimen",
+      "component": "Tumor tissue",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Tissue",
+      "scale": "Nom"
+    },
+    "plasma_specimen": {
+      "code": "77399-8",
+      "display": "Plasma specimen",
+      "component": "Plasma",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Plasma",
+      "scale": "Nom"
+    },
+    "blood_specimen": {
+      "code": "59260-0",
+      "display": "Blood specimen",
+      "component": "Blood",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Blood",
+      "scale": "Nom"
+    }
+  },
+  "therapeutic_implications": {
+    "therapeutic_implication": {
+      "code": "51963-7",
+      "display": "Medication assessed [ID]",
+      "component": "Medication",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "Drug associated with genomic finding"
+    },
+    "therapeutic_response": {
+      "code": "93044-6",
+      "display": "Predicted therapeutic response",
+      "component": "Response",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "values": ["Responsive", "Resistant", "Unknown"]
+    },
+    "evidence_level": {
+      "code": "93348-1",
+      "display": "Genomic therapeutic implication evidence level",
+      "component": "Evidence level",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom",
+      "note": "AMP/ASCO/CAP tier classification"
+    },
+    "clinical_trial_eligibility": {
+      "code": "100429-1",
+      "display": "Clinical trial eligibility [Interpretation]",
+      "component": "Trial eligibility",
+      "property": "Imp",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Nom"
+    }
+  },
+  "quality_metrics": {
+    "quality_score": {
+      "code": "82121-5",
+      "display": "Quality score [Score]",
+      "component": "Quality",
+      "property": "Score",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Qn"
+    },
+    "read_depth": {
+      "code": "82121-5",
+      "display": "Read depth",
+      "component": "Read depth",
+      "property": "Num",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Qn"
+    },
+    "variant_call_quality": {
+      "code": "100418-4",
+      "display": "Variant call quality score",
+      "component": "Variant quality",
+      "property": "Score",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Qn"
+    }
+  },
+  "report_metadata": {
+    "report_date": {
+      "code": "85269-9",
+      "display": "Date of report",
+      "component": "Report date",
+      "property": "Tm",
+      "time": "Pt",
+      "system": "Report",
+      "scale": "Tm"
+    },
+    "lab_performing_test": {
+      "code": "52831-5",
+      "display": "Laboratory that performed test",
+      "component": "Laboratory",
+      "property": "Prid",
+      "time": "Pt",
+      "system": "Report",
+      "scale": "Nom"
+    },
+    "test_method": {
+      "code": "85069-3",
+      "display": "Test method",
+      "component": "Method",
+      "property": "Type",
+      "time": "Pt",
+      "system": "Report",
+      "scale": "Nom"
+    },
+    "interpretation_note": {
+      "code": "48767-8",
+      "display": "Annotation comment [Interpretation]",
+      "component": "Comment",
+      "property": "Narr",
+      "time": "Pt",
+      "system": "Molgen",
+      "scale": "Doc"
+    }
+  }
+}

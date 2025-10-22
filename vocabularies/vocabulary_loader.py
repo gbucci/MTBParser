@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Vocabulary Loader - Dynamic loading and management of controlled vocabularies
-Supports ICD-O, RxNorm, HGNC, SNOMED-CT
+Supports ICD-O, RxNorm, HGNC, SNOMED-CT, LOINC
 """
 
 import json
@@ -35,6 +35,7 @@ class VocabularyLoader:
         self.rxnorm_drugs = {}
         self.hgnc_genes = {}
         self.snomed_ct_terms = {}
+        self.loinc_tests = {}
 
         # Metadata from vocabularies
         self.metadata = {}
@@ -68,6 +69,12 @@ class VocabularyLoader:
                 data = json.load(f)
                 self.snomed_ct_terms = data
                 self.metadata['snomed_ct'] = data.get('metadata', {})
+
+            # Load LOINC tests
+            with open(self.vocab_dir / 'loinc_molecular_tests.json', 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                self.loinc_tests = data
+                self.metadata['loinc'] = data.get('metadata', {})
 
         except FileNotFoundError as e:
             raise FileNotFoundError(
@@ -222,12 +229,143 @@ class VocabularyLoader:
             if info.get('actionable', False)
         ]
 
+    def map_snomed_term(self, term_text: str, category: Optional[str] = None,
+                        fuzzy: bool = True, cutoff: float = 0.7) -> Optional[Dict]:
+        """
+        Map clinical term to SNOMED-CT code
+
+        Args:
+            term_text: Clinical term in Italian or English
+            category: Optional category to search in (e.g., 'clinical_findings', 'procedures')
+            fuzzy: Enable fuzzy matching
+            cutoff: Similarity threshold for fuzzy matching
+
+        Returns:
+            Dictionary with code, system, display, or None
+        """
+        term_lower = term_text.lower().strip()
+
+        # If category specified, search only that category
+        if category and category in self.snomed_ct_terms:
+            category_terms = self.snomed_ct_terms[category]
+
+            # Exact match
+            if term_lower in category_terms:
+                return category_terms[term_lower]
+
+            # Substring match
+            for key, value in category_terms.items():
+                if key in term_lower or term_lower in key:
+                    return value
+
+            # Fuzzy match
+            if fuzzy:
+                matches = get_close_matches(term_lower, category_terms.keys(), n=1, cutoff=cutoff)
+                if matches:
+                    return category_terms[matches[0]]
+
+        # Search all categories
+        else:
+            for cat_name, cat_terms in self.snomed_ct_terms.items():
+                if cat_name == 'metadata':
+                    continue
+                if not isinstance(cat_terms, dict):
+                    continue
+
+                # Exact match
+                if term_lower in cat_terms:
+                    result = cat_terms[term_lower].copy()
+                    result['category'] = cat_name
+                    return result
+
+                # Substring match
+                for key, value in cat_terms.items():
+                    if key in term_lower or term_lower in key:
+                        result = value.copy()
+                        result['category'] = cat_name
+                        return result
+
+        return None
+
+    def map_loinc_code(self, test_name: str, category: Optional[str] = None) -> Optional[Dict]:
+        """
+        Map molecular test to LOINC code
+
+        Args:
+            test_name: Test name or description
+            category: Optional category (e.g., 'genomic_variants', 'tumor_markers', 'ngs_panels')
+
+        Returns:
+            Dictionary with code, display, component, property, system, scale
+        """
+        test_lower = test_name.lower().strip()
+
+        # If category specified, search only that category
+        if category and category in self.loinc_tests:
+            category_tests = self.loinc_tests[category]
+
+            # Exact match
+            if test_lower in category_tests:
+                return category_tests[test_lower]
+
+            # Partial match
+            for key, value in category_tests.items():
+                if key in test_lower or test_lower in key:
+                    return value
+
+        # Search all categories
+        else:
+            for cat_name, cat_tests in self.loinc_tests.items():
+                if cat_name == 'metadata':
+                    continue
+                if not isinstance(cat_tests, dict):
+                    continue
+
+                # Exact match
+                if test_lower in cat_tests:
+                    result = cat_tests[test_lower].copy()
+                    result['category'] = cat_name
+                    return result
+
+                # Partial match
+                for key, value in cat_tests.items():
+                    if key in test_lower or test_lower in key:
+                        result = value.copy()
+                        result['category'] = cat_name
+                        return result
+
+        return None
+
+    def get_loinc_by_category(self, category: str) -> Dict:
+        """
+        Get all LOINC codes in a specific category
+
+        Args:
+            category: Category name (e.g., 'genomic_variants', 'tumor_markers')
+
+        Returns:
+            Dictionary of LOINC codes in that category
+        """
+        return self.loinc_tests.get(category, {})
+
+    def get_snomed_by_category(self, category: str) -> Dict:
+        """
+        Get all SNOMED-CT terms in a specific category
+
+        Args:
+            category: Category name (e.g., 'clinical_findings', 'procedures')
+
+        Returns:
+            Dictionary of SNOMED-CT terms in that category
+        """
+        return self.snomed_ct_terms.get(category, {})
+
     def get_metadata(self, vocab_type: str) -> Dict:
         """
         Get metadata for a specific vocabulary
 
         Args:
-            vocab_type: One of 'icd_o', 'rxnorm', 'hgnc', 'snomed_ct'
+            vocab_type: One of 'icd_o', 'rxnorm', 'hgnc', 'snomed_ct', 'loinc'
 
         Returns:
             Metadata dictionary
@@ -245,11 +383,25 @@ class VocabularyLoader:
         Returns:
             Dictionary with counts and metadata
         """
+        # Count SNOMED-CT terms
+        snomed_count = 0
+        for cat_name, cat_terms in self.snomed_ct_terms.items():
+            if cat_name != 'metadata' and isinstance(cat_terms, dict):
+                snomed_count += len(cat_terms)
+
+        # Count LOINC codes
+        loinc_count = 0
+        for cat_name, cat_tests in self.loinc_tests.items():
+            if cat_name != 'metadata' and isinstance(cat_tests, dict):
+                loinc_count += len(cat_tests)
+
         return {
             'icd_o_diagnoses_count': len(self.icd_o_diagnoses),
             'rxnorm_drugs_count': len(self.rxnorm_drugs),
             'hgnc_genes_count': len(self.hgnc_genes),
             'actionable_genes_count': len(self.get_actionable_genes()),
+            'snomed_ct_terms_count': snomed_count,
+            'loinc_codes_count': loinc_count,
             'metadata': self.metadata
         }
 
@@ -292,6 +444,28 @@ if __name__ == "__main__":
     print("\n=== Actionable Genes ===")
     actionable = loader.get_actionable_genes()
     print(f"Actionable genes ({len(actionable)}): {actionable[:10]}...")
+
+    # Test SNOMED-CT mapping
+    print("\n=== Testing SNOMED-CT Mapping ===")
+    melanoma = loader.map_snomed_term("melanoma cutaneo")
+    print(f"Melanoma cutaneo: {melanoma}")
+
+    ngs = loader.map_snomed_term("ngs", category="procedures")
+    print(f"NGS procedure: {ngs}")
+
+    staging = loader.map_snomed_term("stadio III")
+    print(f"Stadio III: {staging}")
+
+    # Test LOINC mapping
+    print("\n=== Testing LOINC Mapping ===")
+    vaf = loader.map_loinc_code("variant allele frequency")
+    print(f"VAF: {vaf}")
+
+    tmb = loader.map_loinc_code("tumor mutational burden")
+    print(f"TMB: {tmb}")
+
+    gene_fusion = loader.map_loinc_code("gene fusion")
+    print(f"Gene fusion: {gene_fusion}")
 
     # Get stats
     print("\n=== Vocabulary Statistics ===")
