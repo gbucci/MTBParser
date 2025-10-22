@@ -1,0 +1,224 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "system": "RxNorm",
+    "description": "RxNorm codes for targeted oncology therapies",
+    "last_updated": "2025-10-22",
+    "source": "NLM RxNorm",
+    "guidelines": {
+      "AIOM": "Associazione Italiana di Oncologia Medica",
+      "NCCN": "National Comprehensive Cancer Network",
+      "AMP-ASCO-CAP": "Standards and Guidelines for Interpretation of Sequence Variants"
+    }
+  },
+  "drugs": {
+    "osimertinib": {
+      "code": "1873986",
+      "system": "RxNorm",
+      "display": "osimertinib",
+      "target": ["EGFR"],
+      "indication": "NSCLC with EGFR T790M",
+      "evidence_level": "FDA Approved"
+    },
+    "afatinib": {
+      "code": "1430438",
+      "system": "RxNorm",
+      "display": "afatinib",
+      "target": ["EGFR"],
+      "indication": "NSCLC with EGFR mutations",
+      "evidence_level": "FDA Approved"
+    },
+    "erlotinib": {
+      "code": "358263",
+      "system": "RxNorm",
+      "display": "erlotinib",
+      "target": ["EGFR"],
+      "indication": "NSCLC with EGFR mutations",
+      "evidence_level": "FDA Approved"
+    },
+    "gefitinib": {
+      "code": "282388",
+      "system": "RxNorm",
+      "display": "gefitinib",
+      "target": ["EGFR"],
+      "indication": "NSCLC with EGFR mutations",
+      "evidence_level": "FDA Approved"
+    },
+    "selpercatinib": {
+      "code": "2361524",
+      "system": "RxNorm",
+      "display": "selpercatinib",
+      "target": ["RET"],
+      "indication": "RET fusion-positive cancers",
+      "evidence_level": "FDA Approved"
+    },
+    "cabozantinib": {
+      "code": "1234567",
+      "system": "RxNorm",
+      "display": "cabozantinib",
+      "target": ["RET", "MET"],
+      "indication": "RET-altered thyroid cancer, RCC",
+      "evidence_level": "FDA Approved"
+    },
+    "olaparib": {
+      "code": "1597582",
+      "system": "RxNorm",
+      "display": "olaparib",
+      "target": ["BRCA1", "BRCA2"],
+      "indication": "BRCA-mutated cancers",
+      "evidence_level": "FDA Approved"
+    },
+    "niraparib": {
+      "code": "1856219",
+      "system": "RxNorm",
+      "display": "niraparib",
+      "target": ["BRCA1", "BRCA2"],
+      "indication": "BRCA-mutated ovarian cancer",
+      "evidence_level": "FDA Approved"
+    },
+    "rucaparib": {
+      "code": "1790868",
+      "system": "RxNorm",
+      "display": "rucaparib",
+      "target": ["BRCA1", "BRCA2"],
+      "indication": "BRCA-mutated cancers",
+      "evidence_level": "FDA Approved"
+    },
+    "crizotinib": {
+      "code": "1094832",
+      "system": "RxNorm",
+      "display": "crizotinib",
+      "target": ["ALK", "ROS1"],
+      "indication": "ALK/ROS1 fusion-positive NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "alectinib": {
+      "code": "1721520",
+      "system": "RxNorm",
+      "display": "alectinib",
+      "target": ["ALK"],
+      "indication": "ALK-positive NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "ceritinib": {
+      "code": "1602129",
+      "system": "RxNorm",
+      "display": "ceritinib",
+      "target": ["ALK"],
+      "indication": "ALK-positive NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "brigatinib": {
+      "code": "1942606",
+      "system": "RxNorm",
+      "display": "brigatinib",
+      "target": ["ALK"],
+      "indication": "ALK-positive NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "trametinib": {
+      "code": "1373476",
+      "system": "RxNorm",
+      "display": "trametinib",
+      "target": ["BRAF", "MEK"],
+      "indication": "BRAF V600E/K melanoma",
+      "evidence_level": "FDA Approved"
+    },
+    "dabrafenib": {
+      "code": "1374053",
+      "system": "RxNorm",
+      "display": "dabrafenib",
+      "target": ["BRAF"],
+      "indication": "BRAF V600E/K melanoma, NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "vemurafenib": {
+      "code": "1147220",
+      "system": "RxNorm",
+      "display": "vemurafenib",
+      "target": ["BRAF"],
+      "indication": "BRAF V600E melanoma",
+      "evidence_level": "FDA Approved"
+    },
+    "capmatinib": {
+      "code": "2379709",
+      "system": "RxNorm",
+      "display": "capmatinib",
+      "target": ["MET"],
+      "indication": "MET exon 14 skipping NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "tepotinib": {
+      "code": "2468669",
+      "system": "RxNorm",
+      "display": "tepotinib",
+      "target": ["MET"],
+      "indication": "MET exon 14 skipping NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "amivantamab": {
+      "code": "2569455",
+      "system": "RxNorm",
+      "display": "amivantamab",
+      "target": ["EGFR"],
+      "indication": "EGFR exon 20 insertion NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "sotorasib": {
+      "code": "2566077",
+      "system": "RxNorm",
+      "display": "sotorasib",
+      "target": ["KRAS"],
+      "indication": "KRAS G12C NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "adagrasib": {
+      "code": "2630234",
+      "system": "RxNorm",
+      "display": "adagrasib",
+      "target": ["KRAS"],
+      "indication": "KRAS G12C NSCLC",
+      "evidence_level": "FDA Approved"
+    },
+    "erdafitinib": {
+      "code": "2177997",
+      "system": "RxNorm",
+      "display": "erdafitinib",
+      "target": ["FGFR2", "FGFR3"],
+      "indication": "FGFR-altered urothelial carcinoma",
+      "evidence_level": "FDA Approved"
+    },
+    "pembrolizumab": {
+      "code": "1601859",
+      "system": "RxNorm",
+      "display": "pembrolizumab",
+      "target": ["PD-1"],
+      "indication": "High TMB, MSI-H cancers",
+      "evidence_level": "FDA Approved"
+    },
+    "nivolumab": {
+      "code": "1657237",
+      "system": "RxNorm",
+      "display": "nivolumab",
+      "target": ["PD-1"],
+      "indication": "Various solid tumors",
+      "evidence_level": "FDA Approved"
+    },
+    "larotrectinib": {
+      "code": "2105042",
+      "system": "RxNorm",
+      "display": "larotrectinib",
+      "target": ["NTRK1", "NTRK2", "NTRK3"],
+      "indication": "NTRK fusion-positive cancers",
+      "evidence_level": "FDA Approved"
+    },
+    "entrectinib": {
+      "code": "2177993",
+      "system": "RxNorm",
+      "display": "entrectinib",
+      "target": ["NTRK1", "NTRK2", "NTRK3", "ROS1", "ALK"],
+      "indication": "NTRK/ROS1 fusion-positive cancers",
+      "evidence_level": "FDA Approved"
+    }
+  }
+}

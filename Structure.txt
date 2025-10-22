@@ -1,0 +1,25 @@
+mtb_parser_system/
+├── vocabularies/
+│   ├── icd_o_diagnoses.json
+│   ├── rxnorm_drugs.json
+│   ├── hgnc_genes.json
+│   ├── snomed_ct_terms.json
+│   └── vocabulary_loader.py
+├── mappers/
+│   ├── fhir_mapper.py
+│   ├── phenopackets_mapper.py
+│   └── omop_mapper.py
+├── exporters/
+│   ├── pdf_exporter.py
+│   ├── json_exporter.py
+│   └── csv_exporter.py
+├── utils/
+│   ├── quality_metrics.py
+│   └── text_utils.py
+├── web_interface/
+│   ├── app.html
+│   ├── styles.css
+│   └── app.js
+├── mtb_parser.py (main parser)
+├── requirements.txt
+└── README.md

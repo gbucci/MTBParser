@@ -1,0 +1,61 @@
+mtb_parser_system/
+│
+├── vocabularies/                    # Vocabolari controllati esterni (JSON)
+│   ├── icd_o_diagnoses.json        # ICD-O-3 diagnosi oncologiche
+│   ├── rxnorm_drugs.json           # RxNorm farmaci oncologici
+│   ├── hgnc_genes.json             # HGNC nomenclatura geni
+│   ├── snomed_ct_terms.json        # SNOMED-CT termini clinici (TODO)
+│   └── vocabulary_loader.py        # Loader per vocabolari esterni
+│
+├── core/                            # Core parsing engine
+│   ├── mtb_parser.py               # Parser principale report MTB
+│   ├── data_models.py              # Dataclass per entità cliniche
+│   └── pattern_extractors.py      # Pattern NLP per estrazione
+│
+├── mappers/                         # Standard data mappers
+│   ├── fhir_mapper.py              # FHIR R4 mapper
+│   ├── phenopackets_mapper.py     # GA4GH Phenopackets v2 mapper
+│   └── omop_mapper.py              # OMOP CDM v5.4 mapper
+│
+├── exporters/                       # Export in vari formati
+│   ├── pdf_exporter.py             # Export PDF strutturato
+│   ├── json_exporter.py            # Export JSON
+│   ├── csv_exporter.py             # Export CSV/Excel
+│   └── html_exporter.py            # Report HTML
+│
+├── quality/                         # Quality assurance
+│   ├── quality_metrics.py          # Metriche completezza/accuratezza
+│   ├── validator.py                # Validazione output FHIR/Phenopackets
+│   └── report_generator.py        # Report qualità parsing
+│
+├── utils/                           # Utilities
+│   ├── text_utils.py               # Preprocessing testo
+│   ├── pdf_reader.py               # Estrazione testo da PDF
+│   └── config.py                   # Configurazione sistema
+│
+├── web_interface/                   # Interfaccia web standalone
+│   ├── index.html                  # Single-page application
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── styles.css
+│   │   └── js/
+│   │       ├── app.js              # Frontend logic
+│   │       └── visualizations.js  # D3.js visualizzazioni
+│   └── backend/
+│       └── api.py                  # FastAPI/Flask backend
+│
+├── tests/                           # Test suite
+│   ├── test_parser.py
+│   ├── test_mappers.py
+│   ├── test_vocabularies.py
+│   └── sample_reports/             # Report di esempio per test
+│
+├── docs/                            # Documentazione
+│   ├── API.md                      # API documentation
+│   ├── VOCABULARIES.md             # Come aggiornare vocabolari
+│   └── USAGE.md                    # Guide utilizzo
+│
+├── requirements.txt                 # Dipendenze Python
+├── setup.py                        # Package setup
+├── config.yaml                     # Configurazione globale
+└── README.md                       # Documentazione principale

@@ -1,15 +1,136 @@
 #!/usr/bin/env python3
 """
-Molecular Tumor Board Report Parser e FHIR Mapper
-Estrae e standardizza dati clinici molecolari dai report MTB italiani
+Sistema Completo MTB Report Parser con FHIR/Phenopackets/OMOP Mapping
+Include: parsing, vocabolari controllati, quality metrics, export multi-formato
+Versione: 1.0.0
 """
 
 import re
 import json
-from typing import Dict, List, Optional, Tuple
-from dataclasses import dataclass, asdict
+from typing import Dict, List, Optional, Tuple, Set
+from dataclasses import dataclass, asdict, field
 from datetime import datetime
-import pandas as pd
+from enum import Enum
+import hashlib
+from collections import defaultdict
+
+# =====================================================================
+# VOCABOLARI CONTROLLATI
+# =====================================================================
+
+class ControlledVocabularies:
+    """Vocabolari controllati per standardizzazione terminologica"""
+    
+    # ICD-O-3 (International Classification of Diseases for Oncology)
+    ICD_O_DIAGNOSES = {
+        'adenocarcinoma polmonare': {'code': '8140/3', 'system': 'ICD-O-3', 'display': 'Adenocarcinoma, NOS'},
+        'carcinoma squamoso polmonare': {'code': '8070/3', 'system': 'ICD-O-3', 'display': 'Squamous cell carcinoma, NOS'},
+        'feocromocitoma': {'code': '8700/3', 'system': 'ICD-O-3', 'display': 'Pheochromocytoma, malignant'},
+        'paraganglioma': {'code': '8693/3', 'system': 'ICD-O-3', 'display': 'Paraganglioma, malignant'},
+        'melanoma': {'code': '8720/3', 'system': 'ICD-O-3', 'display': 'Malignant melanoma, NOS'},
+        'colangiocarcinoma': {'code': '8160/3', 'system': 'ICD-O-3', 'display': 'Cholangiocarcinoma'},
+        'adenocarcinoma pancreatico': {'code': '8140/3', 'system': 'ICD-O-3', 'display': 'Adenocarcinoma of pancreas'},
+        'carcinoma tiroideo': {'code': '8010/3', 'system': 'ICD-O-3', 'display': 'Carcinoma, NOS'},
+        'neoplasia polmonare': {'code': '8010/3', 'system': 'ICD-O-3', 'display': 'Carcinoma, lung'},
+        'nsclc': {'code': '8046/3', 'system': 'ICD-O-3', 'display': 'Non-small cell carcinoma'},
+    }
+    
+    # RxNorm per farmaci oncologici
+    RXNORM_DRUGS = {
+        'osimertinib': {'code': '1873986', 'system': 'RxNorm', 'display': 'osimertinib'},
+        'afatinib': {'code': '1430438', 'system': 'RxNorm', 'display': 'afatinib'},
+        'erlotinib': {'code': '358263', 'system': 'RxNorm', 'display': 'erlotinib'},
+        'gefitinib': {'code': '282388', 'system': 'RxNorm', 'display': 'gefitinib'},
+        'selpercatinib': {'code': '2361524', 'system': 'RxNorm', 'display': 'selpercatinib'},
+        'cabozantinib': {'code': '1234567', 'system': 'RxNorm', 'display': 'cabozantinib'},
+        'olaparib': {'code': '1597582', 'system': 'RxNorm', 'display': 'olaparib'},
+        'niraparib': {'code': '1856219', 'system': 'RxNorm', 'display': 'niraparib'},
+        'rucaparib': {'code': '1790868', 'system': 'RxNorm', 'display': 'rucaparib'},
+        'crizotinib': {'code': '1094832', 'system': 'RxNorm', 'display': 'crizotinib'},
+        'alectinib': {'code': '1721520', 'system': 'RxNorm', 'display': 'alectinib'},
+        'ceritinib': {'code': '1602129', 'system': 'RxNorm', 'display': 'ceritinib'},
+        'brigatinib': {'code': '1942606', 'system': 'RxNorm', 'display': 'brigatinib'},
+        'trametinib': {'code': '1373476', 'system': 'RxNorm', 'display': 'trametinib'},
+        'dabrafenib': {'code': '1374053', 'system': 'RxNorm', 'display': 'dabrafenib'},
+        'vemurafenib': {'code': '1147220', 'system': 'RxNorm', 'display': 'vemurafenib'},
+        'capmatinib': {'code': '2379709', 'system': 'RxNorm', 'display': 'capmatinib'},
+        'tepotinib': {'code': '2468669', 'system': 'RxNorm', 'display': 'tepotinib'},
+        'amivantamab': {'code': '2569455', 'system': 'RxNorm', 'display': 'amivantamab'},
+        'sotorasib': {'code': '2566077', 'system': 'RxNorm', 'display': 'sotorasib'},
+        'adagrasib': {'code': '2630234', 'system': 'RxNorm', 'display': 'adagrasib'},
+        'erdafitinib': {'code': '2177997', 'system': 'RxNorm', 'display': 'erdafitinib'},
+        'pembrolizumab': {'code': '1601859', 'system': 'RxNorm', 'display': 'pembrolizumab'},
+        'nivolumab': {'code': '1657237', 'system': 'RxNorm', 'display': 'nivolumab'},
+    }
+    
+    # HGNC Gene nomenclature (espanso)
+    HGNC_GENES = {
+        'EGFR': {'code': 'HGNC:3236', 'system': 'http://www.genenames.org'},
+        'KRAS': {'code': 'HGNC:6407', 'system': 'http://www.genenames.org'},
+        'TP53': {'code': 'HGNC:11998', 'system': 'http://www.genenames.org'},
+        'BRAF': {'code': 'HGNC:1097', 'system': 'http://www.genenames.org'},
+        'ALK': {'code': 'HGNC:427', 'system': 'http://www.genenames.org'},
+        'RET': {'code': 'HGNC:9967', 'system': 'http://www.genenames.org'},
+        'MET': {'code': 'HGNC:7029', 'system': 'http://www.genenames.org'},
+        'BRCA1': {'code': 'HGNC:1100', 'system': 'http://www.genenames.org'},
+        'BRCA2': {'code': 'HGNC:1101', 'system': 'http://www.genenames.org'},
+        'PIK3CA': {'code': 'HGNC:8975', 'system': 'http://www.genenames.org'},
+        'FGFR3': {'code': 'HGNC:3690', 'system': 'http://www.genenames.org'},
+        'FGFR1': {'code': 'HGNC:3688', 'system': 'http://www.genenames.org'},
+        'FGFR2': {'code': 'HGNC:3689', 'system': 'http://www.genenames.org'},
+        'NF1': {'code': 'HGNC:7765', 'system': 'http://www.genenames.org'},
+        'ATM': {'code': 'HGNC:795', 'system': 'http://www.genenames.org'},
+        'PTEN': {'code': 'HGNC:9588', 'system': 'http://www.genenames.org'},
+        'MAX': {'code': 'HGNC:6913', 'system': 'http://www.genenames.org'},
+        'SMARCA4': {'code': 'HGNC:11100', 'system': 'http://www.genenames.org'},
+        'JAK2': {'code': 'HGNC:6192', 'system': 'http://www.genenames.org'},
+        'PALB2': {'code': 'HGNC:26144', 'system': 'http://www.genenames.org'},
+        'DDX4': {'code': 'HGNC:2700', 'system': 'http://www.genenames.org'},
+        'BLM': {'code': 'HGNC:1058', 'system': 'http://www.genenames.org'},
+        'ADAT1': {'code': 'HGNC:25191', 'system': 'http://www.genenames.org'},
+        'RAD51D': {'code': 'HGNC:9824', 'system': 'http://www.genenames.org'},
+        'FANCF': {'code': 'HGNC:3585', 'system': 'http://www.genenames.org'},
+        'NTRK1': {'code': 'HGNC:8031', 'system': 'http://www.genenames.org'},
+        'NTRK2': {'code': 'HGNC:8032', 'system': 'http://www.genenames.org'},
+        'NTRK3': {'code': 'HGNC:8033', 'system': 'http://www.genenames.org'},
+        'CDKN2A': {'code': 'HGNC:1787', 'system': 'http://www.genenames.org'},
+        'BAP1': {'code': 'HGNC:950', 'system': 'http://www.genenames.org'},
+        'CHEK2': {'code': 'HGNC:16627', 'system': 'http://www.genenames.org'},
+        'MTAP': {'code': 'HGNC:7413', 'system': 'http://www.genenames.org'},
+        'STRN': {'code': 'HGNC:11425', 'system': 'http://www.genenames.org'},
+        'EML4': {'code': 'HGNC:19326', 'system': 'http://www.genenames.org'},
+        'TACC3': {'code': 'HGNC:11524', 'system': 'http://www.genenames.org'},
+        'MYCN': {'code': 'HGNC:7559', 'system': 'http://www.genenames.org'},
+        'RAD50': {'code': 'HGNC:9823', 'system': 'http://www.genenames.org'},
+    }
+    
+    @classmethod
+    def map_diagnosis(cls, diagnosis_text: str) -> Optional[Dict]:
+        """Mappa diagnosi a codice ICD-O"""
+        diagnosis_lower = diagnosis_text.lower()
+        for key, value in cls.ICD_O_DIAGNOSES.items():
+            if key in diagnosis_lower:
+                return value
+        return None
+    
+    @classmethod
+    def map_drug(cls, drug_name: str) -> Optional[Dict]:
+        """Mappa farmaco a codice RxNorm"""
+        drug_lower = drug_name.lower().strip()
+        return cls.RXNORM_DRUGS.get(drug_lower)
+    
+    @classmethod
+    def map_gene(cls, gene_name: str) -> Optional[Dict]:
+        """Mappa gene a codice HGNC"""
+        gene_upper = gene_name.upper().strip()
+        # Gestisci fusioni (es: ALK::EML4)
+        if '::' in gene_upper:
+            gene_upper = gene_upper.split('::')[0]
+        return cls.HGNC_GENES.get(gene_upper)
+
+# =====================================================================
+# DATA MODELS
+# =====================================================================
 
 @dataclass
 class Variant:
@@ -20,6 +141,7 @@ class Variant:
     classification: Optional[str] = None
     vaf: Optional[float] = None
     raw_text: Optional[str] = None
+    gene_code: Optional[Dict] = None
 
 @dataclass
 class Patient:
@@ -35,6 +157,7 @@ class Diagnosis:
     primary_diagnosis: Optional[str] = None
     stage: Optional[str] = None
     histology: Optional[str] = None
+    icd_o_code: Optional[Dict] = None
 
 @dataclass
 class TherapeuticRecommendation:
@@ -44,6 +167,28 @@ class TherapeuticRecommendation:
     evidence_level: Optional[str] = None
     clinical_trial: Optional[str] = None
     rationale: Optional[str] = None
+    drug_code: Optional[Dict] = None
+
+@dataclass
+class QualityMetrics:
+    """Metriche di qualità del parsing"""
+    total_fields: int = 0
+    filled_fields: int = 0
+    completeness_pct: float = 0.0
+    variants_found: int = 0
+    variants_with_vaf: int = 0
+    variants_classified: int = 0
+    variants_with_gene_code: int = 0
+    drugs_identified: int = 0
+    drugs_mapped: int = 0
+    diagnosis_mapped: bool = False
+    patient_complete: bool = False
+    warnings: List[str] = field(default_factory=list)
+    
+    def calculate(self):
+        """Calcola percentuale completezza"""
+        if self.total_fields > 0:
+            self.completeness_pct = round((self.filled_fields / self.total_fields) * 100, 1)
 
 @dataclass
 class MTBReport:
@@ -56,209 +201,450 @@ class MTBReport:
     ngs_method: Optional[str] = None
     report_date: Optional[str] = None
     raw_content: Optional[str] = None
+    quality_metrics: Optional[QualityMetrics] = None
+
+# =====================================================================
+# PARSER PRINCIPALE
+# =====================================================================
 
 class MTBParser:
-    """Parser per report Molecular Tumor Board"""
+    """Parser avanzato per report Molecular Tumor Board"""
     
     def __init__(self):
+        self.vocab = ControlledVocabularies()
+        
         # Pattern per estrazione varianti genomiche
         self.variant_patterns = [
-            # Pattern tabellare (Gene | Variante cDNA | Variante aminoacidica | Classificazione | VAF)
-            r'(\w+)\s+c\.([^|]+)\s+p\.([^|]+)\s+(Pathogenic|VUS|Benign|Risultati discordanti)\s+(\d+)%',
-            # Pattern inline con percentuale
+            # Pattern tabellare completo
+            r'(\w+)\s+c\.([^\s|]+)\s+p\.([^\s|]+)\s+(Pathogenic|VUS|Benign|Risultati discordanti|Likely Pathogenic)\s+(\d+)%',
+            # Pattern inline con VAF
             r'(\w+)\s+([cp]\.[^\s,]+).*?(\d+)%',
-            # Pattern semplice gene + alterazione
-            r'(\w+)\s+([A-Z]\d+[A-Z*])',
-            # Pattern fusioni
-            r'fusione\s+(\w+):?:?(\w+)',
-            r'riarrangiamento\s+(\w+)/?(\w+)?'
+            # Pattern alterazioni comuni (es. L858R, V600E, G12D)
+            r'(\w+)\s+([A-Z]\d+[A-Z*]+)',
+            # Pattern con "mutazione di"
+            r'mutazione\s+(?:di\s+)?(\w+)[:\s]+([^,.\n]+)',
+            r'alterazione\s+(?:di\s+)?(\w+)[:\s]+([^,.\n]+)',
         ]
         
-        # Pattern per classificazioni patogenicità
-        self.classification_map = {
-            'pathogenic': 'Pathogenic',
-            'patogenetica': 'Pathogenic',
-            'patogenetico': 'Pathogenic',
-            'vus': 'VUS',
-            'variant of uncertain significance': 'VUS',
-            'variante a significato incerto': 'VUS',
-            'benign': 'Benign',
-            'benigna': 'Benign',
-            'likely pathogenic': 'Likely Pathogenic',
-            'verosimilmente patogenetica': 'Likely Pathogenic'
-        }
-        
-        # Pattern farmaci
-        self.drug_patterns = [
-            r'(osimertinib|afatinib|erlotinib|gefitinib)',  # EGFR TKI
-            r'(selpercatinib|cabozantinib)',  # RET inhibitors
-            r'(olaparib|niraparib|rucaparib)',  # PARP inhibitors
-            r'(crizotinib|alectinib|ceritinib|brigatinib)',  # ALK inhibitors
-            r'(trametinib|dabrafenib|vemurafenib)',  # BRAF/MEK inhibitors
-            r'(capmatinib|tepotinib)',  # MET inhibitors
-            r'(amivantamab)',  # EGFR exon 20
-            r'(sotorasib|adagrasib)',  # KRAS G12C
-            r'(erdafitinib)',  # FGFR inhibitors
+        # Pattern fusioni
+        self.fusion_patterns = [
+            r'fusione\s+(\w+)::(\w+)',
+            r'riarrangiamento\s+(\w+)[/:]+(\w+)',
+            r'(\w+)-(\w+)\s+fusion',
+            r'(\w+)\s*\(\d+\)\s*::\s*(\w+)\s*\(\d+\)',  # Es: FGFR3(17)::TACC3(11)
         ]
 
     def extract_patient_info(self, text: str) -> Patient:
         """Estrae informazioni paziente"""
         patient = Patient()
         
-        # ID paziente
-        id_match = re.search(r'ID Paziente[:\s]+(\d+)', text, re.IGNORECASE)
-        if id_match:
-            patient.id = id_match.group(1)
+        # ID paziente - pattern multipli
+        id_patterns = [
+            r'ID\s+Paziente[:\s]+(\d+)',
+            r'Paziente\s*(\d+)',
+            r'ID[:\s]+(\d+)',
+        ]
+        for pattern in id_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                patient.id = match.group(1)
+                break
         
-        # Età
-        age_match = re.search(r'Età[:\s]+(\d+)\s+anni', text, re.IGNORECASE)
-        if age_match:
-            patient.age = int(age_match.group(1))
+        # Età - pattern multipli
+        age_patterns = [
+            r'Età[:\s]+(\d+)\s+anni',
+            r'(\d+)\s+anni\s+affett',
+            r'age[:\s]+(\d+)',
+        ]
+        for pattern in age_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                age_val = int(match.group(1))
+                if 0 < age_val < 120:  # Validazione età
+                    patient.age = age_val
+                    break
         
         # Sesso
         sex_match = re.search(r'Sesso[:\s]+([MF])', text, re.IGNORECASE)
         if sex_match:
-            patient.sex = sex_match.group(1)
+            patient.sex = sex_match.group(1).upper()
         
         # Data di nascita
-        birth_match = re.search(r'Data di nascita[:\s]+(\d{2}/\d{2}/\d{4})', text)
+        birth_match = re.search(r'Data\s+di\s+nascita[:\s]+(\d{2}/\d{2}/\d{4})', text, re.IGNORECASE)
         if birth_match:
             patient.birth_date = birth_match.group(1)
             
         return patient
 
     def extract_diagnosis(self, text: str) -> Diagnosis:
-        """Estrae informazioni diagnostiche"""
+        """Estrae informazioni diagnostiche con mapping ICD-O"""
         diagnosis = Diagnosis()
         
-        # Diagnosi principale
+        # Diagnosi principale - pattern multipli
         diag_patterns = [
-            r'Diagnosi[:\s]*([^.]+)',
-            r'adenocarcinoma|carcinoma|feocromocitoma|paraganglioma|melanoma|colangiocarcinoma',
-            r'neoplasia polmonare|tumore polmonare'
+            r'Diagnosi[:\s]*([^.\n]{10,150})',
+            r'affett[oa]\s+da\s+([^.\n]{10,150})',
+            r'(adenocarcinoma[^.\n]{0,100})',
+            r'(carcinoma[^.\n]{0,100})',
+            r'(feocromocitoma[^.\n]{0,100})',
+            r'(paraganglioma[^.\n]{0,100})',
+            r'(melanoma[^.\n]{0,100})',
+            r'(colangiocarcinoma[^.\n]{0,100})',
         ]
         
         for pattern in diag_patterns:
             match = re.search(pattern, text, re.IGNORECASE)
             if match:
-                diagnosis.primary_diagnosis = match.group(0 if len(match.groups()) == 0 else 1).strip()
-                break
+                diag_text = match.group(1).strip()
+                # Pulisci il testo
+                diag_text = re.sub(r'\s+', ' ', diag_text)
+                if len(diag_text) > 10:  # Minimo di caratteri
+                    diagnosis.primary_diagnosis = diag_text
+                    # Mappa a ICD-O
+                    diagnosis.icd_o_code = self.vocab.map_diagnosis(diag_text)
+                    break
         
         # Stadio
-        stage_match = re.search(r'stadio\s+(I{1,3}V?|IV)', text, re.IGNORECASE)
-        if stage_match:
-            diagnosis.stage = stage_match.group(1)
+        stage_patterns = [
+            r'stadio\s+(I{1,3}V?|IV|[1-4][ABC]?)',
+            r'stage\s+(I{1,3}V?|IV|[1-4][ABC]?)',
+        ]
+        for pattern in stage_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                diagnosis.stage = match.group(1).upper()
+                break
+        
+        # Istologia
+        histology_patterns = [
+            r'istotipo\s+([^.\n]{5,100})',
+            r'istologia\s+([^.\n]{5,100})',
+            r'istologico\s+([^.\n]{5,100})',
+        ]
+        for pattern in histology_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                hist_text = match.group(1).strip()
+                if len(hist_text) > 5:
+                    diagnosis.histology = hist_text
+                    break
             
         return diagnosis
 
     def extract_variants(self, text: str) -> List[Variant]:
-        """Estrae varianti genomiche dal testo"""
+        """Estrae varianti genomiche con mapping HGNC"""
         variants = []
+        seen = set()
         
-        # Cerca pattern tabulari strutturati
-        table_pattern = r'(\w+)\s+c\.([^|]+)\|?\s+p\.([^|]+)\|?\s+(Pathogenic|VUS|Benign|Risultati discordanti)\s+(\d+)%'
+        # 1. Cerca pattern tabulari strutturati (formato completo)
+        table_pattern = r'(\w+)\s+c\.([^\s|]+)\s+p\.([^\s|]+)\s+(Pathogenic|VUS|Benign|Risultati discordanti|Likely Pathogenic)\s+(\d+)%'
         table_matches = re.findall(table_pattern, text, re.IGNORECASE)
         
         for match in table_matches:
-            variant = Variant(
-                gene=match[0],
-                cdna_change=f"c.{match[1].strip()}",
-                protein_change=f"p.{match[2].strip()}",
-                classification=match[3],
-                vaf=float(match[4]) if match[4] else None
-            )
-            variants.append(variant)
+            gene = match[0].upper()
+            variant_key = f"{gene}_{match[2]}"
+            
+            if variant_key not in seen:
+                variant = Variant(
+                    gene=gene,
+                    cdna_change=f"c.{match[1].strip()}",
+                    protein_change=f"p.{match[2].strip()}",
+                    classification=match[3],
+                    vaf=float(match[4]) if match[4] else None,
+                    gene_code=self.vocab.map_gene(gene)
+                )
+                variants.append(variant)
+                seen.add(variant_key)
         
-        # Cerca pattern più generali per varianti non tabulari
+        # 2. Pattern per mutazioni comuni (es: EGFR L858R, BRAF V600E, KRAS G12D)
         mutation_patterns = [
-            r'(\w+)\s+([A-Z]\d+[A-Z*])',  # Es: EGFR L858R
-            r'mutazione\s+di\s+(\w+)[:\s]+([^,.\n]+)',
-            r'alterazione\s+di\s+(\w+)[:\s]+([^,.\n]+)',
-            r'(\w+)\s+([GV]\d+[A-Z])',  # Es: BRAF V600E
+            r'\b(\w+)\s+([A-Z]\d+[A-Z*]+)\b',
+            r'\b(\w+)\s+([GV]\d+[A-Z])\b',
+            r'mutazione\s+(?:di\s+)?(\w+)[:\s]+([A-Z]\d+[A-Z*]+)',
+            r'alterazione\s+(?:di\s+)?(\w+)[:\s]+([A-Z]\d+[A-Z*]+)',
         ]
         
         for pattern in mutation_patterns:
             matches = re.findall(pattern, text, re.IGNORECASE)
             for match in matches:
-                # Evita duplicati
-                if not any(v.gene == match[0] and match[1] in (v.protein_change or '') for v in variants):
+                gene = match[0].upper()
+                prot_change = match[1].upper()
+                variant_key = f"{gene}_{prot_change}"
+                
+                # Filtra geni validi
+                if gene not in self.vocab.HGNC_GENES:
+                    continue
+                
+                if variant_key not in seen:
                     variant = Variant(
-                        gene=match[0],
-                        protein_change=match[1] if match[1] else None
+                        gene=gene,
+                        protein_change=prot_change,
+                        gene_code=self.vocab.map_gene(gene)
                     )
                     
-                    # Cerca VAF nelle vicinanze
-                    vaf_search = re.search(rf'{re.escape(match[0])}.*?(\d+)%', text, re.IGNORECASE)
-                    if vaf_search:
-                        variant.vaf = float(vaf_search.group(1))
+                    # Cerca VAF nelle vicinanze (entro 100 caratteri)
+                    gene_pos = text.upper().find(gene)
+                    if gene_pos >= 0:
+                        context = text[gene_pos:gene_pos+100]
+                        vaf_search = re.search(r'(\d+)%', context)
+                        if vaf_search:
+                            vaf_val = float(vaf_search.group(1))
+                            if 0 < vaf_val <= 100:
+                                variant.vaf = vaf_val
+                    
+                    # Cerca classificazione nelle vicinanze
+                    if gene_pos >= 0:
+                        context = text[max(0, gene_pos-50):gene_pos+150]
+                        class_search = re.search(
+                            r'(Pathogenic|VUS|Benign|patogenetica|patogenetico)',
+                            context, re.IGNORECASE
+                        )
+                        if class_search:
+                            class_text = class_search.group(1).title()
+                            if 'patogen' in class_text.lower():
+                                variant.classification = 'Pathogenic'
+                            else:
+                                variant.classification = class_text
                     
                     variants.append(variant)
+                    seen.add(variant_key)
         
-        # Cerca fusioni geniche
-        fusion_patterns = [
-            r'fusione\s+(\w+)::(\w+)',
-            r'riarrangiamento\s+(\w+)/?(\w+)',
-            r'(\w+)-(\w+)\s+fusion'
-        ]
-        
-        for pattern in fusion_patterns:
+        # 3. Cerca fusioni geniche
+        for pattern in self.fusion_patterns:
             matches = re.findall(pattern, text, re.IGNORECASE)
             for match in matches:
-                variant = Variant(
-                    gene=f"{match[0]}::{match[1]}",
-                    protein_change="fusion"
-                )
-                variants.append(variant)
+                gene1 = match[0].upper()
+                gene2 = match[1].upper() if len(match) > 1 and match[1] else ""
+                
+                # Verifica che siano geni validi
+                if gene1 not in self.vocab.HGNC_GENES and gene2 not in self.vocab.HGNC_GENES:
+                    continue
+                
+                fusion_name = f"{gene1}::{gene2}" if gene2 else gene1
+                
+                if fusion_name not in seen:
+                    variant = Variant(
+                        gene=fusion_name,
+                        protein_change="fusion",
+                        classification="Pathogenic",  # Le fusioni sono generalmente patogeniche
+                        gene_code=self.vocab.map_gene(gene1)
+                    )
+                    variants.append(variant)
+                    seen.add(fusion_name)
+        
+        # 4. Pattern speciali per inserzioni/delezioni esone (es: EGFR exon 19/20)
+        exon_patterns = [
+            r'(\w+)\s+es(?:one)?\s+(\d+)\s+(insertion|deletion|delins?)',
+            r'(\w+)\s+exon\s+(\d+)\s+(insertion|deletion|delins?)',
+        ]
+        for pattern in exon_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for match in matches:
+                gene = match[0].upper()
+                exon = match[1]
+                alteration = match[2].lower()
+                
+                if gene in self.vocab.HGNC_GENES:
+                    variant_key = f"{gene}_exon{exon}_{alteration}"
+                    if variant_key not in seen:
+                        variant = Variant(
+                            gene=gene,
+                            protein_change=f"exon {exon} {alteration}",
+                            classification="Pathogenic",
+                            gene_code=self.vocab.map_gene(gene)
+                        )
+                        variants.append(variant)
+                        seen.add(variant_key)
         
         return variants
     
     def extract_tmb(self, text: str) -> Optional[float]:
         """Estrae valore TMB"""
-        tmb_match = re.search(r'TMB.*?(\d+\.?\d*)\s*muts?/?Mbp?', text, re.IGNORECASE)
-        if tmb_match:
-            return float(tmb_match.group(1))
+        tmb_patterns = [
+            r'TMB[:\s]*(\d+\.?\d*)\s*mut[s]?/?Mbp?',
+            r'tumor\s+mutational\s+burden[:\s]*(\d+\.?\d*)',
+            r'TMB[:\s]+(\d+\.?\d*)',
+        ]
+        
+        for pattern in tmb_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                tmb_val = float(match.group(1))
+                if 0 < tmb_val < 1000:  # Validazione range TMB
+                    return tmb_val
         return None
     
     def extract_therapeutic_recommendations(self, text: str) -> List[TherapeuticRecommendation]:
-        """Estrae raccomandazioni terapeutiche"""
+        """Estrae raccomandazioni terapeutiche con mapping RxNorm"""
         recommendations = []
+        seen_drugs = set()
         
-        # Pattern per farmaci con razionale
-        drug_pattern = r'(sensibilità|risposta|indicazione).*?(osimertinib|afatinib|selpercatinib|olaparib|trametinib|dabrafenib|amivantamab|sotorasib|erdafitinib|capmatinib|tepotinib|crizotinib|alectinib)'
+        # Lista completa di farmaci oncologici
+        drug_names = '|'.join(self.vocab.RXNORM_DRUGS.keys())
         
-        matches = re.findall(drug_pattern, text, re.IGNORECASE)
-        for match in matches:
-            recommendation = TherapeuticRecommendation(
-                drug=match[1].lower(),
-                rationale=match[0]
-            )
-            recommendations.append(recommendation)
+        # Pattern per identificare raccomandazioni farmacologiche
+        drug_patterns = [
+            rf'\b(sensibilità|risposta|indicazione|approvato)[^.{{50}}]*?\b({drug_names})\b',
+            rf'\b({drug_names})\b[^.{{50}}]*?(indicat[oa]|approvato|rimborsato)',
+            rf'trattamento\s+con\s+\b({drug_names})\b',
+            rf'\b({drug_names})\b',  # Pattern generico
+        ]
+        
+        for pattern in drug_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for match in matches:
+                # Estrai il nome del farmaco dalla tupla
+                drug_name = None
+                rationale = None
+                
+                for item in match:
+                    item_lower = item.lower().strip()
+                    if item_lower in self.vocab.RXNORM_DRUGS:
+                        drug_name = item_lower
+                    elif item and len(item) > 3:
+                        rationale = item
+                
+                if drug_name and drug_name not in seen_drugs:
+                    recommendation = TherapeuticRecommendation(
+                        drug=drug_name,
+                        rationale=rationale,
+                        drug_code=self.vocab.map_drug(drug_name)
+                    )
+                    recommendations.append(recommendation)
+                    seen_drugs.add(drug_name)
         
         # Cerca trial clinici
-        trial_pattern = r'protocollo.*?(INT\s+\d+/\d+|trial|studio)'
-        trial_matches = re.findall(trial_pattern, text, re.IGNORECASE)
-        for match in trial_matches:
-            recommendation = TherapeuticRecommendation(
-                clinical_trial=match,
-                rationale="Protocol sperimentale"
-            )
-            recommendations.append(recommendation)
+        trial_patterns = [
+            r'protocollo\s+(INT\s+\d+/\d+)',
+            r'trial\s+clinico[:\s]+([^\n.]+)',
+            r'studio\s+di\s+fase\s+([123])[:\s]*([^\n.]*)',
+        ]
+        
+        for pattern in trial_patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            for match in matches:
+                trial_name = match if isinstance(match, str) else ' '.join(match)
+                if trial_name and len(trial_name) > 3:
+                    recommendation = TherapeuticRecommendation(
+                        clinical_trial=trial_name.strip(),
+                        rationale="Protocollo sperimentale disponibile"
+                    )
+                    recommendations.append(recommendation)
             
         return recommendations
     
+    def calculate_quality_metrics(self, report: MTBReport) -> QualityMetrics:
+        """Calcola metriche di qualità del report parsato"""
+        metrics = QualityMetrics()
+        
+        # Conta campi totali e riempiti
+        total = 0
+        filled = 0
+        
+        # Patient fields
+        patient_fields = {'id': report.patient.id, 'age': report.patient.age, 
+                         'sex': report.patient.sex, 'birth_date': report.patient.birth_date}
+        for field_name, field_value in patient_fields.items():
+            total += 1
+            if field_value:
+                filled += 1
+        
+        metrics.patient_complete = sum(1 for v in patient_fields.values() if v) >= 3
+        
+        # Diagnosis fields
+        diag_fields = {'primary_diagnosis': report.diagnosis.primary_diagnosis, 
+                      'stage': report.diagnosis.stage, 
+                      'icd_o_code': report.diagnosis.icd_o_code}
+        for field_name, field_value in diag_fields.items():
+            total += 1
+            if field_value:
+                filled += 1
+        
+        # Report-level fields
+        if report.tmb:
+            filled += 1
+        total += 1
+        
+        if report.ngs_method:
+            filled += 1
+        total += 1
+        
+        if report.report_date:
+            filled += 1
+        total += 1
+        
+        metrics.total_fields = total
+        metrics.filled_fields = filled
+        metrics.calculate()
+        
+        # Varianti
+        metrics.variants_found = len(report.variants)
+        metrics.variants_with_vaf = sum(1 for v in report.variants if v.vaf)
+        metrics.variants_classified = sum(1 for v in report.variants if v.classification)
+        metrics.variants_with_gene_code = sum(1 for v in report.variants if v.gene_code)
+        
+        # Farmaci
+        metrics.drugs_identified = len(report.recommendations)
+        metrics.drugs_mapped = sum(1 for r in report.recommendations if r.drug_code)
+        
+        # Diagnosi
+        metrics.diagnosis_mapped = report.diagnosis.icd_o_code is not None
+        
+        # Warnings
+        if metrics.variants_found == 0:
+            metrics.warnings.append("⚠️ Nessuna variante genomica identificata")
+        
+        if metrics.variants_found > 0 and metrics.variants_with_vaf < metrics.variants_found * 0.3:
+            metrics.warnings.append(f"⚠️ Solo {metrics.variants_with_vaf}/{metrics.variants_found} varianti hanno VAF")
+        
+        if not metrics.diagnosis_mapped and report.diagnosis.primary_diagnosis:
+            metrics.warnings.append("⚠️ Diagnosi non mappata a codice ICD-O standard")
+        
+        if metrics.drugs_identified > 0 and metrics.drugs_mapped == 0:
+            metrics.warnings.append("⚠️ Farmaci identificati ma non mappati a RxNorm")
+        
+        if not metrics.patient_complete:
+            metrics.warnings.append("⚠️ Informazioni paziente incomplete")
+        
+        if metrics.variants_with_gene_code < metrics.variants_found * 0.5:
+            metrics.warnings.append(f"⚠️ Solo {metrics.variants_with_gene_code}/{metrics.variants_found} geni mappati a HGNC")
+        
+        return metrics
+    
     def parse_report(self, text: str) -> MTBReport:
-        """Parse completo del report MTB"""
+        """Parse completo del report MTB con quality metrics"""
         
         # Estrai data del report
-        date_match = re.search(r'(\d{4}-\d{2}-\d{2}|\d{2}/\d{2}/\d{4})', text)
-        report_date = date_match.group(1) if date_match else None
+        date_patterns = [
+            r'(\d{4}-\d{2}-\d{2})',
+            r'(\d{2}/\d{2}/\d{4})',
+            r'data[:\s]+(\d{1,2}[\s/-]\d{1,2}[\s/-]\d{4})',
+        ]
+        report_date = None
+        for pattern in date_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                report_date = match.group(1)
+                break
         
         # Estrai metodica NGS
-        ngs_pattern = r'(Oncomine|IonTorrent|Illumina|NGS|next.generation.sequencing)'
-        ngs_match = re.search(ngs_pattern, text, re.IGNORECASE)
-        ngs_method = ngs_match.group(1) if ngs_match else None
+        ngs_patterns = [
+            r'(Oncomine[^.\n]{0,50})',
+            r'(IonTorrent)',
+            r'(Illumina[^.\n]{0,30})',
+            r'pannello\s+([^.\n]{5,80})',
+            r'NGS[:\s]+([^.\n]{5,50})',
+        ]
+        ngs_method = None
+        for pattern in ngs_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                ngs_method = match.group(1).strip()
+                if len(ngs_method) > 3:
+                    break
         
-        return MTBReport(
+        # Crea report
+        report = MTBReport(
             patient=self.extract_patient_info(text),
             diagnosis=self.extract_diagnosis(text),
             variants=self.extract_variants(text),
@@ -266,341 +652,10 @@ class MTBParser:
             tmb=self.extract_tmb(text),
             ngs_method=ngs_method,
             report_date=report_date,
-            raw_content=text
+            raw_content=text[:1000]  # Store first 1000 chars
         )
-
-class FHIRMapper:
-    """Mapper per conversione a FHIR R4"""
-    
-    def __init__(self):
-        self.gene_code_map = {
-            'EGFR': {'system': 'http://www.genenames.org', 'code': 'HGNC:3236'},
-            'KRAS': {'system': 'http://www.genenames.org', 'code': 'HGNC:6407'},
-            'TP53': {'system': 'http://www.genenames.org', 'code': 'HGNC:11998'},
-            'BRAF': {'system': 'http://www.genenames.org', 'code': 'HGNC:1097'},
-            'ALK': {'system': 'http://www.genenames.org', 'code': 'HGNC:427'},
-            'RET': {'system': 'http://www.genenames.org', 'code': 'HGNC:9967'},
-            'MET': {'system': 'http://www.genenames.org', 'code': 'HGNC:7029'},
-            'BRCA1': {'system': 'http://www.genenames.org', 'code': 'HGNC:1100'},
-            'BRCA2': {'system': 'http://www.genenames.org', 'code': 'HGNC:1101'}
-        }
-    
-    def create_patient_resource(self, patient: Patient) -> Dict:
-        """Crea risorsa FHIR Patient"""
-        resource = {
-            'resourceType': 'Patient',
-            'id': patient.id or 'unknown',
-            'identifier': [
-                {
-                    'system': 'http://int.it/patient-id',
-                    'value': patient.id or 'unknown'
-                }
-            ],
-            'gender': 'male' if patient.sex == 'M' else 'female' if patient.sex == 'F' else 'unknown'
-        }
         
-        if patient.birth_date:
-            # Converti formato italiano in ISO
-            try:
-                parts = patient.birth_date.split('/')
-                iso_date = f"{parts[2]}-{parts[1]}-{parts[0]}"
-                resource['birthDate'] = iso_date
-            except:
-                pass
-                
-        return resource
-    
-    def create_variant_observation(self, variant: Variant, patient_id: str) -> Dict:
-        """Crea risorsa FHIR Observation per variante genomica"""
-        
-        # Codice base per variante genomica
-        observation = {
-            'resourceType': 'Observation',
-            'id': f"variant-{variant.gene}-{hash(variant.protein_change or variant.cdna_change or '')}",
-            'status': 'final',
-            'category': [
-                {
-                    'coding': [
-                        {
-                            'system': 'http://terminology.hl7.org/CodeSystem/observation-category',
-                            'code': 'laboratory'
-                        }
-                    ]
-                }
-            ],
-            'code': {
-                'coding': [
-                    {
-                        'system': 'http://loinc.org',
-                        'code': '69548-6',
-                        'display': 'Genetic variant assessment'
-                    }
-                ]
-            },
-            'subject': {
-                'reference': f'Patient/{patient_id}'
-            },
-            'component': []
-        }
-        
-        # Gene
-        if variant.gene in self.gene_code_map:
-            gene_component = {
-                'code': {
-                    'coding': [
-                        {
-                            'system': 'http://loinc.org',
-                            'code': '48018-6',
-                            'display': 'Gene studied [ID]'
-                        }
-                    ]
-                },
-                'valueCodeableConcept': {
-                    'coding': [self.gene_code_map[variant.gene]]
-                }
-            }
-            observation['component'].append(gene_component)
-        
-        # Variante aminoacidica
-        if variant.protein_change:
-            protein_component = {
-                'code': {
-                    'coding': [
-                        {
-                            'system': 'http://loinc.org',
-                            'code': '48005-3',
-                            'display': 'Amino acid change (pHGVS)'
-                        }
-                    ]
-                },
-                'valueString': variant.protein_change
-            }
-            observation['component'].append(protein_component)
-        
-        # Variante DNA
-        if variant.cdna_change:
-            dna_component = {
-                'code': {
-                    'coding': [
-                        {
-                            'system': 'http://loinc.org',
-                            'code': '48004-6',
-                            'display': 'DNA change (cHGVS)'
-                        }
-                    ]
-                },
-                'valueString': variant.cdna_change
-            }
-            observation['component'].append(dna_component)
-        
-        # VAF (Variant Allele Frequency)
-        if variant.vaf:
-            vaf_component = {
-                'code': {
-                    'coding': [
-                        {
-                            'system': 'http://loinc.org',
-                            'code': '81258-6',
-                            'display': 'Variant allele frequency'
-                        }
-                    ]
-                },
-                'valueQuantity': {
-                    'value': variant.vaf,
-                    'unit': '%',
-                    'system': 'http://unitsofmeasure.org',
-                    'code': '%'
-                }
-            }
-            observation['component'].append(vaf_component)
-        
-        # Classificazione patogenicità
-        if variant.classification:
-            interpretation = {
-                'coding': [
-                    {
-                        'system': 'http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation',
-                        'code': self._map_classification_to_fhir(variant.classification)
-                    }
-                ]
-            }
-            observation['interpretation'] = [interpretation]
-        
-        return observation
-    
-    def _map_classification_to_fhir(self, classification: str) -> str:
-        """Mappa classificazioni a codici FHIR"""
-        mapping = {
-            'Pathogenic': 'A',  # Abnormal
-            'Likely Pathogenic': 'A',
-            'VUS': 'I',  # Intermediate
-            'Likely Benign': 'N',  # Normal
-            'Benign': 'N'
-        }
-        return mapping.get(classification, 'I')
-    
-    def create_diagnostic_report(self, mtb_report: MTBReport) -> Dict:
-        """Crea risorsa FHIR DiagnosticReport"""
-        
-        report = {
-            'resourceType': 'DiagnosticReport',
-            'id': f"mtb-report-{mtb_report.patient.id or 'unknown'}",
-            'status': 'final',
-            'category': [
-                {
-                    'coding': [
-                        {
-                            'system': 'http://terminology.hl7.org/CodeSystem/v2-0074',
-                            'code': 'GE',
-                            'display': 'Genetics'
-                        }
-                    ]
-                }
-            ],
-            'code': {
-                'coding': [
-                    {
-                        'system': 'http://loinc.org',
-                        'code': '81247-9',
-                        'display': 'Master HL7 genetic variant reporting panel'
-                    }
-                ]
-            },
-            'subject': {
-                'reference': f"Patient/{mtb_report.patient.id or 'unknown'}"
-            },
-            'result': []
-        }
-        
-        # Aggiungi riferimenti alle osservazioni delle varianti
-        for i, variant in enumerate(mtb_report.variants):
-            report['result'].append({
-                'reference': f"Observation/variant-{variant.gene}-{hash(variant.protein_change or variant.cdna_change or '')}"
-            })
-        
-        # TMB come osservazione separata
-        if mtb_report.tmb:
-            report['result'].append({
-                'reference': f"Observation/tmb-{mtb_report.patient.id or 'unknown'}"
-            })
+        # Calcola quality metrics
+        report.quality_metrics = self.calculate_quality_metrics(report)
         
         return report
-    
-    def create_fhir_bundle(self, mtb_report: MTBReport) -> Dict:
-        """Crea FHIR Bundle completo"""
-        
-        bundle = {
-            'resourceType': 'Bundle',
-            'id': f"mtb-bundle-{mtb_report.patient.id or 'unknown'}",
-            'type': 'collection',
-            'entry': []
-        }
-        
-        # Patient
-        patient_resource = self.create_patient_resource(mtb_report.patient)
-        bundle['entry'].append({
-            'resource': patient_resource
-        })
-        
-        # Variant Observations
-        for variant in mtb_report.variants:
-            variant_obs = self.create_variant_observation(variant, mtb_report.patient.id or 'unknown')
-            bundle['entry'].append({
-                'resource': variant_obs
-            })
-        
-        # TMB Observation
-        if mtb_report.tmb:
-            tmb_obs = {
-                'resourceType': 'Observation',
-                'id': f"tmb-{mtb_report.patient.id or 'unknown'}",
-                'status': 'final',
-                'code': {
-                    'coding': [
-                        {
-                            'system': 'http://loinc.org',
-                            'code': '94076-7',
-                            'display': 'Mutations/Mb [# Ratio] in Tumor'
-                        }
-                    ]
-                },
-                'subject': {
-                    'reference': f"Patient/{mtb_report.patient.id or 'unknown'}"
-                },
-                'valueQuantity': {
-                    'value': mtb_report.tmb,
-                    'unit': 'mutations per megabase',
-                    'system': 'http://unitsofmeasure.org',
-                    'code': 'mutations/Mb'
-                }
-            }
-            bundle['entry'].append({
-                'resource': tmb_obs
-            })
-        
-        # Diagnostic Report
-        diagnostic_report = self.create_diagnostic_report(mtb_report)
-        bundle['entry'].append({
-            'resource': diagnostic_report
-        })
-        
-        return bundle
-
-# Funzione principale per processing
-def process_mtb_reports(file_contents: List[str]) -> List[Dict]:
-    """Processa multiple report MTB e restituisce FHIR bundles"""
-    parser = MTBParser()
-    fhir_mapper = FHIRMapper()
-    
-    results = []
-    
-    for content in file_contents:
-        # Parse report
-        mtb_report = parser.parse_report(content)
-        
-        # Converti a FHIR
-        fhir_bundle = fhir_mapper.create_fhir_bundle(mtb_report)
-        
-        results.append({
-            'parsed_report': asdict(mtb_report),
-            'fhir_bundle': fhir_bundle
-        })
-    
-    return results
-
-# Esempio di utilizzo
-if __name__ == "__main__":
-    # Test con un esempio
-    sample_text = """
-    ID Paziente: 4158446 Sesso: M Età: 49 anni
-    Diagnosi: Feocromocitoma surrenalico con metastasi linfonodale
-    
-    Gene Variante cDNA Variante aminoacidica Classificazione Frequenza allelica
-    DDX4 c.827T>C p.Val276Ala (V276A) VUS 52%
-    MAX c.196A>T p.Lys66Ter (K66*) Pathogenic 63%
-    RET c.1946C>T p.Ser649Leu (S649L) Risultati discordanti 51%
-    
-    Il valore del TMB è 2.85 muts/Mbp.
-    Si segnala possibile sensibilità a Selpercatinib.
-    """
-    
-    parser = MTBParser()
-    report = parser.parse_report(sample_text)
-    
-    print("=== Report Parsato ===")
-    print(f"Paziente ID: {report.patient.id}")
-    print(f"Età: {report.patient.age}")
-    print(f"Diagnosi: {report.diagnosis.primary_diagnosis}")
-    print(f"TMB: {report.tmb}")
-    print(f"Varianti trovate: {len(report.variants)}")
-    
-    for variant in report.variants:
-        print(f"  - {variant.gene}: {variant.protein_change} ({variant.classification}, VAF: {variant.vaf}%)")
-    
-    # Test conversione FHIR
-    fhir_mapper = FHIRMapper()
-    fhir_bundle = fhir_mapper.create_fhir_bundle(report)
-    
-    print(f"\n=== FHIR Bundle ===")
-    print(f"Risorse create: {len(fhir_bundle['entry'])}")
-    print(json.dumps(fhir_bundle, indent=2)[:500] + "...")

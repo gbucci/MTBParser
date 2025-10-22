@@ -1,0 +1,308 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "system": "HGNC",
+    "description": "HUGO Gene Nomenclature Committee - Cancer-relevant genes",
+    "last_updated": "2025-10-22",
+    "source": "https://www.genenames.org",
+    "total_genes": 37
+  },
+  "genes": {
+    "EGFR": {
+      "code": "HGNC:3236",
+      "system": "http://www.genenames.org",
+      "name": "Epidermal Growth Factor Receptor",
+      "chromosome": "7",
+      "cancer_types": ["NSCLC", "Glioblastoma", "Colorectal"],
+      "actionable": true
+    },
+    "KRAS": {
+      "code": "HGNC:6407",
+      "system": "http://www.genenames.org",
+      "name": "KRAS Proto-Oncogene, GTPase",
+      "chromosome": "12",
+      "cancer_types": ["NSCLC", "Colorectal", "Pancreatic"],
+      "actionable": true
+    },
+    "TP53": {
+      "code": "HGNC:11998",
+      "system": "http://www.genenames.org",
+      "name": "Tumor Protein P53",
+      "chromosome": "17",
+      "cancer_types": ["Various"],
+      "actionable": false
+    },
+    "BRAF": {
+      "code": "HGNC:1097",
+      "system": "http://www.genenames.org",
+      "name": "B-Raf Proto-Oncogene, Serine/Threonine Kinase",
+      "chromosome": "7",
+      "cancer_types": ["Melanoma", "Colorectal", "NSCLC"],
+      "actionable": true
+    },
+    "ALK": {
+      "code": "HGNC:427",
+      "system": "http://www.genenames.org",
+      "name": "ALK Receptor Tyrosine Kinase",
+      "chromosome": "2",
+      "cancer_types": ["NSCLC"],
+      "actionable": true
+    },
+    "RET": {
+      "code": "HGNC:9967",
+      "system": "http://www.genenames.org",
+      "name": "Ret Proto-Oncogene",
+      "chromosome": "10",
+      "cancer_types": ["Thyroid", "NSCLC"],
+      "actionable": true
+    },
+    "MET": {
+      "code": "HGNC:7029",
+      "system": "http://www.genenames.org",
+      "name": "MET Proto-Oncogene, Receptor Tyrosine Kinase",
+      "chromosome": "7",
+      "cancer_types": ["NSCLC", "Gastric"],
+      "actionable": true
+    },
+    "BRCA1": {
+      "code": "HGNC:1100",
+      "system": "http://www.genenames.org",
+      "name": "BRCA1 DNA Repair Associated",
+      "chromosome": "17",
+      "cancer_types": ["Breast", "Ovarian"],
+      "actionable": true
+    },
+    "BRCA2": {
+      "code": "HGNC:1101",
+      "system": "http://www.genenames.org",
+      "name": "BRCA2 DNA Repair Associated",
+      "chromosome": "13",
+      "cancer_types": ["Breast", "Ovarian", "Prostate"],
+      "actionable": true
+    },
+    "PIK3CA": {
+      "code": "HGNC:8975",
+      "system": "http://www.genenames.org",
+      "name": "Phosphatidylinositol-4,5-Bisphosphate 3-Kinase Catalytic Subunit Alpha",
+      "chromosome": "3",
+      "cancer_types": ["Breast", "Colorectal"],
+      "actionable": true
+    },
+    "FGFR1": {
+      "code": "HGNC:3688",
+      "system": "http://www.genenames.org",
+      "name": "Fibroblast Growth Factor Receptor 1",
+      "chromosome": "8",
+      "cancer_types": ["Breast", "Lung"],
+      "actionable": true
+    },
+    "FGFR2": {
+      "code": "HGNC:3689",
+      "system": "http://www.genenames.org",
+      "name": "Fibroblast Growth Factor Receptor 2",
+      "chromosome": "10",
+      "cancer_types": ["Cholangiocarcinoma", "Gastric"],
+      "actionable": true
+    },
+    "FGFR3": {
+      "code": "HGNC:3690",
+      "system": "http://www.genenames.org",
+      "name": "Fibroblast Growth Factor Receptor 3",
+      "chromosome": "4",
+      "cancer_types": ["Bladder", "Glioblastoma"],
+      "actionable": true
+    },
+    "NF1": {
+      "code": "HGNC:7765",
+      "system": "http://www.genenames.org",
+      "name": "Neurofibromin 1",
+      "chromosome": "17",
+      "cancer_types": ["Neurofibromatosis"],
+      "actionable": false
+    },
+    "ATM": {
+      "code": "HGNC:795",
+      "system": "http://www.genenames.org",
+      "name": "ATM Serine/Threonine Kinase",
+      "chromosome": "11",
+      "cancer_types": ["Breast", "Pancreatic"],
+      "actionable": true
+    },
+    "PTEN": {
+      "code": "HGNC:9588",
+      "system": "http://www.genenames.org",
+      "name": "Phosphatase And Tensin Homolog",
+      "chromosome": "10",
+      "cancer_types": ["Various"],
+      "actionable": false
+    },
+    "MAX": {
+      "code": "HGNC:6913",
+      "system": "http://www.genenames.org",
+      "name": "MYC Associated Factor X",
+      "chromosome": "14",
+      "cancer_types": ["Pheochromocytoma"],
+      "actionable": false
+    },
+    "SMARCA4": {
+      "code": "HGNC:11100",
+      "system": "http://www.genenames.org",
+      "name": "SWI/SNF Related, Matrix Associated, Actin Dependent Regulator Of Chromatin, Subfamily A, Member 4",
+      "chromosome": "19",
+      "cancer_types": ["Various"],
+      "actionable": false
+    },
+    "JAK2": {
+      "code": "HGNC:6192",
+      "system": "http://www.genenames.org",
+      "name": "Janus Kinase 2",
+      "chromosome": "9",
+      "cancer_types": ["Myeloproliferative neoplasms"],
+      "actionable": true
+    },
+    "PALB2": {
+      "code": "HGNC:26144",
+      "system": "http://www.genenames.org",
+      "name": "Partner And Localizer Of BRCA2",
+      "chromosome": "16",
+      "cancer_types": ["Breast", "Pancreatic"],
+      "actionable": true
+    },
+    "DDX4": {
+      "code": "HGNC:2700",
+      "system": "http://www.genenames.org",
+      "name": "DEAD-Box Helicase 4",
+      "chromosome": "5",
+      "cancer_types": ["Germ cell tumors"],
+      "actionable": false
+    },
+    "BLM": {
+      "code": "HGNC:1058",
+      "system": "http://www.genenames.org",
+      "name": "BLM RecQ Like Helicase",
+      "chromosome": "15",
+      "cancer_types": ["Bloom syndrome"],
+      "actionable": false
+    },
+    "ADAT1": {
+      "code": "HGNC:25191",
+      "system": "http://www.genenames.org",
+      "name": "Adenosine Deaminase tRNA Specific 1",
+      "chromosome": "16",
+      "cancer_types": ["Various"],
+      "actionable": false
+    },
+    "RAD51D": {
+      "code": "HGNC:9824",
+      "system": "http://www.genenames.org",
+      "name": "RAD51 Paralog D",
+      "chromosome": "17",
+      "cancer_types": ["Breast", "Ovarian"],
+      "actionable": true
+    },
+    "FANCF": {
+      "code": "HGNC:3585",
+      "system": "http://www.genenames.org",
+      "name": "FA Complementation Group F",
+      "chromosome": "11",
+      "cancer_types": ["Fanconi anemia"],
+      "actionable": false
+    },
+    "NTRK1": {
+      "code": "HGNC:8031",
+      "system": "http://www.genenames.org",
+      "name": "Neurotrophic Receptor Tyrosine Kinase 1",
+      "chromosome": "1",
+      "cancer_types": ["Various with NTRK fusions"],
+      "actionable": true
+    },
+    "NTRK2": {
+      "code": "HGNC:8032",
+      "system": "http://www.genenames.org",
+      "name": "Neurotrophic Receptor Tyrosine Kinase 2",
+      "chromosome": "9",
+      "cancer_types": ["Various with NTRK fusions"],
+      "actionable": true
+    },
+    "NTRK3": {
+      "code": "HGNC:8033",
+      "system": "http://www.genenames.org",
+      "name": "Neurotrophic Receptor Tyrosine Kinase 3",
+      "chromosome": "15",
+      "cancer_types": ["Various with NTRK fusions"],
+      "actionable": true
+    },
+    "CDKN2A": {
+      "code": "HGNC:1787",
+      "system": "http://www.genenames.org",
+      "name": "Cyclin Dependent Kinase Inhibitor 2A",
+      "chromosome": "9",
+      "cancer_types": ["Melanoma", "Pancreatic"],
+      "actionable": false
+    },
+    "BAP1": {
+      "code": "HGNC:950",
+      "system": "http://www.genenames.org",
+      "name": "BRCA1 Associated Protein 1",
+      "chromosome": "3",
+      "cancer_types": ["Mesothelioma", "Renal cell"],
+      "actionable": false
+    },
+    "CHEK2": {
+      "code": "HGNC:16627",
+      "system": "http://www.genenames.org",
+      "name": "Checkpoint Kinase 2",
+      "chromosome": "22",
+      "cancer_types": ["Breast", "Colorectal"],
+      "actionable": true
+    },
+    "MTAP": {
+      "code": "HGNC:7413",
+      "system": "http://www.genenames.org",
+      "name": "Methylthioadenosine Phosphorylase",
+      "chromosome": "9",
+      "cancer_types": ["Glioblastoma"],
+      "actionable": false
+    },
+    "STRN": {
+      "code": "HGNC:11425",
+      "system": "http://www.genenames.org",
+      "name": "Striatin",
+      "chromosome": "2",
+      "cancer_types": ["Various"],
+      "actionable": false
+    },
+    "EML4": {
+      "code": "HGNC:19326",
+      "system": "http://www.genenames.org",
+      "name": "EMAP Like 4",
+      "chromosome": "2",
+      "cancer_types": ["NSCLC (ALK fusion partner)"],
+      "actionable": true
+    },
+    "TACC3": {
+      "code": "HGNC:11524",
+      "system": "http://www.genenames.org",
+      "name": "Transforming Acidic Coiled-Coil Containing Protein 3",
+      "chromosome": "4",
+      "cancer_types": ["Glioblastoma (FGFR fusion partner)"],
+      "actionable": true
+    },
+    "MYCN": {
+      "code": "HGNC:7559",
+      "system": "http://www.genenames.org",
+      "name": "MYCN Proto-Oncogene, BHLH Transcription Factor",
+      "chromosome": "2",
+      "cancer_types": ["Neuroblastoma"],
+      "actionable": false
+    },
+    "RAD50": {
+      "code": "HGNC:9823",
+      "system": "http://www.genenames.org",
+      "name": "RAD50 Double Strand Break Repair Protein",
+      "chromosome": "5",
+      "cancer_types": ["Various"],
+      "actionable": false
+    }
+  }
+}

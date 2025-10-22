@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "system": "SNOMED-CT",
+    "description": "SNOMED Clinical Terms for oncology",
+    "last_updated": "2025-10-22",
+    "source": "SNOMED International"
+  },
+  "clinical_findings": {
+    "neoplasia maligna": {
+      "code": "363346000",
+      "system": "http://snomed.info/sct",
+      "display": "Malignant neoplastic disease"
+    },
+    "metastasi": {
+      "code": "128462008",
+      "system": "http://snomed.info/sct",
+      "display": "Metastatic malignant neoplasm"
+    },
+    "remissione completa": {
+      "code": "277022003",
+      "system": "http://snomed.info/sct",
+      "display": "Complete remission"
+    },
+    "progressione di malattia": {
+      "code": "271299001",
+      "system": "http://snomed.info/sct",
+      "display": "Disease progression"
+    }
+  },
+  "procedures": {
+    "biopsia": {
+      "code": "86273004",
+      "system": "http://snomed.info/sct",
+      "display": "Biopsy"
+    },
+    "sequenziamento genomico": {
+      "code": "405825005",
+      "system": "http://snomed.info/sct",
+      "display": "Molecular genetic test"
+    },
+    "ngs": {
+      "code": "117617002",
+      "system": "http://snomed.info/sct",
+      "display": "Next generation sequencing"
+    }
+  },
+  "specimen": {
+    "tessuto tumorale": {
+      "code": "258415003",
+      "system": "http://snomed.info/sct",
+      "display": "Tumor tissue"
+    },
+    "sangue": {
+      "code": "119297000",
+      "system": "http://snomed.info/sct",
+      "display": "Blood specimen"
+    },
+    "plasma": {
+      "code": "119361006",
+      "system": "http://snomed.info/sct",
+      "display": "Plasma specimen"
+    }
+  },
+  "variant_classification": {
+    "patogenetica": {
+      "code": "pathogenic",
+      "display": "Pathogenic",
+      "acmg_class": "5"
+    },
+    "likely pathogenic": {
+      "code": "likely_pathogenic",
+      "display": "Likely pathogenic",
+      "acmg_class": "4"
+    },
+    "variante a significato incerto": {
+      "code": "uncertain_significance",
+      "display": "Variant of uncertain significance",
+      "acmg_class": "3"
+    },
+    "vus": {
+      "code": "uncertain_significance",
+      "display": "VUS",
+      "acmg_class": "3"
+    },
+    "likely benign": {
+      "code": "likely_benign",
+      "display": "Likely benign",
+      "acmg_class": "2"
+    },
+    "benigna": {
+      "code": "benign",
+      "display": "Benign",
+      "acmg_class": "1"
+    }
+  }
+}

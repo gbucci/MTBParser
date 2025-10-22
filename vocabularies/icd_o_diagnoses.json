@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "version": "3.2",
+    "system": "ICD-O-3",
+    "description": "International Classification of Diseases for Oncology, 3rd Edition",
+    "last_updated": "2025-10-22",
+    "source": "WHO ICD-O-3"
+  },
+  "diagnoses": {
+    "adenocarcinoma polmonare": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, NOS",
+      "topography": "C34"
+    },
+    "carcinoma squamoso polmonare": {
+      "code": "8070/3",
+      "system": "ICD-O-3",
+      "display": "Squamous cell carcinoma, NOS",
+      "topography": "C34"
+    },
+    "nsclc": {
+      "code": "8046/3",
+      "system": "ICD-O-3",
+      "display": "Non-small cell carcinoma",
+      "topography": "C34"
+    },
+    "neoplasia polmonare": {
+      "code": "8010/3",
+      "system": "ICD-O-3",
+      "display": "Carcinoma, lung",
+      "topography": "C34"
+    },
+    "feocromocitoma": {
+      "code": "8700/3",
+      "system": "ICD-O-3",
+      "display": "Pheochromocytoma, malignant",
+      "topography": "C74"
+    },
+    "paraganglioma": {
+      "code": "8693/3",
+      "system": "ICD-O-3",
+      "display": "Paraganglioma, malignant",
+      "topography": "C75"
+    },
+    "melanoma": {
+      "code": "8720/3",
+      "system": "ICD-O-3",
+      "display": "Malignant melanoma, NOS",
+      "topography": "C44"
+    },
+    "colangiocarcinoma": {
+      "code": "8160/3",
+      "system": "ICD-O-3",
+      "display": "Cholangiocarcinoma",
+      "topography": "C22"
+    },
+    "adenocarcinoma pancreatico": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma of pancreas",
+      "topography": "C25"
+    },
+    "carcinoma tiroideo": {
+      "code": "8010/3",
+      "system": "ICD-O-3",
+      "display": "Carcinoma, NOS",
+      "topography": "C73"
+    },
+    "carcinoma mammario": {
+      "code": "8500/3",
+      "system": "ICD-O-3",
+      "display": "Infiltrating duct carcinoma, NOS",
+      "topography": "C50"
+    },
+    "adenocarcinoma colon": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, NOS",
+      "topography": "C18"
+    },
+    "glioblastoma": {
+      "code": "9440/3",
+      "system": "ICD-O-3",
+      "display": "Glioblastoma, NOS",
+      "topography": "C71"
+    },
+    "carcinoma renale": {
+      "code": "8312/3",
+      "system": "ICD-O-3",
+      "display": "Renal cell carcinoma, NOS",
+      "topography": "C64"
+    },
+    "carcinoma vescica": {
+      "code": "8120/3",
+      "system": "ICD-O-3",
+      "display": "Transitional cell carcinoma, NOS",
+      "topography": "C67"
+    }
+  }
+}

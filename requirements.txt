@@ -1,0 +1,45 @@
+# MTB Parser System - Python Dependencies
+# Version: 1.0.0
+
+# Core dependencies (minimal - no external packages required for basic functionality)
+# The parser is designed to work with Python standard library
+
+# Optional: For enhanced functionality
+# Uncomment if needed for specific features
+
+# For PDF parsing (if implementing pdf_reader.py)
+# PyPDF2==3.0.1
+# pdfplumber==0.10.3
+
+# For web interface (if implementing Flask/FastAPI backend)
+# flask==3.0.0
+# fastapi==0.109.0
+# uvicorn==0.27.0
+
+# For data manipulation and analysis
+# pandas==2.2.0
+# numpy==1.26.3
+
+# For advanced NLP (if extending pattern extraction)
+# spacy==3.7.2
+# transformers==4.37.0
+
+# For FHIR validation
+# fhir.resources==7.1.0
+
+# For testing
+# pytest==8.0.0
+# pytest-cov==4.1.0
+
+# For documentation
+# sphinx==7.2.6
+# sphinx-rtd-theme==2.0.0
+
+# For code quality
+# black==24.1.1
+# flake8==7.0.0
+# mypy==1.8.0
+
+# Development tools
+# ipython==8.20.0
+# jupyter==1.0.0
