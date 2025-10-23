@@ -86,8 +86,11 @@ Il parser è ottimizzato per gestire report MTB italiani, riconoscendo terminolo
 git clone https://github.com/gbucci/MTBParser.git
 cd MTBParser
 
-# Installazione dipendenze
+# Installazione dipendenze base
 pip install pandas
+
+# Installazione dipendenze per generazione PDF (opzionale)
+pip install reportlab
 ```
 
 ### Uso CLI (NUOVO)
@@ -197,6 +200,28 @@ for result in results:
     fhir = result['fhir_bundle']
     print(f"Paziente {parsed['patient']['id']}: {len(parsed['variants'])} varianti")
 ```
+
+### Generazione Report PDF
+
+MTBParser può generare report PDF professionali dai dati estratti:
+
+```bash
+# Genera PDF da file JSON completo
+python3 generate_pdf_report.py output/report_001/complete_package.json
+
+# Specifica percorso di output personalizzato
+python3 generate_pdf_report.py output/report_001/complete_package.json custom_report.pdf
+```
+
+Il report PDF include:
+- Anagrafica paziente
+- Diagnosi con codici ICD-O
+- Informazioni sul panel NGS utilizzato (FoundationOne CDx, OncoPanel Plus, etc.)
+- Tabella delle varianti genomiche con classificazione
+- Tumor Mutational Burden (TMB)
+- Raccomandazioni terapeutiche con livelli di evidenza
+
+Il generatore rileva automaticamente il panel NGS utilizzato confrontando i geni identificati con i panel standard oncologici.
 
 ### Test Rapido
 
@@ -364,7 +389,7 @@ self.drug_patterns = [
 - Il parser usa regex e può non catturare tutti i formati possibili
 - Supporto ottimizzato per report italiani; report in altre lingue potrebbero richiedere adattamenti
 - La qualità dell'estrazione dipende dalla struttura del report originale
-- Non gestisce immagini o PDF (richiede pre-conversione in testo)
+- L'input deve essere in formato testo (non gestisce direttamente immagini o PDF scansionati)
 
 ## Contribuire
 

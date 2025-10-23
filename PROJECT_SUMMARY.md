@@ -144,7 +144,29 @@
   - Export settings
   - Standard versions (FHIR R4, Phenopackets v2, OMOP v5.4)
 
-#### 7. Testing & Integration ✅
+#### 7. PDF Report Generator ✅
+- **Files**: 2 modules
+  - `generate_pdf_report.py`: Main PDF generation script
+  - `pdf_generator/ngs_panels.py`: NGS panel definitions
+
+- **Features**:
+  - Professional PDF reports with standardized formatting
+  - Automatic NGS panel detection (FoundationOne CDx, OncoPanel Plus, Comprehensive Cancer Panel)
+  - Patient demographics section
+  - Diagnosis with ICD-O codes
+  - NGS panel information (genes, biomarkers, methodology)
+  - Variants table with HGNC codes
+  - TMB (Tumor Mutational Burden) display
+  - Therapeutic recommendations with evidence levels
+  - Auto-generated timestamp
+
+- **NGS Panels Database**:
+  - FoundationOne CDx: 324 genes
+  - OncoPanel Plus: 447 genes
+  - Comprehensive Cancer Panel: 170 genes
+  - Panel auto-detection based on gene overlap
+
+#### 8. Testing & Integration ✅
 - **File**: `test_integration.py`
 - **Coverage**:
   - End-to-end pipeline test
@@ -163,12 +185,13 @@
 ## 📊 System Metrics
 
 ### Code Statistics
-- **Total Files Created**: 20+
-- **Total Lines of Code**: ~5,000+
+- **Total Files Created**: 22+
+- **Total Lines of Code**: ~5,500+
 - **Vocabularies**: 4 JSON files (116 total entries)
 - **Data Models**: 6 dataclasses
 - **Mappers**: 3 (FHIR, Phenopackets, OMOP)
 - **Exporters**: 2 (JSON, CSV)
+- **Report Generators**: 1 (PDF with 3 NGS panels)
 
 ### Vocabulary Coverage
 - **ICD-O Diagnoses**: 15 common oncology diagnoses
@@ -212,6 +235,7 @@ Raw MTB Text Report
         ↓
    [Exporters] → JSON files
                → CSV files
+               → PDF reports (professional format)
 ```
 
 ---
@@ -225,6 +249,8 @@ Raw MTB Text Report
 - ✅ `exporters/` (2 exporters)
 - ✅ `quality/` (1 module)
 - ✅ `utils/` (2 modules)
+- ✅ `pdf_generator/` (NGS panel definitions)
+- ✅ `generate_pdf_report.py` (PDF generator script)
 - ✅ `test_integration.py`
 - ✅ `requirements.txt`
 
@@ -259,10 +285,10 @@ Raw MTB Text Report
 ## 📈 Future Enhancements (Optional)
 
 Potential areas for expansion:
-- PDF report parsing (`utils/pdf_reader.py`)
+- PDF input parsing (`utils/pdf_reader.py`) for scanned reports
 - Web interface (`web_interface/`)
 - FHIR/Phenopacket validation
-- Additional export formats (HTML, PDF reports)
+- Additional export formats (HTML reports)
 - API endpoints (Flask/FastAPI)
 - Advanced NLP with spaCy/transformers
 - Additional vocabularies (HPO, MONDO, etc.)
