@@ -99,6 +99,9 @@ class PatternExtractors:
             # MYC amplified
             r'\b(\w+)\s+amplified',
 
+            # Italian format: "del gene KRAS (Copy number = 8.33)"
+            r'gene\s+(\w+)\s*\(Copy\s+number\s*=\s*(\d+\.?\d*)\)',
+
             # ERBB2 copy number: 8.5
             r'\b(\w+)\s+copy\s+number[:\s]+(\d+\.?\d*)',
 
