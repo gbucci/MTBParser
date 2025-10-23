@@ -22,6 +22,59 @@ except ModuleNotFoundError:
     from interactive.interactive_editor import SimpleInteractiveEditor
     from exporters.unified_exporter import UnifiedExporter, ExportFormat
 
+# Optional: python-docx for .docx support
+try:
+    from docx import Document
+    DOCX_SUPPORT = True
+except ImportError:
+    DOCX_SUPPORT = False
+
+
+def read_file_content(file_path: Path) -> str:
+    """
+    Read file content with automatic format detection
+
+    Supports:
+    - .txt files (plain text)
+    - .docx files (Microsoft Word, requires python-docx)
+
+    Args:
+        file_path: Path to input file
+
+    Returns:
+        Text content as string
+
+    Raises:
+        ValueError: If file format is not supported
+        ImportError: If .docx file but python-docx not installed
+    """
+    suffix = file_path.suffix.lower()
+
+    if suffix == '.txt':
+        # Plain text file
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return f.read()
+
+    elif suffix == '.docx':
+        # Microsoft Word document
+        if not DOCX_SUPPORT:
+            raise ImportError(
+                "python-docx is required to read .docx files.\n"
+                "Install it with: pip install python-docx"
+            )
+
+        doc = Document(file_path)
+        full_text = []
+        for para in doc.paragraphs:
+            full_text.append(para.text)
+        return '\n'.join(full_text)
+
+    else:
+        raise ValueError(
+            f"Unsupported file format: {suffix}\n"
+            f"Supported formats: .txt, .docx"
+        )
+
 
 class MTBParserCLI:
     """
@@ -50,7 +103,7 @@ class MTBParserCLI:
         Parse a single MTB report file
 
         Args:
-            input_file: Path to input text file
+            input_file: Path to input file (.txt or .docx)
             interactive: Force interactive mode
             auto_interactive: Automatically trigger interactive mode for invalid reports
             export_formats: List of export formats
@@ -60,10 +113,9 @@ class MTBParserCLI:
             Success status
         """
         try:
-            # Read file
+            # Read file with automatic format detection
             print(f"\n📄 Reading: {input_file}")
-            with open(input_file, 'r', encoding='utf-8') as f:
-                text_content = f.read()
+            text_content = read_file_content(input_file)
 
             # Parse report
             print("🔍 Parsing report...")
@@ -222,7 +274,7 @@ Supported export formats:
         'input_file',
         nargs='?',
         type=Path,
-        help='Input MTB report file (text format)'
+        help='Input MTB report file (.txt or .docx format)'
     )
     input_group.add_argument(
         '--batch',

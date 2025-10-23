@@ -7,6 +7,12 @@
 # Optional: For enhanced functionality
 # Uncomment if needed for specific features
 
+# For reading .docx files (Word documents)
+python-docx==1.1.0
+
+# For generating PDF reports
+reportlab==4.0.7
+
 # For PDF parsing (if implementing pdf_reader.py)
 # PyPDF2==3.0.1
 # pdfplumber==0.10.3

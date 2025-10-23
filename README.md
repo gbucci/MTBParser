@@ -89,8 +89,9 @@ cd MTBParser
 # Installazione dipendenze base
 pip install pandas
 
-# Installazione dipendenze per generazione PDF (opzionale)
-pip install reportlab
+# Installazione dipendenze opzionali
+pip install reportlab      # Per generazione PDF
+pip install python-docx    # Per leggere file .docx
 ```
 
 ### Uso CLI (NUOVO)

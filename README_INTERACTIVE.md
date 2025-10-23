@@ -51,16 +51,23 @@ pip install -r requirements.txt
 
 ### Uso Base - CLI
 
+**Formati supportati**: `.txt` (plain text) e `.docx` (Microsoft Word)
+
 #### 1. Parse singolo file con modalità interattiva
 
 ```bash
+# File di testo
 python mtb_parser_cli.py report.txt -i
+
+# File Word (richiede python-docx)
+python mtb_parser_cli.py report.docx -i
 ```
 
 #### 2. Parse ed export in tutti i formati
 
 ```bash
 python mtb_parser_cli.py report.txt -e all -o ./exports
+python mtb_parser_cli.py report.docx -e all -o ./exports
 ```
 
 #### 3. Parse ed export solo FHIR e Phenopackets
@@ -72,7 +79,11 @@ python mtb_parser_cli.py report.txt -e fhir phenopackets -o ./exports
 #### 4. Batch processing di una directory
 
 ```bash
+# Default pattern (*.txt)
 python mtb_parser_cli.py --batch ./reports/ -e all
+
+# Pattern per file .docx
+python mtb_parser_cli.py --batch ./reports/ --pattern "*.docx" -e all
 ```
 
 #### 5. Batch con modalità interattiva forzata
