@@ -139,12 +139,16 @@ class PatternExtractors:
             r'Sesso[:\s]+(M|F|Maschio|Femmina|Male|Female)',
             r'Sex[:\s]+(M|F|Male|Female)',
             r'Gender[:\s]+(M|F|Male|Female)',
+            # Inline format: "Paziente maschio" or "Paziente femmina"
+            r'[Pp]aziente\s+(maschio|femmina)',
         ]
 
         self.birth_date_patterns = [
-            r'Data\s+di\s+nascita[:\s]+(\d{1,2}[/-]\d{1,2}[/-]\d{4})',
-            r'Date\s+of\s+birth[:\s]+(\d{1,2}[/-]\d{1,2}[/-]\d{4})',
-            r'Nato[/a]?\s+il[:\s]+(\d{1,2}[/-]\d{1,2}[/-]\d{4})',
+            # Support multiple separators: /, -, .
+            r'Data\s+di\s+nascita[:\s]+(\d{1,2}[/.\-]\d{1,2}[/.\-]\d{4})',
+            r'Date\s+of\s+birth[:\s]+(\d{1,2}[/.\-]\d{1,2}[/.\-]\d{4})',
+            # "nato/a il" format - colon optional
+            r'[Nn]ato[/a]?\s+il[:\s]+(\d{1,2}[/.\-]\d{1,2}[/.\-]\d{4})',
         ]
 
         # ===== DIAGNOSIS PATTERNS =====
@@ -152,7 +156,11 @@ class PatternExtractors:
         self.diagnosis_patterns = [
             # Inline format: "affetto/a da [diagnosis]"
             # Example: "Paziente17 60 anni affetta da adenocarcinoma polmonare stadio IV"
-            r'affett[oa]\s+da\s+([^.\n]+?)(?:\s+(?:stadio|stage|con|e(?:\s+comutazione)?)\s+)',
+            # Stops at: stadio, stage, con, in, e comutazione
+            r'affett[oa]\s+da\s+([^.\n]+?)(?:\s+(?:stadio|stage|con|in\s+terapia|in\s+trattamento|e(?:\s+comutazione)?)\s+)',
+
+            # More flexible variant: stops at period, newline, or "in"
+            r'affett[oa]\s+da\s+([^.\n,]+?)(?:\s+in\s+)',
 
             # Variant: "con diagnosi di [diagnosis]"
             r'con\s+diagnosi\s+di\s+([^.\n]+?)(?:\s+(?:stadio|stage|con)\s+)',
@@ -237,7 +245,14 @@ class PatternExtractors:
         for pattern in self.sex_patterns:
             match = re.search(pattern, text, re.IGNORECASE)
             if match:
-                patient.sex = match.group(1)
+                sex_value = match.group(1)
+                # Normalize to M/F
+                if sex_value.lower() in ['maschio', 'male']:
+                    patient.sex = 'M'
+                elif sex_value.lower() in ['femmina', 'female']:
+                    patient.sex = 'F'
+                else:
+                    patient.sex = sex_value.upper()
                 break
 
         # Extract birth date
@@ -249,16 +264,41 @@ class PatternExtractors:
                 patient.birth_date = self._convert_date_to_iso(date_str)
                 break
 
+        # Calculate age from birth date if age not found
+        if patient.birth_date and not patient.age:
+            patient.age = self._calculate_age_from_birth_date(patient.birth_date)
+
         return patient
 
     @staticmethod
     def _convert_date_to_iso(date_str: str) -> str:
-        """Convert DD/MM/YYYY to YYYY-MM-DD"""
-        parts = re.split(r'[/-]', date_str)
+        """Convert DD/MM/YYYY or DD.MM.YYYY to YYYY-MM-DD"""
+        parts = re.split(r'[/.\-]', date_str)
         if len(parts) == 3:
             day, month, year = parts
             return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
         return date_str
+
+    @staticmethod
+    def _calculate_age_from_birth_date(birth_date_iso: str) -> Optional[int]:
+        """
+        Calculate age from birth date in ISO format (YYYY-MM-DD)
+
+        Args:
+            birth_date_iso: Birth date in ISO format (YYYY-MM-DD)
+
+        Returns:
+            Age in years, or None if calculation fails
+        """
+        try:
+            from datetime import datetime
+            birth = datetime.strptime(birth_date_iso, '%Y-%m-%d')
+            today = datetime.now()
+            # Calculate age accounting for birthday not yet occurred this year
+            age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+            return age
+        except (ValueError, AttributeError):
+            return None
 
     # ========== DIAGNOSIS EXTRACTION ==========
 
