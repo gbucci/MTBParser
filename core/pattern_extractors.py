@@ -148,16 +148,32 @@ class PatternExtractors:
         ]
 
         # ===== DIAGNOSIS PATTERNS =====
+        # Order matters: more specific patterns first
         self.diagnosis_patterns = [
-            r'Diagnosi[:\s]+([^\n.]+)',
-            r'Diagnosis[:\s]+([^\n.]+)',
-            r'Tumore[:\s]+([^\n.]+)',
-            r'Neoplasia[:\s]+([^\n.]+)',
+            # Inline format: "affetto/a da [diagnosis]"
+            # Example: "Paziente17 60 anni affetta da adenocarcinoma polmonare stadio IV"
+            r'affett[oa]\s+da\s+([^.\n]+?)(?:\s+(?:stadio|stage|con|e(?:\s+comutazione)?)\s+)',
+
+            # Variant: "con diagnosi di [diagnosis]"
+            r'con\s+diagnosi\s+di\s+([^.\n]+?)(?:\s+(?:stadio|stage|con)\s+)',
+
+            # Standard format with label (at beginning of line or after newline)
+            r'(?:^|\n)Diagnosi[:\s]+([^\n.(]+)',
+            r'(?:^|\n)Diagnosis[:\s]+([^\n.(]+)',
+
+            # Tumore/Neoplasia only if at beginning or after specific context
+            r'(?:^|\n)Tumore[:\s]+([^\n.(]+)',
+            r'(?:^|\n)Neoplasia[:\s]+([^\n.(]+)',
+
+            # Starting with diagnosis type (as fallback)
+            # Example: "adenocarcinoma polmonare stadio IV"
+            r'\b((?:adeno)?carcinoma\s+\w+(?:\s+\w+)?)\s+stadio',
         ]
 
         self.stage_patterns = [
-            r'Stadio[:\s]+(I{1,3}[AB]?|IV)',
-            r'Stage[:\s]+(I{1,3}[AB]?|IV)',
+            # Note: IV must come before I{1,3} to match correctly
+            r'[Ss]tadio[:\s]+(IV|I{1,3}[AB]?)',
+            r'[Ss]tage[:\s]+(IV|I{1,3}[AB]?)',
             r'TNM[:\s]+T(\d)N(\d)M(\d)',
         ]
 
