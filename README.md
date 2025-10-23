@@ -1,10 +1,39 @@
 # MTBParser
 
-Parser e convertitore FHIR per report di Molecular Tumor Board (MTB) italiani.
+**Version 1.0.0** - Parser completo per report di Molecular Tumor Board (MTB) italiani con **export multi-formato** e **modalità interattiva**.
+
+## 🚀 NOVITÀ - Version 1.0.0
+
+### Nuove Features Principali
+
+✅ **Export Multi-Formato Unificato** - Supporto completo per 5 formati interoperabili:
+- **FHIR R4** - HL7 FHIR Bundle per integrazione EHR
+- **GA4GH Phenopackets v2** - Standard per ricerca genomica internazionale
+- **OMOP CDM v5.4** - Common Data Model per studi osservazionali
+- **JSON** - Formato nativo MTBParser
+- **CSV** - Export tabulari per analisi
+
+✅ **Modalità Interattiva** - Sistema intelligente di validazione e correzione:
+- Validazione automatica con 3 livelli di severità (CRITICAL, WARNING, INFO)
+- Attivazione automatica per report incompleti
+- Editor guidato campo per campo
+- Navigazione intuitiva con tastiera
+
+✅ **CLI Completo** - Interfaccia command-line production-ready:
+- Parse singolo o batch processing
+- Export selettivo o completo
+- Configurazione flessibile
+
+**📖 Documentazione Nuove Features:**
+- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Guida rapida comandi
+- **[README_INTERACTIVE.md](README_INTERACTIVE.md)** - Guida completa modalità interattiva ed export
+- **[IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)** - Dettagli tecnici
+
+---
 
 ## Descrizione
 
-MTBParser è uno strumento Python che estrae automaticamente dati clinici molecolari strutturati da report MTB in formato testuale e li converte in risorse FHIR R4 standard per l'interoperabilità sanitaria.
+MTBParser è uno strumento Python che estrae automaticamente dati clinici molecolari strutturati da report MTB in formato testuale e li converte in **5 formati standard interoperabili** per l'integrazione in sistemi sanitari ed ambiti di ricerca.
 
 Il parser è ottimizzato per gestire report MTB italiani, riconoscendo terminologia medica italiana e formati tipici dei centri oncologici italiani.
 
@@ -48,13 +77,9 @@ Il parser è ottimizzato per gestire report MTB italiani, riconoscendo terminolo
 - Trial clinici
 - Razionale della raccomandazione
 
-## Installazione
+## 🚀 Quick Start (Nuova CLI)
 
-### Requisiti
-- Python 3.7+
-- pandas
-
-### Setup
+### Installazione
 
 ```bash
 # Clone del repository
@@ -64,6 +89,43 @@ cd MTBParser
 # Installazione dipendenze
 pip install pandas
 ```
+
+### Uso CLI (NUOVO)
+
+```bash
+# Parse report di esempio con export completo
+python mtb_parser_cli.py examples/sample_report.txt -e all -o ./exports
+
+# Parse con modalità interattiva
+python mtb_parser_cli.py my_report.txt -i
+
+# Batch processing di una directory
+python mtb_parser_cli.py --batch ./reports/ -e all
+
+# Export solo FHIR per integrazione EHR
+python mtb_parser_cli.py report.txt -e fhir -o ./ehr_integration
+
+# Help completo
+python mtb_parser_cli.py --help
+```
+
+**Output organizzato per paziente:**
+```
+exports/
+└── patient_12345/
+    ├── fhir_r4_bundle.json
+    ├── ga4gh_phenopacket_v2.json
+    ├── omop_cdm_v5_4.json
+    ├── mtb_report.json
+    └── csv/
+        ├── patient_summary.csv
+        ├── variants.csv
+        └── recommendations.csv
+```
+
+### Requisiti
+- Python 3.7+
+- pandas
 
 ## Utilizzo
 

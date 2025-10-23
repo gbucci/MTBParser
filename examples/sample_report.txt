@@ -1,0 +1,45 @@
+Report MTB - Paziente Esempio
+
+=== INFORMAZIONI PAZIENTE ===
+ID Paziente: 12345
+Età: 65 anni
+Sesso: M
+Data di nascita: 15/03/1958
+
+=== DIAGNOSI ===
+Diagnosi: Adenocarcinoma polmonare stadio IV
+Istologia: Adenocarcinoma scarsamente differenziato
+
+=== ANALISI MOLECOLARE ===
+Metodica: Oncomine Comprehensive Assay v3
+Data analisi: 22/10/2025
+
+Varianti genomiche identificate:
+
+Gene    cDNA            Proteina        Classificazione    VAF
+----    ----            --------        ---------------    ---
+EGFR    c.2573T>G       p.Leu858Arg     Pathogenic         45%
+TP53    c.733G>A        p.Gly245Ser     Pathogenic         52%
+NF1     c.2540T>C       p.Leu847Pro     VUS                23%
+
+Fusioni geniche:
+- Nessuna fusione identificata
+
+=== BIOMARCATORI ===
+TMB: 8.5 mut/Mb (tumor mutational burden medio)
+PD-L1: 5% (basso)
+
+=== RACCOMANDAZIONI TERAPEUTICHE ===
+
+1. EGFR L858R (esone 21)
+   - Farmaco: Osimertinib
+   - Indicazione: FDA approved per EGFR L858R
+   - Livello evidenza: 1A
+   - Note: Terapia di prima linea raccomandata
+
+2. Immunoterapia
+   - PD-L1 basso (5%) e TMB medio: considerare chemioterapia + pembrolizumab
+   - Livello evidenza: 2B
+
+=== TRIAL CLINICI DISPONIBILI ===
+Protocollo INT 142/24 - Studio di fase II per EGFR mutato
