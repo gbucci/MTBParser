@@ -322,6 +322,9 @@ class PatternExtractors:
         cnv_variants = self._extract_cnv(text, seen)
         variants.extend(cnv_variants)
 
+        # 5. Post-process: Enrich variants with VAF information
+        variants = self._enrich_variants_with_vaf(variants, text)
+
         return variants
 
     def _parse_variant_match(self, match: Tuple, pattern: str) -> Optional[Variant]:
@@ -471,6 +474,101 @@ class PatternExtractors:
             return "deletion"
         else:
             return "CNV"
+
+    def _enrich_variants_with_vaf(self, variants: List[Variant], text: str) -> List[Variant]:
+        """
+        Post-process variants to add VAF (Variant Allele Frequency) information
+
+        Searches for VAF patterns in the text and matches them to variants by gene name.
+        Handles multiple Italian formats:
+        - "EGFR 16%" (gene + percentage)
+        - "frequenza allelica 76%" (spelled out)
+        - "f.a. 68%" or "f.a.61%" (abbreviated)
+
+        Args:
+            variants: List of extracted variants
+            text: Original report text
+
+        Returns:
+            Variants enriched with VAF where found
+        """
+        # VAF extraction patterns (in order of priority)
+        vaf_patterns = [
+            # Pattern 1: Gene name followed by percentage
+            # Example: "EGFR 16%" or "PTEN 20%"
+            (r'\b({gene})\s+(\d+(?:\.\d+)?)%', 'gene_percent'),
+
+            # Pattern 2: Gene + mutation + f.a. + percentage
+            # Example: "Gly719Arg f.a.61%" or "f.a. 68%"
+            (r'({mutation})\s+f\.a\.?\s*(\d+(?:\.\d+)?)%', 'mutation_fa'),
+
+            # Pattern 3: "frequenza allelica" spelled out
+            # Example: "frequenza allelica 76%"
+            (r'({mutation}).*?frequenza\s+allelica\s+(\d+(?:\.\d+)?)%', 'mutation_freq'),
+
+            # Pattern 4: Protein change followed by percentage
+            # Example: "L858R 45%" or "(L858R) 45%"
+            (r'({mutation})\s*\)?\s*(\d+(?:\.\d+)?)%', 'mutation_percent'),
+        ]
+
+        # Create a mapping of gene -> variants for quick lookup
+        gene_variants = {}
+        for variant in variants:
+            if variant.gene not in gene_variants:
+                gene_variants[variant.gene] = []
+            gene_variants[variant.gene].append(variant)
+
+        # For each variant without VAF, try to find it
+        for variant in variants:
+            if variant.vaf is not None:
+                continue  # Already has VAF
+
+            gene = variant.gene
+            mutation = variant.protein_change or variant.cdna_change
+
+            # Try gene-based patterns first
+            for pattern_template, pattern_type in vaf_patterns:
+                if '{gene}' in pattern_template:
+                    # Gene-based pattern
+                    pattern = pattern_template.replace('{gene}', re.escape(gene))
+                    matches = re.findall(pattern, text, re.IGNORECASE)
+
+                    if matches:
+                        # Take the first match
+                        vaf_value = float(matches[0][1] if isinstance(matches[0], tuple) else matches[0])
+                        variant.vaf = vaf_value
+                        break
+
+                elif mutation and '{mutation}' in pattern_template:
+                    # Mutation-based pattern
+                    # Clean mutation string for regex
+                    mutation_clean = mutation.strip('p.').strip('c.')
+                    pattern = pattern_template.replace('{mutation}', re.escape(mutation_clean))
+                    matches = re.findall(pattern, text, re.IGNORECASE)
+
+                    if matches:
+                        vaf_value = float(matches[0][1] if isinstance(matches[0], tuple) else matches[0])
+                        variant.vaf = vaf_value
+                        break
+
+            # Special case: Look for VAF in nearby context (within 200 chars)
+            if variant.vaf is None and mutation:
+                # Find mutation mention in text
+                mutation_clean = mutation.strip('p.').strip('c.')
+                mutation_pattern = re.escape(mutation_clean)
+
+                for match in re.finditer(mutation_pattern, text, re.IGNORECASE):
+                    start = max(0, match.start() - 100)
+                    end = min(len(text), match.end() + 100)
+                    context = text[start:end]
+
+                    # Look for percentage in context
+                    vaf_match = re.search(r'(\d+(?:\.\d+)?)%', context)
+                    if vaf_match:
+                        variant.vaf = float(vaf_match.group(1))
+                        break
+
+        return variants
 
     # ========== TMB EXTRACTION ==========
 
