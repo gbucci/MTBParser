@@ -36,6 +36,9 @@ class PatternExtractors:
 
         # ===== VARIANT PATTERNS =====
         self.variant_patterns = [
+            # Detailed exon format: "variante nell'esone X del gene EGFR (NM_005228.4): c.2241A>C, p.(Leu747Phe), frequenza allelica 11%"
+            r"variante\s+nell['\']esone\s+\d+\s+del\s+gene\s+(\w+)\s*\([^\)]+\):\s*c\.([^,\s]+)(?:,\s*p\.\(([^)]+)\))?(?:,?\s*frequenza\s+allelica\s+(\d+(?:\.\d+)?)%)?",
+
             # Pattern tabellare completo: EGFR c.2573T>G p.Leu858Arg Pathogenic 45%
             r'(\w+)\s+c\.([^\s|]+)\s+p\.([^\s|]+)\s+(Pathogenic|VUS|Benign|Risultati discordanti|Likely Pathogenic|Likely Benign)\s+(\d+)%',
 
@@ -123,24 +126,27 @@ class PatternExtractors:
 
         # ===== PATIENT PATTERNS =====
         self.patient_id_patterns = [
-            r'ID\s+Paziente[:\s]+(\d+)',
-            r'Paziente\s*[:\s]*(\d+)',
-            r'ID[:\s]+(\d+)',
+            r'ID\s+Paziente[:\s]+([A-Z0-9]+)',
+            r'Paziente\s+([A-Z]\d+)\s+',  # "Paziente N1 maschio" format
+            r'Paziente\s*[:\s]*([A-Z0-9]+)',
+            r'ID[:\s]+([A-Z0-9]+)',
         ]
 
         self.age_patterns = [
-            r'Età[:\s]+(\d+)',
-            r'Age[:\s]+(\d+)',
-            r'(\d+)\s+anni',
-            r'(\d+)\s+years',
+            # Explicit age field - limit to reasonable ages (1-120)
+            r'\bEtà[:\s]+(\d{1,3})\b',
+            r'\bAge[:\s]+(\d{1,3})\b',
+            # More restrictive: age should be reasonable (1-3 digits) and followed by age indicator
+            r'\b([1-9]\d{0,2})\s+anni\b',
+            r'\b([1-9]\d{0,2})\s+years\b',
         ]
 
         self.sex_patterns = [
             r'Sesso[:\s]+(M|F|Maschio|Femmina|Male|Female)',
             r'Sex[:\s]+(M|F|Male|Female)',
             r'Gender[:\s]+(M|F|Male|Female)',
-            # Inline format: "Paziente maschio" or "Paziente femmina"
-            r'[Pp]aziente\s+(maschio|femmina)',
+            # Inline format: "Paziente N1 maschio" - allow optional ID between Paziente and sex
+            r'[Pp]aziente\s+(?:[A-Z0-9]+\s+)?(maschio|femmina)',
         ]
 
         self.birth_date_patterns = [
@@ -397,6 +403,16 @@ class PatternExtractors:
                 protein_change=f"p.{protein}" if not protein.startswith('p.') else protein,
                 classification=classification,
                 vaf=float(vaf)
+            )
+
+        # Pattern for detailed exon format (gene, cDNA, protein, VAF)
+        elif len(match) == 4:
+            gene, cdna, protein, vaf = match
+            return Variant(
+                gene=gene.upper(),
+                cdna_change=f"c.{cdna}" if cdna and not cdna.startswith('c.') else cdna if cdna else None,
+                protein_change=f"p.{protein}" if protein and not protein.startswith('p.') else protein if protein else None,
+                vaf=float(vaf) if vaf else None
             )
 
         # Pattern 2: Gene + change + VAF
