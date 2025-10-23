@@ -49,3 +49,9 @@ mtb_parser_old.py
 
 # Documentation builds
 docs/_build/
+
+# Batch processing outputs
+batch_test_output/
+batch_reports_final/
+sample_reports_individual_pdfs/
+sample_reports_batch_output/
