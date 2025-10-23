@@ -19,6 +19,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
 sys.path.insert(0, str(Path(__file__).parent))
 
 from pdf_generator.ngs_panels import get_panel, detect_panel_from_genes
+from pdf_generator.escat_pyramid import create_escat_pyramid, create_escat_legend, map_variant_to_escat, get_escat_color
 
 
 def load_mtb_data(json_path: str) -> dict:
@@ -177,30 +178,18 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
     elements.append(ngs_table)
     elements.append(Spacer(1, 0.5*cm))
     
-    # Variants Table
+    # Variants Table with ESCAT levels
     if variants:
         elements.append(Paragraph("VARIANTI GENOMICHE IDENTIFICATE", heading_style))
 
-        variant_table_data = [["Gene", "cDNA", "Proteina", "VAF%", "Classificazione", "HGNC"]]
+        # Add ESCAT column
+        variant_table_data = [["Gene", "cDNA", "Proteina", "VAF%", "Classificazione", "ESCAT", "HGNC"]]
 
-        for variant in variants[:20]:  # Limit to 20 variants
-            # Better handling of empty values
-            gene = variant.get('gene') or '-'
-            cdna = variant.get('cdna_change') or '-'
-            protein = variant.get('protein_change') or '-'
-            vaf = f"{variant['vaf']:.1f}" if variant.get('vaf') is not None else '-'
-            classification = variant.get('classification') or '-'
-            hgnc = variant.get('gene_code', {}).get('code', '-') if variant.get('gene_code') else '-'
+        # Track ESCAT levels for pyramid
+        escat_counts = {}
+        diagnosis_text = diagnosis.get('primary_diagnosis', '')
 
-            # Truncate long values with ellipsis
-            cdna = cdna if len(cdna) <= 20 else cdna[:17] + '...'
-            protein = protein if len(protein) <= 20 else protein[:17] + '...'
-            classification = classification if len(classification) <= 15 else classification[:12] + '...'
-
-            variant_table_data.append([gene, cdna, protein, vaf, classification, hgnc])
-
-        variant_table = Table(variant_table_data, colWidths=[2.5*cm, 3*cm, 3*cm, 1.5*cm, 3*cm, 2*cm])
-        variant_table.setStyle(TableStyle([
+        table_styles = [
             # Header styling - lighter blue
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#4a90d9')),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
@@ -211,11 +200,53 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
             ('FONTSIZE', (0, 1), (-1, -1), 9),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
             ('TOPPADDING', (0, 0), (-1, -1), 10),
-            # Alternating row colors for better readability
-            ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f9f9f9')),
-            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#f0f8ff')]),
             ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#d0d0d0'))
-        ]))
+        ]
+
+        for idx, variant in enumerate(variants[:20], start=1):  # Limit to 20 variants
+            # Better handling of empty values
+            gene = variant.get('gene') or '-'
+            cdna = variant.get('cdna_change') or '-'
+            protein = variant.get('protein_change') or '-'
+            vaf = f"{variant['vaf']:.1f}" if variant.get('vaf') is not None else '-'
+            classification = variant.get('classification') or '-'
+            hgnc = variant.get('gene_code', {}).get('code', '-') if variant.get('gene_code') else '-'
+
+            # Map to ESCAT level
+            escat_level = map_variant_to_escat(variant, diagnosis_text)
+            escat_display = escat_level if escat_level else '-'
+
+            # Track ESCAT distribution
+            if escat_level:
+                escat_counts[escat_level] = escat_counts.get(escat_level, 0) + 1
+
+            # Truncate long values with ellipsis
+            cdna = cdna if len(cdna) <= 20 else cdna[:17] + '...'
+            protein = protein if len(protein) <= 20 else protein[:17] + '...'
+            classification = classification if len(classification) <= 15 else classification[:12] + '...'
+
+            variant_table_data.append([gene, cdna, protein, vaf, classification, escat_display, hgnc])
+
+            # Color code ESCAT cell
+            if escat_level:
+                escat_color = get_escat_color(escat_level)
+                text_color = colors.white if escat_level not in ['IV'] else colors.black
+                table_styles.extend([
+                    ('BACKGROUND', (5, idx), (5, idx), escat_color),
+                    ('TEXTCOLOR', (5, idx), (5, idx), text_color),
+                    ('FONTNAME', (5, idx), (5, idx), 'Helvetica-Bold'),
+                ])
+
+            # Highlight actionable variants (ESCAT I or II)
+            if escat_level and escat_level.startswith(('I', 'II')):
+                table_styles.append(('BACKGROUND', (0, idx), (4, idx), colors.HexColor('#e8f8f5')))
+
+            # Highlight resistance (ESCAT X)
+            if escat_level == 'X':
+                table_styles.append(('BACKGROUND', (0, idx), (4, idx), colors.HexColor('#fadbd8')))
+
+        variant_table = Table(variant_table_data, colWidths=[2*cm, 2.5*cm, 2.5*cm, 1.3*cm, 2.5*cm, 1.5*cm, 1.7*cm])
+        variant_table.setStyle(TableStyle(table_styles))
         elements.append(variant_table)
         
         if len(variants) > 20:
@@ -239,7 +270,26 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
             
             elements.append(Paragraph(rec_text, styles['Normal']))
             elements.append(Spacer(1, 0.3*cm))
-    
+
+    # ESCAT Pyramid - show if there are variants
+    if variants:
+        elements.append(Spacer(1, 0.8*cm))
+        elements.append(Paragraph("LIVELLI DI EVIDENZA CLINICA (ESCAT)", heading_style))
+
+        # Add pyramid visualization
+        pyramid_elements = create_escat_pyramid(width=10*cm, include_legend=True)
+        elements.extend(pyramid_elements)
+
+        # Show distribution if we have ESCAT data
+        if escat_counts:
+            elements.append(Spacer(1, 0.5*cm))
+            dist_text = "<b>Distribuzione varianti per livello ESCAT:</b><br/>"
+            for level in sorted(escat_counts.keys()):
+                count = escat_counts[level]
+                dist_text += f"• {level}: {count} variant{'e' if count > 1 else 'e'}<br/>"
+
+            elements.append(Paragraph(dist_text, styles['Normal']))
+
     # Footer
     elements.append(Spacer(1, 1*cm))
     footer_text = f"<i>Report generato automaticamente da MTBParser il {datetime.now().strftime('%d/%m/%Y alle ore %H:%M')}</i>"
