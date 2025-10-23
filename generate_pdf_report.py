@@ -93,10 +93,10 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
     # Patient Information
     elements.append(Paragraph("ANAGRAFICA PAZIENTE", heading_style))
     patient_data = [
-        ["ID Paziente:", patient.get('id', 'N/A')],
-        ["Età:", f"{patient.get('age', 'N/A')} anni" if patient.get('age') else 'N/A'],
-        ["Sesso:", patient.get('sex', 'N/A')],
-        ["Data di nascita:", patient.get('birth_date', 'N/A')]
+        ["ID Paziente:", patient.get('id') or '-'],
+        ["Età:", f"{patient.get('age')} anni" if patient.get('age') else '-'],
+        ["Sesso:", patient.get('sex') or '-'],
+        ["Data di nascita:", patient.get('birth_date') or '-']
     ]
     
     patient_table = Table(patient_data, colWidths=[5*cm, 10*cm])
@@ -114,14 +114,19 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
     
     # Diagnosis
     elements.append(Paragraph("DIAGNOSI", heading_style))
-    diagnosis_text = diagnosis.get('primary_diagnosis', 'Non specificata')
-    if diagnosis.get('stage'):
-        diagnosis_text += f" - Stadio {diagnosis['stage']}"
-    
+    diagnosis_text = diagnosis.get('primary_diagnosis') or '-'
+
+    icd_code = '-'
+    if diagnosis.get('icd_o_code'):
+        code = diagnosis['icd_o_code'].get('code', '-')
+        display = diagnosis['icd_o_code'].get('display', '')
+        icd_code = f"{code} ({display})" if display else code
+
     diagnosis_data = [
         ["Diagnosi primaria:", diagnosis_text],
-        ["Codice ICD-O:", diagnosis.get('icd_o_code', {}).get('code', 'N/A') if diagnosis.get('icd_o_code') else 'N/A'],
-        ["Istologia:", diagnosis.get('histology', 'N/A')]
+        ["Stadio:", diagnosis.get('stage') or '-'],
+        ["Codice ICD-O:", icd_code],
+        ["Istologia:", diagnosis.get('histology') or '-']
     ]
     
     diagnosis_table = Table(diagnosis_data, colWidths=[5*cm, 10*cm])
@@ -140,22 +145,33 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
     detected_genes = [v['gene'] for v in variants if v.get('gene')]
     panel_name = detect_panel_from_genes(detected_genes)
     panel_info = get_panel(panel_name)
-    
+
     elements.append(Paragraph("TEST GENOMICI ESEGUITI", heading_style))
+
+    # Use Paragraph for long text to enable wrapping
+    methodology_text = ngs_method or panel_info['methodology']
+    methodology_para = Paragraph(methodology_text, styles['Normal'])
+
     ngs_data = [
-        ["Metodologia:", ngs_method or panel_info['methodology']],
+        ["Metodologia:", methodology_para],
         ["Panel utilizzato:", panel_name],
         ["Numero di geni:", str(len(panel_info['genes']))],
-        ["Biomarker analizzati:", ", ".join(panel_info['biomarkers'])]
+        ["Biomarker analizzati:", ", ".join(panel_info['biomarkers'])],
     ]
-    
+
+    # Add TMB value if available
+    if tmb is not None:
+        ngs_data.append(["TMB (mut/Mb):", f"{tmb}"])
+
     ngs_table = Table(ngs_data, colWidths=[5*cm, 10*cm])
     ngs_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#e8f4f8')),
         ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
         ('FONTSIZE', (0, 0), (-1, -1), 10),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+        ('TOPPADDING', (0, 0), (-1, -1), 8),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.grey)
     ]))
     elements.append(ngs_table)
@@ -164,55 +180,50 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
     # Variants Table
     if variants:
         elements.append(Paragraph("VARIANTI GENOMICHE IDENTIFICATE", heading_style))
-        
+
         variant_table_data = [["Gene", "cDNA", "Proteina", "VAF%", "Classificazione", "HGNC"]]
-        
+
         for variant in variants[:20]:  # Limit to 20 variants
-            variant_table_data.append([
-                variant.get('gene') or '',
-                (variant.get('cdna_change') or '')[:20],
-                (variant.get('protein_change') or '')[:20],
-                str(variant.get('vaf', '')) if variant.get('vaf') else '',
-                (variant.get('classification') or '')[:15],
-                (variant.get('gene_code', {}).get('code') or '')[:15] if variant.get('gene_code') else ''
-            ])
-        
+            # Better handling of empty values
+            gene = variant.get('gene') or '-'
+            cdna = variant.get('cdna_change') or '-'
+            protein = variant.get('protein_change') or '-'
+            vaf = f"{variant['vaf']:.1f}" if variant.get('vaf') is not None else '-'
+            classification = variant.get('classification') or '-'
+            hgnc = variant.get('gene_code', {}).get('code', '-') if variant.get('gene_code') else '-'
+
+            # Truncate long values with ellipsis
+            cdna = cdna if len(cdna) <= 20 else cdna[:17] + '...'
+            protein = protein if len(protein) <= 20 else protein[:17] + '...'
+            classification = classification if len(classification) <= 15 else classification[:12] + '...'
+
+            variant_table_data.append([gene, cdna, protein, vaf, classification, hgnc])
+
         variant_table = Table(variant_table_data, colWidths=[2.5*cm, 3*cm, 3*cm, 1.5*cm, 3*cm, 2*cm])
         variant_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1a5490')),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            # Header styling - lighter blue
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#4a90d9')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
             ('FONTSIZE', (0, 0), (-1, 0), 10),
-            ('FONTSIZE', (0, 1), (-1, -1), 8),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey)
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
+            ('TOPPADDING', (0, 0), (-1, -1), 10),
+            # Alternating row colors for better readability
+            ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#f9f9f9')),
+            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#f0f8ff')]),
+            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#d0d0d0'))
         ]))
         elements.append(variant_table)
         
         if len(variants) > 20:
             elements.append(Spacer(1, 0.3*cm))
             elements.append(Paragraph(f"<i>... e altre {len(variants)-20} varianti (vedi report completo)</i>", styles['Normal']))
-        
+
         elements.append(Spacer(1, 0.5*cm))
-    
-    # TMB
-    if tmb:
-        elements.append(Paragraph("TUMOR MUTATIONAL BURDEN (TMB)", heading_style))
-        tmb_data = [["TMB:", f"{tmb} mut/Mb"]]
-        tmb_table = Table(tmb_data, colWidths=[5*cm, 10*cm])
-        tmb_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#e8f4f8')),
-            ('ALIGN', (0, 0), (0, -1), 'RIGHT'),
-            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, -1), 10),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey)
-        ]))
-        elements.append(tmb_table)
-        elements.append(Spacer(1, 0.5*cm))
-    
+
     # Therapeutic Recommendations
     if recommendations:
         elements.append(Paragraph("RACCOMANDAZIONI TERAPEUTICHE", heading_style))
