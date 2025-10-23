@@ -1,0 +1,150 @@
+{
+  "patient": {
+    "id": "13",
+    "age": null,
+    "sex": null,
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": null,
+    "stage": null,
+    "histology": null,
+    "icd_o_code": null
+  },
+  "variants": [
+    {
+      "gene": "KRAS",
+      "cdna_change": null,
+      "protein_change": "G12D",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:6407",
+        "system": "http://www.genenames.org",
+        "name": "KRAS Proto-Oncogene, GTPase",
+        "chromosome": "12",
+        "cancer_types": [
+          "NSCLC",
+          "Colorectal",
+          "Pancreatic"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "ATM",
+      "cdna_change": null,
+      "protein_change": "su tessuto (VAF 45%) e la presenza di multiple alterazioni geniche riscontrate in NGS supportino la possibilità che il paziente possa avere un profilo HRD+",
+      "classification": null,
+      "vaf": 45.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:795",
+        "system": "http://www.genenames.org",
+        "name": "ATM Serine/Threonine Kinase",
+        "chromosome": "11",
+        "cancer_types": [
+          "Breast",
+          "Pancreatic"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "RET",
+      "cdna_change": null,
+      "protein_change": "la bassa frequenza allelica della variante (VAF 14%) e l’assenza di comorbidità suggestive portano e ritenere molto poco probabile presenza di sindrome MEN",
+      "classification": null,
+      "vaf": 14.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:9967",
+        "system": "http://www.genenames.org",
+        "name": "Ret Proto-Oncogene",
+        "chromosome": "10",
+        "cancer_types": [
+          "Thyroid",
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "RAD50",
+      "cdna_change": null,
+      "protein_change": "non è stata descritta nei principali database di riferimento; il gene RAD50 è coinvolto nel pathway del DNA-damage repair e potenzialmente alla base di un fenotipo HRD+ (homologous recombination deficiency); tuttavia solo un test HRD potrebbe chiarire il fenotipo",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:9823",
+        "system": "http://www.genenames.org",
+        "name": "RAD50 Double Strand Break Repair Protein",
+        "chromosome": "5",
+        "cancer_types": [
+          "Various"
+        ],
+        "actionable": false
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "niraparib",
+      "gene_target": "BRCA1, BRCA2",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1856219",
+        "system": "RxNorm",
+        "display": "niraparib",
+        "target": [
+          "BRCA1",
+          "BRCA2"
+        ],
+        "indication": "BRCA-mutated ovarian cancer",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "sotorasib",
+      "gene_target": "KRAS",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2566077",
+        "system": "RxNorm",
+        "display": "sotorasib",
+        "target": [
+          "KRAS"
+        ],
+        "indication": "KRAS G12C NSCLC",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": "sia su ctDNA sia su tessuto è stata riscontrata un’alterazione patogenetica di ATM, uno dei geni coinvolti nel pathway del DNA-damage repair e potenzialmente alla base di un fenotipo HRD (homologous recombination deficiency). In patologie a diversa primitività (ca ovarico, ca prostatico) è consolidato l’utilizzo dei PARP inibitori in neoplasie con deficit della ricombinazione omologa (HRD+); nel caso in esame, sebbene la frequenza allelica della mutazione ATM su tessuto (VAF 45%) e la presenza di multiple alterazioni geniche riscontrate in NGS supportino la possibilità che il paziente possa avere un profilo HRD+, la mancata risposta al platino (presente in 2 linee di trattamento) contrasta con tale ipotesi. Solo un test HRD potrebbe chiarire il fenotipo, ma non è rimborsato per le neoplasie polmonari.",
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 18,
+    "filled_fields": 1,
+    "completeness_pct": 5.6,
+    "variants_found": 4,
+    "variants_with_vaf": 2,
+    "variants_classified": 0,
+    "variants_with_gene_code": 4,
+    "drugs_identified": 2,
+    "drugs_mapped": 2,
+    "diagnosis_mapped": false,
+    "patient_complete": false,
+    "warnings": [
+      "Diagnosis not mapped to ICD-O",
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}

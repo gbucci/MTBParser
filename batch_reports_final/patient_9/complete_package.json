@@ -1,0 +1,113 @@
+{"mtb_report":
+{
+  "patient": {
+    "id": "9",
+    "age": null,
+    "sex": "M",
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": null,
+    "stage": null,
+    "histology": null,
+    "icd_o_code": null
+  },
+  "variants": [
+    {
+      "gene": "JAK2",
+      "cdna_change": null,
+      "protein_change": "V617F",
+      "classification": null,
+      "vaf": 1.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:6192",
+        "system": "http://www.genenames.org",
+        "name": "Janus Kinase 2",
+        "chromosome": "9",
+        "cancer_types": [
+          "Myeloproliferative neoplasms"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "JAK2",
+      "cdna_change": null,
+      "protein_change": "V617F è tipica della policitemia vera e di altre sindromi mieloproliferative",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:6192",
+        "system": "http://www.genenames.org",
+        "name": "Janus Kinase 2",
+        "chromosome": "9",
+        "cancer_types": [
+          "Myeloproliferative neoplasms"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "EGFR",
+      "cdna_change": null,
+      "protein_change": "exon 19 deletion",
+      "classification": "Pathogenic",
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "amivantamab",
+      "gene_target": "EGFR",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2569455",
+        "system": "RxNorm",
+        "display": "amivantamab",
+        "target": [
+          "EGFR"
+        ],
+        "indication": "EGFR exon 20 insertion NSCLC",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": "possiamo identificare la specifica alterazione genica, ma dal punto di vista biologico tutte le delezioni (e delins) dell’esone 19 condividono il medesimo significato e determinano sensibilità agli inibitori tirosinchinasici.",
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 15,
+    "filled_fields": 2,
+    "completeness_pct": 13.3,
+    "variants_found": 3,
+    "variants_with_vaf": 1,
+    "variants_classified": 1,
+    "variants_with_gene_code": 3,
+    "drugs_identified": 1,
+    "drugs_mapped": 1,
+    "diagnosis_mapped": false,
+    "patient_complete": false,
+    "warnings": [
+      "Diagnosis not mapped to ICD-O",
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}}

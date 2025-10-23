@@ -1,0 +1,189 @@
+{"mtb_report":
+{
+  "patient": {
+    "id": "1",
+    "age": null,
+    "sex": "F",
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": "carcinoma tiroideo",
+    "stage": null,
+    "histology": null,
+    "icd_o_code": {
+      "code": "8010/3",
+      "system": "ICD-O-3",
+      "display": "Carcinoma, NOS",
+      "topography": "C73"
+    }
+  },
+  "variants": [
+    {
+      "gene": "KRAS",
+      "cdna_change": null,
+      "protein_change": "G12D",
+      "classification": null,
+      "vaf": 25.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:6407",
+        "system": "http://www.genenames.org",
+        "name": "KRAS Proto-Oncogene, GTPase",
+        "chromosome": "12",
+        "cancer_types": [
+          "NSCLC",
+          "Colorectal",
+          "Pancreatic"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "KRAS",
+      "cdna_change": null,
+      "protein_change": "ed in particolare della variante G13V (che ha valore di gain of function) in pazienti con MET exon skipping non è riportata in letteratura; tuttavia alterazioni di KRAS sono descritte come meccanismi di resistenza primaria e secondaria agli inibitori di MET",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:6407",
+        "system": "http://www.genenames.org",
+        "name": "KRAS Proto-Oncogene, GTPase",
+        "chromosome": "12",
+        "cancer_types": [
+          "NSCLC",
+          "Colorectal",
+          "Pancreatic"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "STRN::ALK",
+      "cdna_change": null,
+      "protein_change": "fusion",
+      "classification": "Pathogenic",
+      "vaf": 3.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:11425",
+        "system": "http://www.genenames.org",
+        "name": "Striatin",
+        "chromosome": "2",
+        "cancer_types": [
+          "Various"
+        ],
+        "actionable": false
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "alectinib",
+      "gene_target": "ALK",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1721520",
+        "system": "RxNorm",
+        "display": "alectinib",
+        "target": [
+          "ALK"
+        ],
+        "indication": "ALK-positive NSCLC",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "niraparib",
+      "gene_target": "BRCA1, BRCA2",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1856219",
+        "system": "RxNorm",
+        "display": "niraparib",
+        "target": [
+          "BRCA1",
+          "BRCA2"
+        ],
+        "indication": "BRCA-mutated ovarian cancer",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "capmatinib",
+      "gene_target": "MET",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2379709",
+        "system": "RxNorm",
+        "display": "capmatinib",
+        "target": [
+          "MET"
+        ],
+        "indication": "MET exon 14 skipping NSCLC",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "tepotinib",
+      "gene_target": "MET",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2468669",
+        "system": "RxNorm",
+        "display": "tepotinib",
+        "target": [
+          "MET"
+        ],
+        "indication": "MET exon 14 skipping NSCLC",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "erdafitinib",
+      "gene_target": "FGFR2, FGFR3",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2177997",
+        "system": "RxNorm",
+        "display": "erdafitinib",
+        "target": [
+          "FGFR2",
+          "FGFR3"
+        ],
+        "indication": "FGFR-altered urothelial carcinoma",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": "genomico interno solo quella di TP53 è stata classificata come di significato patogenetico, mentre per le alterazioni di BAP1, NF1 e PTEN altresì riscontrate non ci sono ad oggi evidenze di significato clinico riportate nei principali database di riferimento.",
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 15,
+    "filled_fields": 3,
+    "completeness_pct": 20.0,
+    "variants_found": 3,
+    "variants_with_vaf": 2,
+    "variants_classified": 1,
+    "variants_with_gene_code": 3,
+    "drugs_identified": 5,
+    "drugs_mapped": 5,
+    "diagnosis_mapped": true,
+    "patient_complete": false,
+    "warnings": [
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}}

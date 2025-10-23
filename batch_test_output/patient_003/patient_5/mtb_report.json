@@ -1,0 +1,76 @@
+{
+  "patient": {
+    "id": "5",
+    "age": 50,
+    "sex": null,
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": null,
+    "stage": null,
+    "histology": null,
+    "icd_o_code": null
+  },
+  "variants": [
+    {
+      "gene": "BRAF",
+      "cdna_change": null,
+      "protein_change": "che si mantiene anche all’analisi NGS della rebiopsia in esame",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:1097",
+        "system": "http://www.genenames.org",
+        "name": "B-Raf Proto-Oncogene, Serine/Threonine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "Melanoma",
+          "Colorectal",
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "pembrolizumab",
+      "gene_target": "PD-1",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1601859",
+        "system": "RxNorm",
+        "display": "pembrolizumab",
+        "target": [
+          "PD-1"
+        ],
+        "indication": "High TMB, MSI-H cancers",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": "ha frequenza allelica elevata (69%); tuttavia, considerata la cellularità neoplastica del campione e l’insorgenza di malattia oltre i 50 anni (non nota anamnesi familiare o personale positiva per altre neoplasie) si ritiene improbabile che si tratti di una variante germinale per cui non si pone indicazione ad approfondimenti in tal senso. References: [Giraud JS et al. NF1 mutations as biomarker of response to immune checkpoint blockades for lung adenocarcinoma patients. NPJ Precis Oncol. 2024 Feb 10;8(1):32. doi: 10.1038/s41698-024-00524-x] [Redig AJ, et al. Clinical and Molecular Characteristics of NF1-Mutant Lung Cancer. Clin Cancer Res. 2016 Jul 1;22(13):3148-56. doi: 10.1158/1078-0432.CCR-15-2377]",
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 9,
+    "filled_fields": 2,
+    "completeness_pct": 22.2,
+    "variants_found": 1,
+    "variants_with_vaf": 0,
+    "variants_classified": 0,
+    "variants_with_gene_code": 1,
+    "drugs_identified": 1,
+    "drugs_mapped": 1,
+    "diagnosis_mapped": false,
+    "patient_complete": false,
+    "warnings": [
+      "Diagnosis not mapped to ICD-O",
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "patient": {
+    "id": "17",
+    "age": 60,
+    "sex": null,
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": "adenocarcinoma polmonare",
+    "stage": "IV",
+    "histology": null,
+    "icd_o_code": {
+      "code": "8140/3",
+      "system": "ICD-O-3",
+      "display": "Adenocarcinoma, NOS",
+      "topography": "C34"
+    }
+  },
+  "variants": [
+    {
+      "gene": "EGFR",
+      "cdna_change": null,
+      "protein_change": "L858R",
+      "classification": null,
+      "vaf": 16.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "PTEN",
+      "cdna_change": null,
+      "protein_change": "D107Y",
+      "classification": null,
+      "vaf": 20.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:9588",
+        "system": "http://www.genenames.org",
+        "name": "Phosphatase And Tensin Homolog",
+        "chromosome": "10",
+        "cancer_types": [
+          "Various"
+        ],
+        "actionable": false
+      }
+    },
+    {
+      "gene": "EGFR",
+      "cdna_change": null,
+      "protein_change": "R776H",
+      "classification": null,
+      "vaf": 16.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "EGFR",
+      "cdna_change": null,
+      "protein_change": "L858R e comutazione di PTEN D107Y",
+      "classification": null,
+      "vaf": 16.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "PIK3CA",
+      "cdna_change": null,
+      "protein_change": "Glu545Lys",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:8975",
+        "system": "http://www.genenames.org",
+        "name": "Phosphatidylinositol-4,5-Bisphosphate 3-Kinase Catalytic Subunit Alpha",
+        "chromosome": "3",
+        "cancer_types": [
+          "Breast",
+          "Colorectal"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "PTEN",
+      "cdna_change": null,
+      "protein_change": "D107Y è localizzata nel dominio tirosinchinasico",
+      "classification": null,
+      "vaf": 20.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:9588",
+        "system": "http://www.genenames.org",
+        "name": "Phosphatase And Tensin Homolog",
+        "chromosome": "10",
+        "cancer_types": [
+          "Various"
+        ],
+        "actionable": false
+      }
+    },
+    {
+      "gene": "FGFR3::TACC3",
+      "cdna_change": null,
+      "protein_change": "fusion",
+      "classification": "Pathogenic",
+      "vaf": 2.9,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3690",
+        "system": "http://www.genenames.org",
+        "name": "Fibroblast Growth Factor Receptor 3",
+        "chromosome": "4",
+        "cancer_types": [
+          "Bladder",
+          "Glioblastoma"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "FGFR3::TACC3",
+      "cdna_change": null,
+      "protein_change": "fusion",
+      "classification": "Pathogenic",
+      "vaf": 2.9,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3690",
+        "system": "http://www.genenames.org",
+        "name": "Fibroblast Growth Factor Receptor 3",
+        "chromosome": "4",
+        "cancer_types": [
+          "Bladder",
+          "Glioblastoma"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "FGFR3::TACC3",
+      "cdna_change": null,
+      "protein_change": "fusion",
+      "classification": "Pathogenic",
+      "vaf": 2.9,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3690",
+        "system": "http://www.genenames.org",
+        "name": "Fibroblast Growth Factor Receptor 3",
+        "chromosome": "4",
+        "cancer_types": [
+          "Bladder",
+          "Glioblastoma"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "FGFR3::TACC3",
+      "cdna_change": null,
+      "protein_change": "fusion",
+      "classification": "Pathogenic",
+      "vaf": 2.9,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3690",
+        "system": "http://www.genenames.org",
+        "name": "Fibroblast Growth Factor Receptor 3",
+        "chromosome": "4",
+        "cancer_types": [
+          "Bladder",
+          "Glioblastoma"
+        ],
+        "actionable": true
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "afatinib",
+      "gene_target": "EGFR",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1430438",
+        "system": "RxNorm",
+        "display": "afatinib",
+        "target": [
+          "EGFR"
+        ],
+        "indication": "NSCLC with EGFR mutations",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "erdafitinib",
+      "gene_target": "FGFR2, FGFR3",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2177997",
+        "system": "RxNorm",
+        "display": "erdafitinib",
+        "target": [
+          "FGFR2",
+          "FGFR3"
+        ],
+        "indication": "FGFR-altered urothelial carcinoma",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "osimertinib",
+      "gene_target": "EGFR",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1873986",
+        "system": "RxNorm",
+        "display": "osimertinib",
+        "target": [
+          "EGFR"
+        ],
+        "indication": "NSCLC with EGFR T790M",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": "di mutazione composta di EGFR es 18 Gly719Arg e EGFR es 20 Arg776His",
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 36,
+    "filled_fields": 4,
+    "completeness_pct": 11.1,
+    "variants_found": 10,
+    "variants_with_vaf": 9,
+    "variants_classified": 4,
+    "variants_with_gene_code": 10,
+    "drugs_identified": 3,
+    "drugs_mapped": 3,
+    "diagnosis_mapped": true,
+    "patient_complete": false,
+    "warnings": [
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}

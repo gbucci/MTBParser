@@ -1,0 +1,251 @@
+{"mtb_report":
+{
+  "patient": {
+    "id": "7",
+    "age": null,
+    "sex": null,
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": null,
+    "stage": null,
+    "histology": null,
+    "icd_o_code": null
+  },
+  "variants": [
+    {
+      "gene": "BRAF",
+      "cdna_change": null,
+      "protein_change": "G469A",
+      "classification": null,
+      "vaf": 7.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:1097",
+        "system": "http://www.genenames.org",
+        "name": "B-Raf Proto-Oncogene, Serine/Threonine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "Melanoma",
+          "Colorectal",
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "BRAF",
+      "cdna_change": null,
+      "protein_change": "G469V",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:1097",
+        "system": "http://www.genenames.org",
+        "name": "B-Raf Proto-Oncogene, Serine/Threonine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "Melanoma",
+          "Colorectal",
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "KRAS",
+      "cdna_change": null,
+      "protein_change": "G12V",
+      "classification": null,
+      "vaf": 50.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:6407",
+        "system": "http://www.genenames.org",
+        "name": "KRAS Proto-Oncogene, GTPase",
+        "chromosome": "12",
+        "cancer_types": [
+          "NSCLC",
+          "Colorectal",
+          "Pancreatic"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "MET",
+      "cdna_change": null,
+      "protein_change": "R988C",
+      "classification": null,
+      "vaf": 50.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:7029",
+        "system": "http://www.genenames.org",
+        "name": "MET Proto-Oncogene, Receptor Tyrosine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Gastric"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "BRAF",
+      "cdna_change": null,
+      "protein_change": "riscontrata risulta essere una mutazione nell’esone 11 di BRAF",
+      "classification": null,
+      "vaf": 7.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:1097",
+        "system": "http://www.genenames.org",
+        "name": "B-Raf Proto-Oncogene, Serine/Threonine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "Melanoma",
+          "Colorectal",
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "BRAF",
+      "cdna_change": null,
+      "protein_change": "non-V600",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:1097",
+        "system": "http://www.genenames.org",
+        "name": "B-Raf Proto-Oncogene, Serine/Threonine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "Melanoma",
+          "Colorectal",
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "BRCA2",
+      "cdna_change": null,
+      "protein_change": "emersa dal test germinale è coerente con la risposta clinica e laboratoristica ai sali di platino e supporta razionale biologico di utilizzo di PARPi di mantenimento (dati studio Fase 3)",
+      "classification": null,
+      "vaf": 50.0,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:1101",
+        "system": "http://www.genenames.org",
+        "name": "BRCA2 DNA Repair Associated",
+        "chromosome": "13",
+        "cancer_types": [
+          "Breast",
+          "Ovarian",
+          "Prostate"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "MET",
+      "cdna_change": null,
+      "protein_change": "riscontrata (R988C",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:7029",
+        "system": "http://www.genenames.org",
+        "name": "MET Proto-Oncogene, Receptor Tyrosine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Gastric"
+        ],
+        "actionable": true
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "olaparib",
+      "gene_target": "BRCA1, BRCA2",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1597582",
+        "system": "RxNorm",
+        "display": "olaparib",
+        "target": [
+          "BRCA1",
+          "BRCA2"
+        ],
+        "indication": "BRCA-mutated cancers",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "dabrafenib",
+      "gene_target": "BRAF",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1374053",
+        "system": "RxNorm",
+        "display": "dabrafenib",
+        "target": [
+          "BRAF"
+        ],
+        "indication": "BRAF V600E/K melanoma, NSCLC",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "trametinib",
+      "gene_target": "BRAF, MEK",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1373476",
+        "system": "RxNorm",
+        "display": "trametinib",
+        "target": [
+          "BRAF",
+          "MEK"
+        ],
+        "indication": "BRAF V600E/K melanoma",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": "interno 25-M-01194: mut BRAF G469A (VAF 7%)",
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 30,
+    "filled_fields": 1,
+    "completeness_pct": 3.3,
+    "variants_found": 8,
+    "variants_with_vaf": 5,
+    "variants_classified": 0,
+    "variants_with_gene_code": 8,
+    "drugs_identified": 3,
+    "drugs_mapped": 3,
+    "diagnosis_mapped": false,
+    "patient_complete": false,
+    "warnings": [
+      "Diagnosis not mapped to ICD-O",
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}}

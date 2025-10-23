@@ -255,7 +255,7 @@ def map_variant_to_escat(variant: Dict, diagnosis: str) -> Optional[str]:
         ESCAT level string (e.g., 'I-A', 'II-B') or None
     """
     gene = variant.get('gene', '').upper()
-    classification = variant.get('classification', '').lower()
+    classification = (variant.get('classification') or '').lower()
 
     # High evidence actionable variants (examples - should be expanded)
     tier_1a_variants = {

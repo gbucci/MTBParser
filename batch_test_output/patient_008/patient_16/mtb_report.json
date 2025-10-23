@@ -1,0 +1,96 @@
+{
+  "patient": {
+    "id": "16",
+    "age": 67,
+    "sex": null,
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": null,
+    "stage": null,
+    "histology": null,
+    "icd_o_code": null
+  },
+  "variants": [
+    {
+      "gene": "KRAS",
+      "cdna_change": null,
+      "protein_change": "G12D",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:6407",
+        "system": "http://www.genenames.org",
+        "name": "KRAS Proto-Oncogene, GTPase",
+        "chromosome": "12",
+        "cancer_types": [
+          "NSCLC",
+          "Colorectal",
+          "Pancreatic"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "EGFR",
+      "cdna_change": null,
+      "protein_change": "nella biopsia polmonare risulta essere un'inserzione dell'esone 20",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:3236",
+        "system": "http://www.genenames.org",
+        "name": "Epidermal Growth Factor Receptor",
+        "chromosome": "7",
+        "cancer_types": [
+          "NSCLC",
+          "Glioblastoma",
+          "Colorectal"
+        ],
+        "actionable": true
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "amivantamab",
+      "gene_target": "EGFR",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2569455",
+        "system": "RxNorm",
+        "display": "amivantamab",
+        "target": [
+          "EGFR"
+        ],
+        "indication": "EGFR exon 20 insertion NSCLC",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": null,
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 12,
+    "filled_fields": 2,
+    "completeness_pct": 16.7,
+    "variants_found": 2,
+    "variants_with_vaf": 0,
+    "variants_classified": 0,
+    "variants_with_gene_code": 2,
+    "drugs_identified": 1,
+    "drugs_mapped": 1,
+    "diagnosis_mapped": false,
+    "patient_complete": false,
+    "warnings": [
+      "Diagnosis not mapped to ICD-O",
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}

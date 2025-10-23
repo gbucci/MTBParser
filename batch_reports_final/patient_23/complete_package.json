@@ -1,0 +1,115 @@
+{"mtb_report":
+{
+  "patient": {
+    "id": "23",
+    "age": null,
+    "sex": null,
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": null,
+    "stage": "IIIB",
+    "histology": null,
+    "icd_o_code": null
+  },
+  "variants": [
+    {
+      "gene": "BRAF",
+      "cdna_change": null,
+      "protein_change": "V660E",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:1097",
+        "system": "http://www.genenames.org",
+        "name": "B-Raf Proto-Oncogene, Serine/Threonine Kinase",
+        "chromosome": "7",
+        "cancer_types": [
+          "Melanoma",
+          "Colorectal",
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    },
+    {
+      "gene": "PALB2",
+      "cdna_change": null,
+      "protein_change": "riportata come VUS e confermata anche dal test germinale",
+      "classification": null,
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:26144",
+        "system": "http://www.genenames.org",
+        "name": "Partner And Localizer Of BRCA2",
+        "chromosome": "16",
+        "cancer_types": [
+          "Breast",
+          "Pancreatic"
+        ],
+        "actionable": true
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "drug": "erdafitinib",
+      "gene_target": "FGFR2, FGFR3",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "2177997",
+        "system": "RxNorm",
+        "display": "erdafitinib",
+        "target": [
+          "FGFR2",
+          "FGFR3"
+        ],
+        "indication": "FGFR-altered urothelial carcinoma",
+        "evidence_level": "FDA Approved"
+      }
+    },
+    {
+      "drug": "rucaparib",
+      "gene_target": "BRCA1, BRCA2",
+      "evidence_level": "FDA Approved",
+      "clinical_trial": null,
+      "rationale": null,
+      "drug_code": {
+        "code": "1790868",
+        "system": "RxNorm",
+        "display": "rucaparib",
+        "target": [
+          "BRCA1",
+          "BRCA2"
+        ],
+        "indication": "BRCA-mutated cancers",
+        "evidence_level": "FDA Approved"
+      }
+    }
+  ],
+  "tmb": null,
+  "ngs_method": null,
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 12,
+    "filled_fields": 2,
+    "completeness_pct": 16.7,
+    "variants_found": 2,
+    "variants_with_vaf": 0,
+    "variants_classified": 0,
+    "variants_with_gene_code": 2,
+    "drugs_identified": 2,
+    "drugs_mapped": 2,
+    "diagnosis_mapped": false,
+    "patient_complete": false,
+    "warnings": [
+      "Diagnosis not mapped to ICD-O",
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}}

@@ -1,0 +1,35 @@
+Patient_ID,Age,Sex,Diagnosis,Stage,TMB,Gene,cDNA_Change,Protein_Change,VAF,Classification,ESCAT_Level,HGNC_Code,Actionable,Resistance
+23,,,,IIIB,,BRAF,,V660E,,,IV,HGNC:1097,Yes,No
+23,,,,IIIB,,PALB2,,riportata come VUS e confermata anche dal test germinale,,,IV,HGNC:26144,Yes,No
+13,,,,,,KRAS,,G12D,,,IV,HGNC:6407,Yes,No
+13,,,,,,ATM,,su tessuto (VAF 45%) e la presenza di multiple alterazioni geniche riscontrate in NGS supportino la possibilità che il paziente possa avere un profilo HRD+,45.0,,IV,HGNC:795,Yes,No
+13,,,,,,RET,,la bassa frequenza allelica della variante (VAF 14%) e l’assenza di comorbidità suggestive portano e ritenere molto poco probabile presenza di sindrome MEN,14.0,,IV,HGNC:9967,Yes,No
+13,,,,,,RAD50,,non è stata descritta nei principali database di riferimento; il gene RAD50 è coinvolto nel pathway del DNA-damage repair e potenzialmente alla base di un fenotipo HRD+ (homologous recombination deficiency); tuttavia solo un test HRD potrebbe chiarire il fenotipo,,,IV,HGNC:9823,Yes,No
+1,,F,carcinoma tiroideo,,,KRAS,,G12D,25.0,,IV,HGNC:6407,Yes,No
+1,,F,carcinoma tiroideo,,,KRAS,,ed in particolare della variante G13V (che ha valore di gain of function) in pazienti con MET exon skipping non è riportata in letteratura; tuttavia alterazioni di KRAS sono descritte come meccanismi di resistenza primaria e secondaria agli inibitori di MET,,,IV,HGNC:6407,Yes,No
+1,,F,carcinoma tiroideo,,,STRN::ALK,,fusion,3.0,Pathogenic,I-B,HGNC:11425,Yes,No
+7,,,,,,BRAF,,G469A,7.0,,IV,HGNC:1097,Yes,No
+7,,,,,,BRAF,,G469V,,,IV,HGNC:1097,Yes,No
+7,,,,,,KRAS,,G12V,50.0,,IV,HGNC:6407,Yes,No
+7,,,,,,MET,,R988C,50.0,,IV,HGNC:7029,Yes,No
+7,,,,,,BRAF,,riscontrata risulta essere una mutazione nell’esone 11 di BRAF,7.0,,IV,HGNC:1097,Yes,No
+7,,,,,,BRAF,,non-V600,,,IV,HGNC:1097,Yes,No
+7,,,,,,BRCA2,,emersa dal test germinale è coerente con la risposta clinica e laboratoristica ai sali di platino e supporta razionale biologico di utilizzo di PARPi di mantenimento (dati studio Fase 3),50.0,,IV,HGNC:1101,Yes,No
+7,,,,,,MET,,riscontrata (R988C,,,IV,HGNC:7029,Yes,No
+9,,M,,,,JAK2,,V617F,1.0,,IV,HGNC:6192,Yes,No
+9,,M,,,,JAK2,,V617F è tipica della policitemia vera e di altre sindromi mieloproliferative,,,IV,HGNC:6192,Yes,No
+9,,M,,,,EGFR,,exon 19 deletion,,Pathogenic,II-A,HGNC:3236,Yes,No
+16,67,,,,,KRAS,,G12D,,,IV,HGNC:6407,Yes,No
+16,67,,,,,EGFR,,nella biopsia polmonare risulta essere un'inserzione dell'esone 20,,,IV,HGNC:3236,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,EGFR,,L858R,16.0,,IV,HGNC:3236,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,PTEN,,D107Y,20.0,,IV,HGNC:9588,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,EGFR,,R776H,16.0,,IV,HGNC:3236,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,EGFR,,L858R e comutazione di PTEN D107Y,16.0,,IV,HGNC:3236,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,PIK3CA,,Glu545Lys,,,IV,HGNC:8975,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,PTEN,,D107Y è localizzata nel dominio tirosinchinasico,20.0,,IV,HGNC:9588,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,FGFR3::TACC3,,fusion,2.9,Pathogenic,I-B,HGNC:3690,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,FGFR3::TACC3,,fusion,2.9,Pathogenic,I-B,HGNC:3690,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,FGFR3::TACC3,,fusion,2.9,Pathogenic,I-B,HGNC:3690,Yes,No
+17,60,,adenocarcinoma polmonare,IV,,FGFR3::TACC3,,fusion,2.9,Pathogenic,I-B,HGNC:3690,Yes,No
+21,32,,,,,ALK::EML4,,fusion,,Pathogenic,I-B,HGNC:427,Yes,No
+5,50,,,,,BRAF,,che si mantiene anche all’analisi NGS della rebiopsia in esame,,,IV,HGNC:1097,Yes,No

@@ -1,0 +1,57 @@
+{"mtb_report":
+{
+  "patient": {
+    "id": "21",
+    "age": 32,
+    "sex": null,
+    "birth_date": null
+  },
+  "diagnosis": {
+    "primary_diagnosis": null,
+    "stage": null,
+    "histology": null,
+    "icd_o_code": null
+  },
+  "variants": [
+    {
+      "gene": "ALK::EML4",
+      "cdna_change": null,
+      "protein_change": "fusion",
+      "classification": "Pathogenic",
+      "vaf": null,
+      "raw_text": null,
+      "gene_code": {
+        "code": "HGNC:427",
+        "system": "http://www.genenames.org",
+        "name": "ALK Receptor Tyrosine Kinase",
+        "chromosome": "2",
+        "cancer_types": [
+          "NSCLC"
+        ],
+        "actionable": true
+      }
+    }
+  ],
+  "recommendations": [],
+  "tmb": null,
+  "ngs_method": "sul tessuto pre-trattamento (non disponibile internamente) per stabilire se le nuove alterazioni riscontrate (a carico di BRAF, MYCN, MET) siano ab initio o acquisite.",
+  "report_date": null,
+  "quality_metrics": {
+    "total_fields": 9,
+    "filled_fields": 2,
+    "completeness_pct": 22.2,
+    "variants_found": 1,
+    "variants_with_vaf": 0,
+    "variants_classified": 1,
+    "variants_with_gene_code": 1,
+    "drugs_identified": 0,
+    "drugs_mapped": 0,
+    "diagnosis_mapped": false,
+    "patient_complete": false,
+    "warnings": [
+      "Diagnosis not mapped to ICD-O",
+      "Patient information incomplete",
+      "TMB not found"
+    ]
+  }
+}}
