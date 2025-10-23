@@ -60,30 +60,31 @@ echo "--------------------------------------------------------------------------
 rm -rf "$STRUCTURED_DIR"
 mkdir -p "$STRUCTURED_DIR"
 
-for outer_dir in "$PARSED_DIR"/patient_*; do
-    # Find JSON files recursively
-    json_file=$(find "$outer_dir" -name "mtb_report.json" -o -name "complete_package.json" | head -1)
+# Find ALL JSON files (not just first one)
+find "$PARSED_DIR" -name "mtb_report.json" -o -name "complete_package.json" | while read json_file; do
+    # Get directory containing the JSON
+    json_dir=$(dirname "$json_file")
+    patient_id=$(basename "$json_dir" | sed 's/patient_//')
 
-    if [ -n "$json_file" ]; then
-        # Get directory containing the JSON
-        json_dir=$(dirname "$json_file")
-        patient_id=$(basename "$json_dir" | sed 's/patient_//')
+    # Skip if patient_id is just a number from outer directory
+    if [[ ! "$patient_id" =~ ^[0-9]+$ ]]; then
+        continue
+    fi
 
-        # Create target directory
-        target_dir="$STRUCTURED_DIR/patient_$patient_id"
-        mkdir -p "$target_dir"
+    # Create target directory
+    target_dir="$STRUCTURED_DIR/patient_$patient_id"
+    mkdir -p "$target_dir"
 
-        # Check if it's mtb_report.json or complete_package.json
-        if [[ "$json_file" == *"mtb_report.json" ]]; then
-            # Wrap in complete_package format
-            echo '{"mtb_report":' > "$target_dir/complete_package.json"
-            cat "$json_file" >> "$target_dir/complete_package.json"
-            echo '}' >> "$target_dir/complete_package.json"
-            echo "  ✅ Patient $patient_id"
-        else
-            cp "$json_file" "$target_dir/complete_package.json"
-            echo "  ✅ Patient $patient_id"
-        fi
+    # Check if it's mtb_report.json or complete_package.json
+    if [[ "$json_file" == *"mtb_report.json" ]]; then
+        # Wrap in complete_package format
+        echo '{"mtb_report":' > "$target_dir/complete_package.json"
+        cat "$json_file" >> "$target_dir/complete_package.json"
+        echo '}' >> "$target_dir/complete_package.json"
+        echo "  ✅ Patient $patient_id"
+    else
+        cp "$json_file" "$target_dir/complete_package.json"
+        echo "  ✅ Patient $patient_id"
     fi
 done
 
