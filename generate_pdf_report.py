@@ -169,12 +169,12 @@ def generate_pdf_report(json_path: str, output_pdf: str = None):
         
         for variant in variants[:20]:  # Limit to 20 variants
             variant_table_data.append([
-                variant.get('gene', ''),
-                variant.get('cdna_change', '')[:20],
-                variant.get('protein_change', '')[:20],
+                variant.get('gene') or '',
+                (variant.get('cdna_change') or '')[:20],
+                (variant.get('protein_change') or '')[:20],
                 str(variant.get('vaf', '')) if variant.get('vaf') else '',
-                variant.get('classification', '')[:15],
-                variant.get('gene_code', {}).get('code', '')[:15] if variant.get('gene_code') else ''
+                (variant.get('classification') or '')[:15],
+                (variant.get('gene_code', {}).get('code') or '')[:15] if variant.get('gene_code') else ''
             ])
         
         variant_table = Table(variant_table_data, colWidths=[2.5*cm, 3*cm, 3*cm, 1.5*cm, 3*cm, 2*cm])
