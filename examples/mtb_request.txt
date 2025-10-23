@@ -1,0 +1,3 @@
+Paziente N1 maschio, nato il 8.5.1963 affetto da carcinoma gastrico metastatico in terapia di seconda linea.
+NGS: variante nell'esone 19 del gene EGFR (NM_005228.4): c.2241A>C, p.(Leu747Phe), frequenza allelica 11%, coverage 2000X. Il significato clinico di tale variante non è ad oggi riportato nei principali database di riferimento. Aumento del numero di copie del gene KRAS (Copy number = 8.33)
+In letteratura vi è poco; gli studi mostrano un tasso di iperespressione/mutazione variabile tra 10 e 50%.
